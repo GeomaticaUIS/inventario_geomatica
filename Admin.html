@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar inventario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Pantalla de login -->
+<div class="wrap login-wrap" id="login-screen">
+  <div class="panel">
+    <h1>Iniciar sesión</h1>
+    <p style="color:var(--ink-soft);font-size:0.9rem;margin-top:-8px">
+      Ingresa con tu usuario para editar el inventario.
+    </p>
+    <div id="login-status" class="status-msg"></div>
+    <form id="login-form">
+      <div class="field full-width" style="margin-bottom:12px">
+        <label for="login-user">Usuario</label>
+        <input type="text" id="login-user" required autocomplete="username">
+      </div>
+      <div class="field full-width" style="margin-bottom:16px">
+        <label for="login-pass">Contraseña</label>
+        <input type="password" id="login-pass" required autocomplete="current-password">
+      </div>
+      <button type="submit" style="width:100%">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Panel de administración (oculto hasta iniciar sesión) -->
+<div class="wrap" id="admin-screen" style="display:none">
+
+  <header class="site">
+    <div>
+      <h1>Editar inventario</h1>
+      <p>Sesión: <strong id="logged-user-label">—</strong> · Los cambios se guardan como un commit en el repositorio.</p>
+    </div>
+    <div class="count" id="count">— ítems</div>
+  </header>
+
+  <nav class="tools">
+    <a class="button ghost" href="index.html">← Ver inventario</a>
+    <button type="button" class="ghost" id="logout-btn">Cerrar sesión</button>
+  </nav>
+
+  <div id="status" class="status-msg"></div>
+
+  <div class="panel">
+    <details class="config" id="config-details">
+      <summary>Configuración de conexión con GitHub</summary>
+      <div class="field-grid" style="margin-top:14px">
+        <div class="field">
+          <label for="cfg-owner">Usuario u organización</label>
+          <input type="text" id="cfg-owner" placeholder="ej. geomatica-lab">
+        </div>
+        <div class="field">
+          <label for="cfg-repo">Repositorio</label>
+          <input type="text" id="cfg-repo" placeholder="ej. inventario">
+        </div>
+        <div class="field">
+          <label for="cfg-branch">Rama</label>
+          <input type="text" id="cfg-branch" placeholder="main" value="main">
+        </div>
+        <div class="field">
+          <label for="cfg-token">Token de GitHub (personal access token)</label>
+          <input type="password" id="cfg-token" placeholder="ghp_… o github_pat_…">
+        </div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--ink-soft);margin-bottom:0">
+        Crea un token de tipo <em>fine-grained</em> con permiso <strong>Contents: Read and write</strong>
+        limitado solo a este repositorio. El token es lo que realmente controla quién puede guardar
+        cambios en el repo — el usuario y contraseña de arriba solo identifican quién está editando,
+        no reemplazan al token. El token se guarda únicamente en este navegador.
+      </p>
+      <label style="font-size:0.82rem;color:var(--ink-soft);display:flex;gap:6px;align-items:center;margin-top:8px">
+        <input type="checkbox" id="cfg-remember" style="width:auto">
+        Recordar usuario/repo/rama en este navegador
+      </label>
+    </details>
+  </div>
+
+  <div class="panel">
+    <h2 id="form-title">Añadir ítem</h2>
+    <form id="item-form">
+      <input type="hidden" id="item-original-id">
+      <div class="field-grid">
+        <div class="field">
+          <label for="f-id">No. de inventario</label>
+          <input type="text" id="f-id" required placeholder="1007">
+        </div>
+        <div class="field">
+          <label for="f-tipo">Tipo de inventario</label>
+          <select id="f-tipo">
+            <option>Mayor</option>
+            <option>Menor</option>
+            <option>Intangible</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="f-descripcion">Descripción del elemento</label>
+          <input type="text" id="f-descripcion" required placeholder="Descripción del elemento">
+        </div>
+        <div class="field">
+          <label for="f-ubicacion">Ubicación</label>
+          <input type="text" id="f-ubicacion" placeholder="ej. Oficina rectoría">
+        </div>
+        <div class="field">
+          <label for="f-funcionario">Funcionario a cargo</label>
+          <select id="f-funcionario">
+            <option value="rector">Rector</option>
+            <option value="jhon">Jhon</option>
+            <option value="yerly">Yerly</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="f-observacion">Observación / comentario</label>
+          <input type="text" id="f-observacion" placeholder="Opcional">
+        </div>
+        <div class="field full">
+          <label for="f-imagen">Foto del elemento</label>
+          <input type="file" id="f-imagen" accept="image/*">
+          <span id="imagen-actual" style="font-size:0.8rem;color:var(--ink-soft)"></span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" id="save-btn">Guardar ítem</button>
+        <button type="button" class="ghost" id="cancel-edit" style="display:none">Cancelar edición</button>
+      </div>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>No. inventario</th>
+        <th>Descripción</th>
+        <th>Tipo</th>
+        <th>Funcionario</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <footer class="note">
+    Cada guardado hace un commit a <code>data/items.json</code> (y a <code>fotos_inventario/&lt;funcionario&gt;/</code>
+    si subes una foto) en el repositorio configurado arriba. GitHub Pages se reconstruye automáticamente
+    después de cada commit (puede tardar uno o dos minutos en reflejarse).
+  </footer>
+
+</div>
+
+<script src="js/Admin.js"></script>
+</body>
+</html>

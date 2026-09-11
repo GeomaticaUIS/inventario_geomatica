@@ -3,159 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editar inventario</title>
+<title>Administrar Inventario - Geomática UIS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- Pantalla de login -->
+<!-- Pantalla de Login -->
 <div class="wrap login-wrap" id="login-screen">
   <div class="panel">
     <h1>Iniciar sesión</h1>
-    <p style="color:var(--ink-soft);font-size:0.9rem;margin-top:-8px">
-      Ingresa con tu usuario para editar el inventario.
+    <p style="color:var(--ink-soft);font-size:0.88rem;margin-top:-6px;margin-bottom:18px">
+      Ingresa con tus credenciales de usuario para gestionar el inventario y diseñar planos de salas.
     </p>
     <div id="login-status" class="status-msg"></div>
     <form id="login-form">
       <div class="field full-width" style="margin-bottom:12px">
         <label for="login-user">Usuario</label>
-        <input type="text" id="login-user" required autocomplete="username">
+        <input type="text" id="login-user" required autocomplete="username" placeholder="ej. rector, jhon, yerly">
       </div>
-      <div class="field full-width" style="margin-bottom:16px">
+      <div class="field full-width" style="margin-bottom:18px">
         <label for="login-pass">Contraseña</label>
         <input type="password" id="login-pass" required autocomplete="current-password">
       </div>
-      <button type="submit" style="width:100%">Entrar</button>
+      <button type="submit" style="width:100%">Entrar al Sistema</button>
     </form>
   </div>
 </div>
 
-<!-- Panel de administración (oculto hasta iniciar sesión) -->
+<!-- Pantalla Principal de Administración (Oculta hasta iniciar sesión) -->
 <div class="wrap" id="admin-screen" style="display:none">
 
   <header class="site">
     <div>
-      <h1>Editar inventario</h1>
-      <p>Sesión: <strong id="logged-user-label">—</strong> · Los cambios se guardan como un commit en el repositorio.</p>
+      <h1>Administrar Inventario y Salas</h1>
+      <p>Sesión: <strong id="logged-user-label">—</strong> · Base de datos SQLite interna.</p>
     </div>
     <div class="count" id="count">— ítems</div>
   </header>
 
   <nav class="tools">
-    <a class="button ghost" href="index.html">← Ver inventario</a>
-    <button type="button" class="ghost" id="logout-btn">Cerrar sesión</button>
+    <div class="nav-left">
+      <a class="button ghost" href="index.html">← Ver inventario y planos</a>
+      <div class="view-switch">
+        <button type="button" id="tab-btn-items" class="view-btn active">📦 Gestionar Ítems</button>
+        <button type="button" id="tab-btn-salas" class="view-btn">📐 Diseñador de Salas y Planos</button>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button type="button" class="ghost" id="logout-btn">Cerrar sesión</button>
+    </div>
   </nav>
 
   <div id="status" class="status-msg"></div>
 
-  <div class="panel">
-    <details class="config" id="config-details">
-      <summary>Configuración de conexión con GitHub</summary>
-      <div class="field-grid" style="margin-top:14px">
-        <div class="field">
-          <label for="cfg-owner">Usuario u organización</label>
-          <input type="text" id="cfg-owner" placeholder="ej. geomatica-lab">
+  <!-- SECCIÓN 1: GESTIÓN DE ÍTEMS DE INVENTARIO -->
+  <div id="sec-admin-items">
+    <div class="panel">
+      <h2 id="form-title">Añadir ítem</h2>
+      <form id="item-form">
+        <input type="hidden" id="item-original-id">
+        <input type="hidden" id="f-pos-x">
+        <input type="hidden" id="f-pos-y">
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="f-id">No. de inventario</label>
+            <input type="text" id="f-id" required placeholder="ej. 1007">
+          </div>
+
+          <div class="field">
+            <label for="f-tipo">Tipo de inventario</label>
+            <select id="f-tipo">
+              <option value="Mayor">Mayor</option>
+              <option value="Menor">Menor</option>
+              <option value="Intangible">Intangible</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="f-descripcion">Descripción del elemento</label>
+            <input type="text" id="f-descripcion" required placeholder="ej. Nivel óptico Topcon con trípode de aluminio">
+          </div>
+
+          <div class="field">
+            <label for="f-ubicacion">Ubicación textual</label>
+            <input type="text" id="f-ubicacion" placeholder="ej. Gabinete 2, Estante superior">
+          </div>
+
+          <div class="field">
+            <label for="f-funcionario">Responsable a cargo</label>
+            <select id="f-funcionario"></select>
+          </div>
+
+          <div class="field full">
+            <label for="f-sala">Sala / Espacio (para ubicar en el plano 2D)</label>
+            <select id="f-sala">
+              <option value="">-- Sin sala asignada --</option>
+            </select>
+          </div>
+
+          <!-- Selector visual de ubicación sobre el esquema de la sala -->
+          <div class="field full" id="admin-map-wrapper" style="display:none">
+            <label>Ubicación en el Plano de la Sala</label>
+            <div class="coord-hint">
+              📍 <strong>Instrucción:</strong> Haz clic sobre la mesa, estante o posición donde está el elemento para fijar el pin. También puedes arrastrar el pin libremente.
+              <span id="coord-display" style="font-weight:bold;margin-left:8px"></span>
+              <button type="button" class="ghost" id="btn-clear-coords" style="padding:2px 8px;font-size:0.75rem;margin-left:10px">Quitar del plano</button>
+            </div>
+            <div class="admin-map-container" style="height:380px;position:relative;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:6px">
+              <div id="admin-indoor-map" style="width:100%;height:100%"></div>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="f-observacion">Observación / comentario</label>
+            <input type="text" id="f-observacion" placeholder="Opcional: estado, mantenimientos pendientes, etc.">
+          </div>
+
+          <div class="field full">
+            <label for="f-imagen">Foto del elemento</label>
+            <input type="file" id="f-imagen" accept="image/*">
+            <div id="imagen-actual-preview" style="margin-top:6px"></div>
+          </div>
         </div>
-        <div class="field">
-          <label for="cfg-repo">Repositorio</label>
-          <input type="text" id="cfg-repo" placeholder="ej. inventario">
+
+        <div class="form-actions">
+          <button type="submit" id="save-btn">Guardar ítem</button>
+          <button type="button" class="ghost" id="cancel-edit" style="display:none">Cancelar edición</button>
         </div>
-        <div class="field">
-          <label for="cfg-branch">Rama</label>
-          <input type="text" id="cfg-branch" placeholder="main" value="main">
-        </div>
-        <div class="field">
-          <label for="cfg-token">Token de GitHub (personal access token)</label>
-          <input type="password" id="cfg-token" placeholder="ghp_… o github_pat_…">
-        </div>
-      </div>
-      <p style="font-size:0.82rem;color:var(--ink-soft);margin-bottom:0">
-        Crea un token de tipo <em>fine-grained</em> con permiso <strong>Contents: Read and write</strong>
-        limitado solo a este repositorio. El token es lo que realmente controla quién puede guardar
-        cambios en el repo — el usuario y contraseña de arriba solo identifican quién está editando,
-        no reemplazan al token. El token se guarda únicamente en este navegador.
+      </form>
+    </div>
+
+    <!-- Tabla de Gestión de Ítems -->
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:58px">Foto</th>
+            <th>No. Inventario</th>
+            <th>Descripción</th>
+            <th>Sala / Ubicación</th>
+            <th>Tipo</th>
+            <th>Responsable</th>
+            <th style="width:140px">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="admin-rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: DISEÑADOR Y GESTOR DE SALAS / PLANOS -->
+  <div id="sec-admin-salas" style="display:none">
+    
+    <!-- Editor / Creador de Sala -->
+    <div class="panel">
+      <h2 id="sala-form-title">Diseñador Visual de Planos de Sala 2D</h2>
+      <p style="font-size:0.85rem;color:var(--ink-soft);margin-top:-6px">
+        Diseña el plano de tu sala arrastrando mesas, escritorios, puertas y muebles, o sube una imagen de plano existente.
       </p>
-      <label style="font-size:0.82rem;color:var(--ink-soft);display:flex;gap:6px;align-items:center;margin-top:8px">
-        <input type="checkbox" id="cfg-remember" style="width:auto">
-        Recordar usuario/repo/rama en este navegador
-      </label>
-    </details>
-  </div>
 
-  <div class="panel">
-    <h2 id="form-title">Añadir ítem</h2>
-    <form id="item-form">
-      <input type="hidden" id="item-original-id">
-      <div class="field-grid">
-        <div class="field">
-          <label for="f-id">No. de inventario</label>
-          <input type="text" id="f-id" required placeholder="1007">
+      <form id="sala-form">
+        <div class="field-grid">
+          <div class="field">
+            <label for="s-id">ID de la sala (sin espacios)</label>
+            <input type="text" id="s-id" required placeholder="ej. lab_sensores">
+          </div>
+          <div class="field">
+            <label for="s-nombre">Nombre de la sala</label>
+            <input type="text" id="s-nombre" required placeholder="ej. Laboratorio de Sensores y Drones">
+          </div>
+          <div class="field full">
+            <label for="s-desc">Descripción / Ubicación física</label>
+            <input type="text" id="s-desc" placeholder="ej. Aula 302, Edificio de Ingeniería">
+          </div>
+          <div class="field">
+            <label for="s-ancho">Ancho del plano (píxeles)</label>
+            <input type="number" id="s-ancho" value="1000" min="600" max="2000" step="50">
+          </div>
+          <div class="field">
+            <label for="s-alto">Alto del plano (píxeles)</label>
+            <input type="number" id="s-alto" value="700" min="400" max="1500" step="50">
+          </div>
         </div>
-        <div class="field">
-          <label for="f-tipo">Tipo de inventario</label>
-          <select id="f-tipo">
-            <option>Mayor</option>
-            <option>Menor</option>
-            <option>Intangible</option>
-          </select>
-        </div>
-        <div class="field full">
-          <label for="f-descripcion">Descripción del elemento</label>
-          <input type="text" id="f-descripcion" required placeholder="Descripción del elemento">
-        </div>
-        <div class="field">
-          <label for="f-ubicacion">Ubicación</label>
-          <input type="text" id="f-ubicacion" placeholder="ej. Oficina rectoría">
-        </div>
-        <div class="field">
-          <label for="f-funcionario">Funcionario a cargo</label>
-          <select id="f-funcionario">
-            <option value="rector">Rector</option>
-            <option value="jhon">Jhon</option>
-            <option value="yerly">Yerly</option>
-          </select>
-        </div>
-        <div class="field full">
-          <label for="f-observacion">Observación / comentario</label>
-          <input type="text" id="f-observacion" placeholder="Opcional">
-        </div>
-        <div class="field full">
-          <label for="f-imagen">Foto del elemento</label>
-          <input type="file" id="f-imagen" accept="image/*">
-          <span id="imagen-actual" style="font-size:0.8rem;color:var(--ink-soft)"></span>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="submit" id="save-btn">Guardar ítem</button>
-        <button type="button" class="ghost" id="cancel-edit" style="display:none">Cancelar edición</button>
-      </div>
-    </form>
-  </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th>No. inventario</th>
-        <th>Descripción</th>
-        <th>Tipo</th>
-        <th>Funcionario</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="rows"></tbody>
-  </table>
+        <!-- Barra de herramientas de diseño -->
+        <div style="margin-top:16px">
+          <label style="font-size:0.82rem;font-weight:600;color:var(--ink-soft);display:block;margin-bottom:6px">
+            Añadir Elementos al Plano:
+          </label>
+          <div class="designer-tools-panel">
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('mesa')">🪑 + Mesa de Trabajo</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('computo')">🖥️ + Puesto Cómputo</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('gabinete')">🗄️ + Gabinete / Armario</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('rack')">🔌 + Rack Red</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('puerta')">🚪 + Puerta / Acceso</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('ventana')">🪟 + Ventanal</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('telon')">📽️ + Telón Proyector</button>
+            <button type="button" class="designer-tool-btn" onclick="addCanvasItem('texto')">🏷️ + Rótulo de Texto</button>
+            <button type="button" class="designer-tool-btn" style="color:var(--rust)" onclick="clearCanvas()">🧹 Limpiar Todo</button>
+          </div>
+        </div>
+
+        <!-- Lienzo de Diseño de la Sala -->
+        <div class="designer-canvas-viewport">
+          <div id="designer-canvas" style="width:1000px;height:700px">
+            <div id="canvas-title-label" style="position:absolute;top:15px;left:0;right:0;text-align:center;font-size:18px;font-weight:bold;color:#2d3748;pointer-events:none">
+              Plano de Sala
+            </div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--ink-soft);margin-top:6px">
+          💡 <strong>Cómo diseñar:</strong> Arrastra cualquier elemento para ubicarlo sobre el plano. Haz clic en un elemento para cambiar su texto, girarlo 90° o eliminarlo.
+        </p>
+
+        <!-- Opción alternativa: Subir imagen ya hecha -->
+        <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)">
+          <label style="font-size:0.84rem;color:var(--ink);font-weight:600">Opcional: ¿Prefieres subir un archivo de plano existente (PNG, JPG o SVG)?</label>
+          <div style="margin-top:6px">
+            <input type="file" id="s-archivo-plano" accept="image/*,.svg">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="btn-save-sala">💾 Guardar Plano y Sala</button>
+          <button type="button" class="ghost" id="btn-cancel-sala-edit" style="display:none">Cancelar edición</button>
+          <button type="button" class="ghost" id="btn-reset-sala">Limpiar Formulario</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista de Salas Existentes -->
+    <div class="panel">
+      <h2>Salas Registradas</h2>
+      <div id="salas-list" class="salas-grid"></div>
+    </div>
+
+  </div>
 
   <footer class="note">
-    Cada guardado hace un commit a <code>data/items.json</code> (y a <code>fotos_inventario/&lt;funcionario&gt;/</code>
-    si subes una foto) en el repositorio configurado arriba. GitHub Pages se reconstruye automáticamente
-    después de cada commit (puede tardar uno o dos minutos en reflejarse).
+    Inventario interno de Geomática UIS · Los cambios y fotos se guardan en el servidor local.
   </footer>
 
 </div>
 
-<script src="js/Admin.js"></script>
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="js/admin.js"></script>
 </body>
 </html>

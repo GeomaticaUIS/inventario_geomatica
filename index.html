@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inventario</title>
+<title>Inventario de Equipos - Geomática UIS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,47 +14,110 @@
 
   <header class="site">
     <div>
-      <h1>Inventario de equipos</h1>
-      <p>Consulta del inventario de equipos técnicos y de cómputo del grupo.</p>
+      <h1>Inventario de Equipos</h1>
+      <p>Grupo de Geomática UIS · Consulta de equipos técnicos, cómputo y sensores de laboratorio.</p>
     </div>
     <div class="count" id="count">— ítems</div>
   </header>
 
   <nav class="tools">
-    <a class="button ghost" href="Admin.html">Editar inventario →</a>
+    <div class="nav-left">
+      <div class="view-switch">
+        <button type="button" id="btn-view-tabla" class="view-btn active">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
+          Vista Tabla
+        </button>
+        <button type="button" id="btn-view-mapa" class="view-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          Esquema de Sala (Plano 2D)
+        </button>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a class="button ghost" href="admin.html">Administrar inventario →</a>
+    </div>
   </nav>
 
+  <!-- Filtros Generales -->
   <div class="controls">
-    <input type="text" id="search" placeholder="Buscar por número, descripción o ubicación…">
+    <input type="text" id="search" placeholder="Buscar por número, descripción, ubicación o responsable…">
     <select id="filter-tipo">
       <option value="">Todos los tipos</option>
       <option value="Mayor">Mayor</option>
       <option value="Menor">Menor</option>
       <option value="Intangible">Intangible</option>
     </select>
-    <select id="filter-funcionario"><option value="">Todos los funcionarios</option></select>
+    <select id="filter-funcionario">
+      <option value="">Todos los responsables</option>
+    </select>
+    <select id="filter-sala">
+      <option value="">Todas las salas</option>
+    </select>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th>No. inventario</th>
-        <th>Descripción</th>
-        <th>Ubicación</th>
-        <th>Tipo</th>
-        <th>Funcionario</th>
-      </tr>
-    </thead>
-    <tbody id="rows"></tbody>
-  </table>
+  <!-- Vista 1: Tabla de Equipos -->
+  <div id="table-view-section">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:58px">Foto</th>
+            <th>No. Inventario</th>
+            <th>Descripción</th>
+            <th>Ubicación / Sala</th>
+            <th>Tipo</th>
+            <th>Responsable</th>
+            <th style="width:90px">Plano</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td class="empty" colspan="7">Cargando inventario…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Vista 2: Esquema Interactivo de Sala (Plano Indoor Leaflet) -->
+  <div id="map-view-section" class="map-view-wrapper" style="display:none">
+    <div class="map-toolbar">
+      <div class="map-toolbar-left">
+        <label for="map-sala-select">Sala / Espacio:</label>
+        <select id="map-sala-select"></select>
+      </div>
+      <div class="map-legend">
+        <span class="legend-item"><span class="legend-dot mayor"></span> Mayor</span>
+        <span class="legend-item"><span class="legend-dot menor"></span> Menor</span>
+        <span class="legend-item"><span class="legend-dot intangible"></span> Intangible</span>
+      </div>
+    </div>
+    <div class="map-container">
+      <div id="indoor-map"></div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--ink-soft);margin-top:8px;margin-bottom:0">
+      💡 <strong>Consejo:</strong> Haz clic en cualquier marcador para ver la ficha técnica y foto del elemento. Usa la rueda del ratón para hacer zoom sobre el plano.
+    </p>
+  </div>
 
   <footer class="note">
-    Los datos se cargan desde <code>data/items.json</code>. Para modificarlos usa la página de edición.
+    Inventario interno · Servidor local seguro (SQLite). Los cambios se almacenan en <code>data/inventario.db</code>.
   </footer>
 
 </div>
 
+<!-- Modal para ver foto completa -->
+<div id="photo-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modal-title">Foto del Equipo</h3>
+      <button type="button" class="modal-close" id="modal-close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <img id="modal-img" src="" alt="Foto en tamaño completo">
+    </div>
+  </div>
+</div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

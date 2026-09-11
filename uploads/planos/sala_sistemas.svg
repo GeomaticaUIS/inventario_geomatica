@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e0d3" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#faf9f5"/>
+  <rect width="1200" height="800" fill="url(#grid2)"/>
+
+  <rect x="50" y="50" width="1100" height="700" fill="none" stroke="#2d3748" stroke-width="12" rx="6"/>
+
+  <line x1="1150" y1="600" x2="1150" y2="700" stroke="#faf9f5" stroke-width="14"/>
+  <path d="M 1150 700 A 100 100 0 0 1 1050 600" fill="none" stroke="#718096" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="1150" y1="700" x2="1050" y2="700" stroke="#a0aec0" stroke-width="3"/>
+  <text x="1110" y="735" font-family="sans-serif" font-size="14" fill="#718096" text-anchor="middle">Acceso</text>
+
+  <rect x="450" y="55" width="300" height="16" fill="#3182ce" rx="3"/>
+  <text x="600" y="95" font-family="sans-serif" font-weight="bold" font-size="14" fill="#2b6cb0" text-anchor="middle">Telón de Proyección</text>
+
+  <rect x="160" y="130" width="200" height="80" fill="#e2e8f0" stroke="#4a5568" stroke-width="3" rx="4"/>
+  <text x="260" y="175" font-family="sans-serif" font-weight="bold" font-size="14" fill="#2d3748" text-anchor="middle">Puesto Docente</text>
+  <circle cx="260" cy="240" r="22" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+
+  <rect x="160" y="320" width="380" height="90" rx="6" fill="#e2e8f0" stroke="#4a5568" stroke-width="2"/>
+  <text x="350" y="370" font-family="sans-serif" font-weight="bold" font-size="14" fill="#4a5568" text-anchor="middle">Mesa de Cómputo A (1-4)</text>
+
+  <rect x="660" y="320" width="380" height="90" rx="6" fill="#e2e8f0" stroke="#4a5568" stroke-width="2"/>
+  <text x="850" y="370" font-family="sans-serif" font-weight="bold" font-size="14" fill="#4a5568" text-anchor="middle">Mesa de Cómputo B (5-8)</text>
+
+  <rect x="160" y="490" width="380" height="90" rx="6" fill="#e2e8f0" stroke="#4a5568" stroke-width="2"/>
+  <text x="350" y="540" font-family="sans-serif" font-weight="bold" font-size="14" fill="#4a5568" text-anchor="middle">Mesa de Cómputo C (9-12)</text>
+
+  <rect x="660" y="490" width="380" height="90" rx="6" fill="#e2e8f0" stroke="#4a5568" stroke-width="2"/>
+  <text x="850" y="540" font-family="sans-serif" font-weight="bold" font-size="14" fill="#4a5568" text-anchor="middle">Mesa de Cómputo D (13-16)</text>
+
+  <rect x="70" y="620" width="90" height="90" fill="#cbd5e1" stroke="#2d3748" stroke-width="3"/>
+  <text x="115" y="670" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle">Rack Red</text>
+
+  <text x="600" y="35" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1a202c" text-anchor="middle">Sala de Sistemas</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e0d3" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="700" fill="#faf9f5"/>
+  <rect width="1000" height="700" fill="url(#grid)"/>
+
+  <rect x="50" y="50" width="900" height="600" fill="none" stroke="#2d3748" stroke-width="12" rx="6"/>
+
+  <line x1="450" y1="650" x2="550" y2="650" stroke="#faf9f5" stroke-width="14"/>
+  <path d="M 450 650 A 100 100 0 0 1 550 550" fill="none" stroke="#718096" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="450" y1="650" x2="450" y2="550" stroke="#a0aec0" stroke-width="3"/>
+  <text x="500" y="685" font-family="sans-serif" font-size="14" fill="#718096" text-anchor="middle">Acceso Principal</text>
+
+  <line x1="250" y1="50" x2="750" y2="50" stroke="#63b3ed" stroke-width="10"/>
+  <text x="500" y="40" font-family="sans-serif" font-size="13" fill="#3182ce" text-anchor="middle">Ventanal</text>
+
+  <g id="escritorio-rector">
+    <path d="M 180 160 h 260 v 110 h -120 v 150 h -140 z" fill="#e2e8f0" stroke="#4a5568" stroke-width="3"/>
+    <rect x="220" y="200" width="70" height="45" rx="4" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="255" y="228" font-family="sans-serif" font-size="11" fill="#334155" text-anchor="middle">Laptop</text>
+    <circle cx="255" cy="320" r="26" fill="#94a3b8" stroke="#475569" stroke-width="2"/>
+    <text x="250" y="190" font-family="sans-serif" font-weight="bold" font-size="14" fill="#1e293b">Escritorio Principal</text>
+  </g>
+
+  <circle cx="360" cy="340" r="20" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+  <circle cx="420" cy="340" r="20" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+
+  <g id="mesa-reuniones">
+    <rect x="600" y="220" width="260" height="160" rx="25" fill="#e2e8f0" stroke="#4a5568" stroke-width="3"/>
+    <text x="730" y="305" font-family="sans-serif" font-weight="bold" font-size="15" fill="#334155" text-anchor="middle">Mesa de Juntas</text>
+    <circle cx="660" cy="185" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <circle cx="730" cy="185" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <circle cx="800" cy="185" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <circle cx="660" cy="415" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <circle cx="730" cy="415" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <circle cx="800" cy="415" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+  </g>
+
+  <rect x="70" y="460" width="60" height="150" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+  <text x="100" y="540" font-family="sans-serif" font-size="12" fill="#334155" transform="rotate(-90, 100, 540)" text-anchor="middle">Archivador</text>
+
+  <text x="500" y="100" font-family="sans-serif" font-size="22" font-weight="bold" fill="#1e293b" text-anchor="middle">Oficina Rectoría</text>
+  <text x="500" y="125" font-family="sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Esquema Arquitectónico</text>
+</svg>

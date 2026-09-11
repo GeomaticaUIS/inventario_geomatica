@@ -1,67 +1,94 @@
-Inventario de elementos (GitHub Pages)
+# Inventario de Equipos y Esquemas de Sala (Geomática UIS)
 
-Sitio estático para consultar y editar un inventario de elementos, con los datos guardados como JSON versionado en el propio repositorio, incluyendo fotos y acceso con usuario/contraseña al formulario de edición.
+Sistema interno de gestión de inventario para equipos técnicos, de cómputo y sensores del Grupo de Geomática UIS. Funciona sobre **SQLite** y un servidor local en **Python (FastAPI)**, integrando almacenamiento local de imágenes y **esquemas interactivos 2D de salas (Indoor Mapping)** con Leaflet.
 
-Estructura
-inventario-git/
-├── index.html              # Vista pública: tabla con búsqueda y filtros
-├── admin.html               # Login + formulario para añadir/editar/eliminar ítems
-├── generar-hash.html         # Utilidad para crear/cambiar contraseñas
-├── css/style.css
-├── js/app.js                 # Lógica de index.html
-├── js/admin.js                # Lógica de admin.html (login, lectura/escritura vía API de GitHub)
-├── data/items.json             # Los datos del inventario
-├── data/credentials.json        # Usuarios y contraseñas (hash) para entrar a admin.html
-└── fotos_inventario/
-    ├── rector/
-    ├── jhon/
-    └── yerly/
-1. Publicar en GitHub Pages
-Crea un repositorio en GitHub y sube el contenido de esta carpeta.
-Ve a Settings → Pages.
-En "Build and deployment", elige Deploy from a branch, rama main, carpeta / (root).
-En un par de minutos tu sitio estará en https://<tu-usuario>.github.io/<tu-repo>/.
-2. Campos de cada ítem (data/items.json)
-json
-{
-  "id": "1001",
-  "descripcion": "Escritorio en L con superficie de madera",
-  "ubicacion": "Oficina rectoría",
-  "observacion": "Buen estado",
-  "tipo_inventario": "Mayor",
-  "funcionario": "rector",
-  "imagen": "fotos_inventario/rector/1001.jpg"
-}
+---
 
-tipo_inventario es uno de: Mayor, Menor, Intangible. funcionario corresponde a una de las subcarpetas de fotos_inventario/.
+## 🚀 Características Principales
 
-3. Usuarios y contraseñas de admin.html
+1. **Servidor Local Seguro (Sin exposición pública)**:
+   - Funciona en la intranet o red local del laboratorio (`http://localhost:8000` o `http://<IP-LAN>:8000`).
+   - No requiere GitHub Pages ni tokens de GitHub en el navegador.
+2. **Base de Datos SQLite (`data/inventario.db`)**:
+   - Todo el inventario, usuarios y coordenadas espaciales residen en un solo archivo.
+   - Respaldos ultra sencillos: basta con copiar el archivo `.db`.
+   - Soporta alta concurrencia mediante modo WAL (*Write-Ahead Logging*).
+3. **Esquemas 2D de Salas Interactivos (Indoor Mapping)**:
+   - Visualización de planos de salas y laboratorios con **Leaflet (`L.CRS.Simple`)** 100% offline.
+   - Cada equipo se ubica como un pin sobre el plano de su sala correspondiente (mesas, estantes, gabinetes).
+   - En la vista pública: clic en un pin para ver ficha y foto del equipo; buscar en la tabla enfoca automáticamente el equipo en el plano.
+   - En el panel de administración: clic directo sobre el plano para asignar o mover la ubicación del equipo.
+4. **Gestión Local de Fotos**:
+   - Carga y visualización directa de fotos almacenadas en disco (`uploads/fotos/`).
+   - Modal para ampliación de imágenes en alta resolución.
 
-data/credentials.json contiene los usuarios que pueden entrar al formulario de edición. Las contraseñas no se guardan en texto plano, se guarda un hash (SHA-256):
+---
 
-json
-{ "usuario": "jhon", "hash": "…", "nombre": "Jhon" }
+## 📁 Estructura del Proyecto
 
-Los tres usuarios de ejemplo (rector, jhon, yerly) tienen todos la contraseña de ejemplo cambiar123 — cámbiala antes de usar el sitio:
+```
+inventario_geomatica/
+├── run.bat                 # Ejecutable para Windows (doble clic para iniciar)
+├── run.py                  # Script lanzador en Python
+├── requirements.txt        # Dependencias (FastAPI, Uvicorn, Python-Multipart)
+├── index.html              # Vista pública: Tabla responsiva + Esquema 2D de salas
+├── admin.html              # Panel de gestión: Login, CRUD y selector en plano
+├── css/
+│   └── style.css           # Estilos responsivos y diseño UI
+├── js/
+│   ├── app.js              # Lógica de index.html (tabla, filtros y mapa Leaflet)
+│   └── admin.js            # Lógica de admin.html (autenticación y fijación de pines)
+├── backend/
+│   ├── database.py         # Conexión SQLite, esquemas y migración de datos
+│   └── app.py              # API REST en FastAPI y servidor de archivos estáticos
+├── vendor/
+│   └── leaflet/            # Biblioteca Leaflet y estilos (100% offline)
+├── uploads/
+│   ├── fotos/              # Fotografías de los equipos
+│   └── planos/             # Planos esquemáticos SVG/PNG de las salas
+└── data/
+    └── inventario.db       # Base de datos SQLite
+```
 
-Abre generar-hash.html en el navegador.
-Escribe la nueva contraseña; te muestra el hash correspondiente.
-Reemplaza ese hash en el usuario correspondiente dentro de data/credentials.json y súbelo al repo.
-⚠️ Qué protege este login y qué no
+---
 
-Este login es una puerta de identificación, no un mecanismo de seguridad fuerte: data/credentials.json es un archivo público del repositorio, así que alguien con conocimientos técnicos podría leerlo e intentar adivinar la contraseña fuera de línea a partir del hash. Lo que realmente controla quién puede guardar cambios en el repositorio es el token de GitHub que se configura por separado en "Configuración de conexión con GitHub" dentro de admin.html — solo alguien con ese token puede hacer commits, sin importar si pasó el login. Trata el login como una forma de saber "quién edita cada ítem", y el token como el candado real. Si necesitas seguridad más estricta (por ejemplo, que cada funcionario no pueda editar los ítems de otro), lo correcto es moverse a una solución con backend real.
+## ⚡ Cómo Iniciar el Sistema
 
-4. Editar desde el formulario (admin.html)
-Inicia sesión con tu usuario y contraseña.
-Despliega "Configuración de conexión con GitHub" (solo la primera vez, o si no marcaste "recordar"):
-Settings de tu cuenta de GitHub → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token.
-Limita el token solo a este repositorio, con permiso Contents: Read and write únicamente.
-Pégalo en el campo "Token de GitHub".
-Completa el formulario (número de inventario, descripción, ubicación, observación, tipo, funcionario y, opcionalmente, una foto) y guarda.
-Cada guardado crea uno o dos commits: la foto (si la subiste, a fotos_inventario/<funcionario>/<numero>.<extensión>) y el registro en data/items.json.
+### En Windows:
+Haz doble clic en **`run.bat`** o ejecuta en la consola:
+```powershell
+python run.py
+```
 
-El token se guarda solo en el navegador (sessionStorage, nunca se sube al repo). No compartas admin.html con un enlace público visible si no quieres que cualquiera con el token de alguien más pueda editar; para uso interno basta con no anunciar la URL fuera del equipo.
+### En Linux / Mac:
+```bash
+python3 run.py
+```
 
-5. Cargar tu inventario real desde Excel
+Abre tu navegador en:
+* **Vista Pública:** `http://localhost:8000`
+* **Panel de Administración:** `http://localhost:8000/admin.html`
+* **Acceso desde otros equipos del laboratorio:** `http://<IP-DEL-SERVIDOR>:8000`
 
-Exporta tu hoja de Excel como CSV, y cuando la tengas lista te ayudo a convertirla a este formato JSON (data/items.json) y a organizar las fotos en las carpetas correspondientes de fotos_inventario/.
+---
+
+## 🔐 Usuarios y Credenciales Iniciales
+
+El sistema migró automáticamente los usuarios existentes:
+
+| Usuario | Contraseña Inicial | Rol |
+| :--- | :--- | :--- |
+| `rector` | `cambiar123` | Administrador |
+| `jhon` | `cambiar123` | Editor |
+| `yerly` | `cambiar123` | Editor |
+
+---
+
+## 🗺️ Salas Configuradas y Planos de Muestra
+
+1. **Oficina Rectoría** (`oficina_rectoria`): Escritorio principal en L, mesa de juntas y archivadores.
+2. **Sala de Sistemas** (`sala_sistemas`): Puesto docente, 4 islas de cómputo y rack de red.
+3. **Laboratorio de Geomática UIS** (`lab_geomatica`): Gabinetes GNSS/Estaciones, mesas de calibración y estaciones SIG.
+4. **Auditorio** (`auditorio`): Escenario, pantalla de proyección y silletería.
+
+*Puedes subir tus propios planos en formato PNG, JPG o SVG reemplazando o añadiendo archivos en `uploads/planos/`.*

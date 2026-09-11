@@ -51,6 +51,23 @@ def run_tests():
     assert len(salas) >= 8, f"Se esperaban al menos 8 salas, se encontraron {len(salas)}"
     print(f"[OK] GET /api/salas: OK ({len(salas)} salas configuradas)")
 
+    # Test de diseño y guardado de plano SVG
+    test_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700"><rect x="10" y="10" width="100" height="80"/><text x="60" y="50">Test Mesa</text></svg>'
+    res_design = client.post('/api/salas/design', json={
+        "id": "sala_test_svg",
+        "nombre": "Sala de Prueba SVG",
+        "descripcion": "Sala para verificar edición de SVG",
+        "ancho": 1000,
+        "alto": 700,
+        "svg_content": test_svg
+    })
+    assert res_design.status_code == 200
+    assert os.path.exists("uploads/planos/plano_sala_test_svg.svg")
+    client.delete('/api/salas/sala_test_svg')
+    if os.path.exists("uploads/planos/plano_sala_test_svg.svg"):
+        os.remove("uploads/planos/plano_sala_test_svg.svg")
+    print("[OK] POST /api/salas/design y verificación de archivo SVG: OK")
+
     print("\nDetalle de items con coordenadas de plano:")
     for it in items:
         sala = it.get('sala_nombre') or 'Sin sala'

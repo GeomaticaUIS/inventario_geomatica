@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <pattern id="grid_1789142890642" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#e5e0d3" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="700" fill="#faf9f5"/>
+  <rect width="1000" height="700" fill="url(#grid_1789142890642)"/>
+  <!-- Paredes Exteriores -->
+  <rect x="20" y="20" width="960" height="660" fill="none" stroke="#2d3748" stroke-width="12" rx="6"/>
+  <!-- Título de la Sala -->
+  <text x="500" y="65" font-family="sans-serif" font-size="22" font-weight="bold" fill="#1e293b" text-anchor="middle">Sala Auxiliar/SIG</text>
+  <g id="elem_1">
+    <rect x="30" y="120" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="105" y="132" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="130" y="185" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_2">
+    <rect x="240" y="120" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="315" y="132" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="340" y="185" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_3">
+    <rect x="660" y="120" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="735" y="132" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="760" y="185" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_4">
+    <rect x="450" y="120" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="525" y="132" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="550" y="185" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_5">
+    <rect x="660" y="390" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="735" y="402" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="760" y="455" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_6">
+    <rect x="660" y="480" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="735" y="492" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="760" y="545" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_7">
+    <rect x="450" y="390" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="525" y="402" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="550" y="455" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_8">
+    <rect x="450" y="480" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="525" y="492" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="550" y="545" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_9">
+    <rect x="240" y="390" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="315" y="402" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="340" y="455" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_10">
+    <rect x="240" y="480" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="315" y="492" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="340" y="545" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_11">
+    <rect x="30" y="480" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="105" y="492" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="130" y="545" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+  <g id="elem_12">
+    <rect x="30" y="390" width="200" height="80" rx="5" fill="#eff6ff" stroke="#3b82f6" stroke-width="3"/>
+    <rect x="105" y="402" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+    <text x="130" y="455" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo</text>
+  </g>
+</svg>

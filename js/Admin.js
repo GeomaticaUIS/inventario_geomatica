@@ -610,6 +610,7 @@ function renderCanvasElements() {
     controls.className = 'elem-controls';
     controls.innerHTML = `
       <button type="button" class="elem-btn" title="Girar 90°" onclick="rotateCanvasItem('${item.id}', event)">🔄</button>
+      <button type="button" class="elem-btn" title="Cambiar tamaño (ancho x alto)" onclick="resizeCanvasItem('${item.id}', event)">📐</button>
       <button type="button" class="elem-btn" title="Cambiar texto" onclick="renameCanvasItem('${item.id}', event)">✏️</button>
       <button type="button" class="elem-btn" title="Eliminar" onclick="deleteCanvasItem('${item.id}', event)">❌</button>
     `;
@@ -698,12 +699,230 @@ window.renameCanvasItem = function(id, e) {
   }
 };
 
-window.deleteCanvasItem = function(id, e) {
+window.resizeCanvasItem = function(id, e) {
   e.stopPropagation();
-  canvasElements = canvasElements.filter(x => x.id !== id);
-  selectedElementId = null;
-  renderCanvasElements();
+  const item = canvasElements.find(x => x.id === id);
+  if (!item) return;
+  const currentSize = `${item.width}x${item.height}`;
+  const input = prompt(`Dimensiones de "${item.label}" en píxeles (ancho x alto):`, currentSize);
+  if (input) {
+    const parts = input.toLowerCase().split(/[\s,xX*]+/);
+    if (parts.length >= 2) {
+      const nw = parseInt(parts[0]);
+      const nh = parseInt(parts[1]);
+      if (!isNaN(nw) && nw >= 20 && !isNaN(nh) && nh >= 15) {
+        item.width = nw;
+        item.height = nh;
+        renderCanvasElements();
+      }
+    }
+  }
 };
+
+// Parser inteligente de planos SVG existentes para convertirlos en elementos interactivos
+function parseSvgToCanvasElements(svgText, defaultW = 1000, defaultH = 700) {
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(svgText, 'image/svg+xml');
+    const svgEl = doc.querySelector('svg');
+    if (!svgEl) return { elements: [], width: defaultW, height: defaultH, title: '' };
+
+    // 1. Dimensiones del plano
+    let w = parseFloat(svgEl.getAttribute('width')) || defaultW;
+    let h = parseFloat(svgEl.getAttribute('height')) || defaultH;
+    const viewBox = svgEl.getAttribute('viewBox');
+    if (viewBox) {
+      const parts = viewBox.split(/[\s,]+/).map(parseFloat);
+      if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+        w = parts[2];
+        h = parts[3];
+      }
+    }
+
+    // 2. Extraer título de la sala
+    let salaTitle = '';
+    const titleTexts = Array.from(doc.querySelectorAll('text')).filter(t => {
+      const fs = parseFloat(t.getAttribute('font-size') || '14');
+      const y = parseFloat(t.getAttribute('y') || '0');
+      const txt = t.textContent.trim().toLowerCase();
+      const isTitleKeyword = /laboratorio|sala de|oficina|auditorio|esquema arquitect[oó]nico|[aá]rea de sensores/.test(txt);
+      return (fs >= 19 && y < 130) || (isTitleKeyword && y < 130);
+    });
+    if (titleTexts.length > 0) {
+      salaTitle = titleTexts[0].textContent.trim();
+    }
+
+    // 3. Verificar si el SVG ya cuenta con metadatos JSON embebidos
+    const embeddedData = doc.getElementById('canvas-elements-data');
+    if (embeddedData && embeddedData.textContent.trim()) {
+      try {
+        const parsed = JSON.parse(embeddedData.textContent.trim());
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return { elements: parsed, width: w, height: h, title: salaTitle };
+        }
+      } catch (err) {
+        console.warn('Advertencia leyendo datos embebidos:', err);
+      }
+    }
+
+    // 4. Extracción heurística de elementos SVG existentes
+    const elements = [];
+    const consumedTexts = new Set();
+    titleTexts.forEach(t => consumedTexts.add(t));
+
+    const classify = (label) => {
+      const l = (label || '').toLowerCase();
+      if (/c[oó]mputo|computador|pc|laptop|workstation|docente/.test(l)) return 'computo';
+      if (/mesa|escritorio|juntas|reuni[oó]n|calibraci[oó]n|trabajo|escenario|atril|silleter[ií]a/.test(l)) return 'mesa';
+      if (/gabinete|armario|archivador|estante|bodega/.test(l)) return 'gabinete';
+      if (/rack|servidor|switch|comunicaci[oó]n/.test(l)) return 'rack';
+      if (/puerta|acceso|entrada|salida/.test(l)) return 'puerta';
+      if (/ventana|ventanal/.test(l)) return 'ventana';
+      if (/tel[oó]n|pantalla|proyector|proyecci[oó]n|videobeam/.test(l)) return 'telon';
+      return 'mesa';
+    };
+
+    // A) Grupos de elementos (<g id="...">)
+    const groups = Array.from(doc.querySelectorAll('g'));
+    groups.forEach((g, idx) => {
+      const gid = g.getAttribute('id') || '';
+      if (gid.startsWith('grid') || gid.startsWith('defs')) return;
+
+      const rects = Array.from(g.querySelectorAll('rect'));
+      const texts = Array.from(g.querySelectorAll('text'));
+      texts.forEach(t => consumedTexts.add(t));
+
+      const label = texts.map(t => t.textContent.trim()).filter(Boolean).join(' ') || gid || `Elemento ${idx + 1}`;
+      const type = classify(label);
+
+      if (rects.length > 0) {
+        const r = rects[0];
+        const rx = Math.round(parseFloat(r.getAttribute('x')) || 0);
+        const ry = Math.round(parseFloat(r.getAttribute('y')) || 0);
+        const rw = Math.round(parseFloat(r.getAttribute('width')) || 100);
+        const rh = Math.round(parseFloat(r.getAttribute('height')) || 80);
+        elements.push({
+          id: gid || `elem_${elements.length + 1}`,
+          type,
+          label,
+          x: rx,
+          y: ry,
+          width: rw,
+          height: rh,
+          rotation: 0
+        });
+      } else if (g.querySelector('path')) {
+        const path = g.querySelector('path');
+        const d = path.getAttribute('d') || '';
+        const coords = d.match(/[-+]?[0-9]*\.?[0-9]+/g);
+        let rx = 180, ry = 160, rw = 260, rh = 260;
+        if (coords && coords.length >= 4) {
+          rx = parseFloat(coords[0]) || 180;
+          ry = parseFloat(coords[1]) || 160;
+        }
+        elements.push({
+          id: gid || `elem_${elements.length + 1}`,
+          type,
+          label,
+          x: Math.round(rx),
+          y: Math.round(ry),
+          width: rw,
+          height: rh,
+          rotation: 0
+        });
+      }
+    });
+
+    // B) Rectángulos directos / muebles sueltos
+    const allRects = Array.from(doc.querySelectorAll('rect'));
+    allRects.forEach((r, idx) => {
+      if (r.closest('g') && !r.closest('g').id.startsWith('grid')) return;
+
+      const rw = Math.round(parseFloat(r.getAttribute('width')) || 0);
+      const rh = Math.round(parseFloat(r.getAttribute('height')) || 0);
+      const rx = Math.round(parseFloat(r.getAttribute('x')) || 0);
+      const ry = Math.round(parseFloat(r.getAttribute('y')) || 0);
+
+      // Ignorar fondo y paredes perimetrales
+      const isBackground = (rw >= w * 0.9 && rh >= h * 0.9);
+      const isWall = (rx < 60 && ry < 60 && rw >= w * 0.8 && rh >= h * 0.8 && r.getAttribute('fill') === 'none');
+      if (isBackground || isWall) return;
+
+      // Buscar texto más cercano
+      let bestText = null;
+      let bestDist = 999999;
+      const cx = rx + rw / 2;
+      const cy = ry + rh / 2;
+
+      const allTexts = Array.from(doc.querySelectorAll('text'));
+      allTexts.forEach(t => {
+        if (consumedTexts.has(t)) return;
+        const tx = parseFloat(t.getAttribute('x')) || 0;
+        const ty = parseFloat(t.getAttribute('y')) || 0;
+        const dist = Math.hypot(cx - tx, cy - ty);
+        if (dist < bestDist && dist < Math.max(rw, rh) * 1.6) {
+          bestDist = dist;
+          bestText = t;
+        }
+      });
+
+      let label = bestText ? bestText.textContent.trim() : `Elemento ${idx + 1}`;
+      if (bestText) consumedTexts.add(bestText);
+
+      elements.push({
+        id: `elem_${elements.length + 1}`,
+        type: classify(label),
+        label,
+        x: rx,
+        y: ry,
+        width: rw,
+        height: rh,
+        rotation: 0
+      });
+    });
+
+    // C) Líneas de acceso / puertas / ventanales
+    const allLines = Array.from(doc.querySelectorAll('line'));
+    allLines.forEach(line => {
+      if (line.closest('defs') || line.closest('pattern')) return;
+      const lx1 = parseFloat(line.getAttribute('x1')) || 0;
+      const ly1 = parseFloat(line.getAttribute('y1')) || 0;
+      const lx2 = parseFloat(line.getAttribute('x2')) || 0;
+      const ly2 = parseFloat(line.getAttribute('y2')) || 0;
+      const lw = Math.round(Math.abs(lx2 - lx1)) || 20;
+      const lh = Math.round(Math.abs(ly2 - ly1)) || 20;
+      const lx = Math.round(Math.min(lx1, lx2));
+      const ly = Math.round(Math.min(ly1, ly2));
+
+      const allTexts = Array.from(doc.querySelectorAll('text'));
+      for (const t of allTexts) {
+        if (consumedTexts.has(t)) continue;
+        const tx = parseFloat(t.getAttribute('x')) || 0;
+        const ty = parseFloat(t.getAttribute('y')) || 0;
+        if (Math.abs(tx - (lx + lw / 2)) < 140 && Math.abs(ty - (ly + lh / 2)) < 140) {
+          const label = t.textContent.trim();
+          consumedTexts.add(t);
+          elements.push({
+            id: `elem_${elements.length + 1}`,
+            type: classify(label),
+            label,
+            x: lx,
+            y: ly,
+            width: Math.max(90, lw),
+            height: Math.max(35, lh),
+            rotation: 0
+          });
+          break;
+        }
+      }
+    });
+
+    return { elements, width: w, height: h, title: salaTitle };
+  } catch (err) {
+    console.error('Error parseando SVG de plano:', err);
+    return { elements: [], width: defaultW, height: defaultH, title: '' };
+  }
+}
 
 // Generador de código SVG vectorial a partir del lienzo de diseño
 function compileCanvasToSvg(w, h, salaNombre) {
@@ -719,6 +938,8 @@ function compileCanvasToSvg(w, h, salaNombre) {
   svg += `  <rect x="20" y="20" width="${w - 40}" height="${h - 40}" fill="none" stroke="#2d3748" stroke-width="12" rx="6"/>\n`;
   svg += `  <!-- Título de la Sala -->\n`;
   svg += `  <text x="${w / 2}" y="65" font-family="sans-serif" font-size="22" font-weight="bold" fill="#1e293b" text-anchor="middle">${escapeHtml(salaNombre)}</text>\n`;
+  svg += `  <!-- Metadatos de elementos para edición interactiva -->\n`;
+  svg += `  <script type="application/json" id="canvas-elements-data">${JSON.stringify(canvasElements)}</script>\n`;
 
   // Renderizar cada elemento
   canvasElements.forEach(it => {
@@ -798,8 +1019,8 @@ el('sala-form').addEventListener('submit', async (e) => {
   try {
     showStatus(statusBox, 'Guardando plano de la sala…', 'info');
 
-    // Opción A: Subir imagen ya hecha
-    if (fileInput.files.length > 0) {
+    // Opción A: Subir imagen raster (PNG/JPG) sin edición vectorial
+    if (fileInput.files.length > 0 && !fileInput.files[0].name.toLowerCase().endsWith('.svg')) {
       const formData = new FormData();
       formData.append('file', fileInput.files[0]);
 
@@ -818,8 +1039,18 @@ el('sala-form').addEventListener('submit', async (e) => {
       });
       if (!res.ok) throw new Error('Error al guardar los datos de la sala');
     }
-    // Opción B: Si está editando y NO dibujó nada nuevo en el lienzo y NO subió archivo nuevo
-    else if (editingSalaId && canvasElements.length === 0) {
+    // Opción B: Exportar el diseño vectorial interactivo generado en el lienzo (incluye elementos cargados de SVG existente o nuevos)
+    else if (canvasElements.length > 0 || fileInput.files.length > 0 || !editingSalaId) {
+      const svgContent = compileCanvasToSvg(ancho, alto, nombre);
+      const res = await fetch('/api/salas/design', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, nombre, descripcion, ancho, alto, svg_content: svgContent })
+      });
+      if (!res.ok) throw new Error('Error al guardar el plano diseñado');
+    }
+    // Opción C: Actualizar solo texto/metadatos de la sala
+    else {
       const existingSala = salas.find(s => s.id === editingSalaId);
       const salaPayload = {
         id,
@@ -836,16 +1067,6 @@ el('sala-form').addEventListener('submit', async (e) => {
       });
       if (!res.ok) throw new Error('Error al actualizar los datos de la sala');
     }
-    // Opción C: Exportar el nuevo diseño visual generado en el lienzo
-    else {
-      const svgContent = compileCanvasToSvg(ancho, alto, nombre);
-      const res = await fetch('/api/salas/design', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, nombre, descripcion, ancho, alto, svg_content: svgContent })
-      });
-      if (!res.ok) throw new Error('Error al guardar el plano diseñado');
-    }
 
     showStatus(statusBox, `¡Sala "${nombre}" y plano guardados correctamente!`, 'ok');
     resetSalaForm();
@@ -854,6 +1075,33 @@ el('sala-form').addEventListener('submit', async (e) => {
     showStatus(statusBox, err.message, 'error');
   }
 });
+
+// Listener para cuando el usuario selecciona un archivo SVG desde su equipo
+if (el('s-archivo-plano')) {
+  el('s-archivo-plano').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.name.toLowerCase().endsWith('.svg') || file.type.includes('svg')) {
+      try {
+        showStatus(statusBox, 'Procesando archivo SVG seleccionado…', 'info');
+        const text = await file.text();
+        const parsed = parseSvgToCanvasElements(text, parseInt(el('s-ancho').value) || 1000, parseInt(el('s-alto').value) || 700);
+        if (parsed.elements.length > 0) {
+          canvasElements = parsed.elements;
+          nextElementId = canvasElements.length + 1;
+          if (parsed.width) el('s-ancho').value = parsed.width;
+          if (parsed.height) el('s-alto').value = parsed.height;
+          if (parsed.title && !el('s-nombre').value) el('s-nombre').value = parsed.title;
+          updateCanvasSize();
+          renderCanvasElements();
+          showStatus(statusBox, `Se extrajeron ${parsed.elements.length} elementos interactivos del archivo SVG. Ya puedes moverlos y editarlos en el lienzo.`, 'ok');
+        }
+      } catch (err) {
+        console.warn('Error procesando archivo SVG:', err);
+      }
+    }
+  });
+}
 
 function resetSalaForm() {
   editingSalaId = null;
@@ -886,7 +1134,7 @@ el('btn-cancel-sala-edit').addEventListener('click', resetSalaForm);
 
 // ---------- Listado de Salas Existentes y Edición ----------
 
-window.startEditSala = function(salaId) {
+window.startEditSala = async function(salaId) {
   const sala = salas.find(s => s.id === salaId);
   if (!sala) return;
 
@@ -907,14 +1155,56 @@ window.startEditSala = function(salaId) {
   updateCanvasSize();
   el('canvas-title-label').textContent = sala.nombre;
 
-  // Cargar el plano actual de la sala como fondo del lienzo para que el usuario pueda visualizarlo y diseñar sobre él
-  canvas.style.backgroundImage = `url('${sala.plano_imagen}?t=${Date.now()}')`;
-  canvas.style.backgroundSize = '100% 100%';
-  canvas.style.backgroundRepeat = 'no-repeat';
+  // Restaurar cuadrícula limpia en el lienzo para que los elementos sean interactivos
+  canvas.style.backgroundImage = `
+    linear-gradient(to right, #ece7da 1px, transparent 1px),
+    linear-gradient(to bottom, #ece7da 1px, transparent 1px)
+  `;
+  canvas.style.backgroundSize = '30px 30px';
+  canvas.style.backgroundRepeat = 'repeat';
 
-  canvasElements = [];
-  selectedElementId = null;
-  renderCanvasElements();
+  showStatus(statusBox, `Cargando plano vectorial de "${sala.nombre}"…`, 'info');
+
+  try {
+    if (sala.plano_imagen && sala.plano_imagen.toLowerCase().endsWith('.svg')) {
+      const res = await fetch(`${sala.plano_imagen}?t=${Date.now()}`);
+      if (res.ok) {
+        const svgText = await res.text();
+        const parsed = parseSvgToCanvasElements(svgText, sala.ancho || 1000, sala.alto || 700);
+
+        if (parsed.width) el('s-ancho').value = parsed.width;
+        if (parsed.height) el('s-alto').value = parsed.height;
+        updateCanvasSize();
+
+        canvasElements = parsed.elements;
+        nextElementId = canvasElements.length + 1;
+        selectedElementId = null;
+        renderCanvasElements();
+
+        showStatus(statusBox, `¡Plano listo! Se cargaron ${canvasElements.length} elementos interactivos. Ahora puedes arrastrar mesas, puestos o puertas, rotarlos (🔄), cambiar su tamaño (📐) o editarlos.`, 'ok');
+      } else {
+        throw new Error('No se pudo descargar el archivo SVG');
+      }
+    } else {
+      // Si es formato imagen raster (PNG/JPG)
+      canvas.style.backgroundImage = `url('${sala.plano_imagen}?t=${Date.now()}')`;
+      canvas.style.backgroundSize = '100% 100%';
+      canvas.style.backgroundRepeat = 'no-repeat';
+      canvasElements = [];
+      selectedElementId = null;
+      renderCanvasElements();
+      showStatus(statusBox, 'Plano raster cargado como fondo. Puedes añadir muebles y puestos encima.', 'info');
+    }
+  } catch (err) {
+    console.warn('Error cargando elementos SVG:', err);
+    canvas.style.backgroundImage = `url('${sala.plano_imagen}?t=${Date.now()}')`;
+    canvas.style.backgroundSize = '100% 100%';
+    canvas.style.backgroundRepeat = 'no-repeat';
+    canvasElements = [];
+    selectedElementId = null;
+    renderCanvasElements();
+    showStatus(statusBox, 'Se cargó el plano en modo estático de fondo.', 'info');
+  }
 
   el('sala-form').scrollIntoView({ behavior: 'smooth' });
 };

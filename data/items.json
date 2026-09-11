@@ -1,56 +1,1523 @@
 [
   {
-    "id": "1001",
-    "descripcion": "Escritorio en L con superficie de madera",
-    "ubicacion": "Oficina rectoría",
-    "observacion": "Buen estado",
-    "tipo_inventario": "Mayor",
-    "funcionario": "rector",
-    "imagen": "fotos_inventario/rector/1001.jpg"
+    "id": 57402,
+    "descripcion": "ESTABILIZADOR ENERGEX DE 3KVA MOD 3000",
+    "ubicacion": "NO ESTÁ",
+    "observacion": "DUPLICADO 2023 L23 Y ESCUELA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
   },
   {
-    "id": "1002",
-    "descripcion": "Computador portátil HP ProBook",
-    "ubicacion": "Oficina rectoría",
-    "observacion": "Con maletín incluido",
-    "tipo_inventario": "Mayor",
-    "funcionario": "rector",
-    "imagen": "fotos_inventario/rector/1002.jpg"
+    "id": 61728,
+    "descripcion": "GPS GARMIN REF C TREX VISTA  INCLUYE MANUAL DE INSTRUCCIONES, GUIA RAPIDA DE MANEJO, CABLE INTERFASE Y CUERDA  PARA PORTA EL EQUIPO.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
   },
   {
-    "id": "1003",
-    "descripcion": "Silla ergonómica giratoria",
-    "ubicacion": "Sala de sistemas",
-    "observacion": "",
-    "tipo_inventario": "Menor",
-    "funcionario": "jhon",
-    "imagen": "fotos_inventario/jhon/1003.jpg"
+    "id": 78921,
+    "descripcion": "UPS  MONOFASICA Y BIFASICA TIPO ON-LINE 45OO VA3000W REF. ONL-4500-LCD MARCA POWERCOM.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
   },
   {
-    "id": "1004",
-    "descripcion": "Videobeam Epson PowerLite",
-    "ubicacion": "Auditorio",
-    "observacion": "Requiere cambio de lámpara pronto",
-    "tipo_inventario": "Mayor",
-    "funcionario": "jhon",
-    "imagen": ""
+    "id": 91713,
+    "descripcion": "TELEFONO IP 1608, INCLUYE PATCH CORD Y LICENCIA CM:AURA STD ED R5 1-100 ADD LIC.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO 7",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
   },
   {
-    "id": "1005",
-    "descripcion": "Licencia ArcGIS Online (usuario nombrado)",
-    "ubicacion": "N/A",
-    "observacion": "Renovación anual",
-    "tipo_inventario": "Intangible",
-    "funcionario": "yerly",
-    "imagen": ""
+    "id": 94702,
+    "descripcion": "EQUIPO DE COMUNICACION KVM 8-PUERTOS USB/PS2 MONTAJE EN RACK CABLE KVM/USB DE 6 FT MARCA TRENDNET",
+    "ubicacion": "DATACENTER",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
   },
   {
-    "id": "1006",
-    "descripcion": "Calculadora científica Casio",
-    "ubicacion": "Sala de profesores",
-    "observacion": "",
-    "tipo_inventario": "Menor",
-    "funcionario": "yerly",
-    "imagen": "fotos_inventario/yerly/1006.jpg"
+    "id": 94703,
+    "descripcion": "COMPUTADOR APC 15\" RACKMOUNT KEYBOARD MONITOR MOUSE, 1U RACKMOUNTABLE INTEGRATED KEYBOARD, MONITOR AND MOUSE, INCLUDES: CABLE MANAGEMENT ARM, RACK MOUNTING BRACKETS, USER MANUAL.",
+    "ubicacion": "DATACENTER",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 94705,
+    "descripcion": "RACK DE 42U PARA SERVIDORES 19\", LINEA ZERO, PUERTA FRONTAL Y POSTERIOR EN COLD ROLLED, TROQUELADA, DOBLE HOJA, ABATIBLE CON BISAGRA DE PARCHE, LATERALES DESMONTABLES, DOBLE JUEGO PARAL, MEDIDA UTIL 78\", UNIDADES DE RAC K 45, DIMENSION FINAL, ALTO 212 CMS X FRENTE 68 CMS X FONDO 100 CMS, INCLUYE BARRAJE A TIERRA.",
+    "ubicacion": "DATACENTER",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 95186,
+    "descripcion": "SISTEMA DE ALMACENAMIENTO MASIVO EN DISCOS (SAN), QUE PERMITA, CONSOLIDAR LA INFORMACION DE TODOS LOS SERVIDORES DE LA ESCUELA DE INGENIERIA CIVIL Y DEL GRUPO DE INVESTIGACION GEOMATICA CONFORME CON LAS CONDICIONES, TERMINO, CON EQUIPO DE COMUNICACION EXPANSION DEL SISTEMA DE ALMACENAMIENTO MASIVO  EN DISCO P2000",
+    "ubicacion": "DATACENTER",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 95197,
+    "descripcion": "VIDEO BEAM POWERLITE 1735 INALAMBRICO.3000 LUMENES, RESOLUCION NATIVA WXGA 12 (ING.CIVIL GRUPO GEOMATICA)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "TRASLADO YULY FERNANDA LÓPEZ CONTRERAS GUATIGUARA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 95810,
+    "descripcion": "COMPUTADOR HP Z 20  WORKSTATION MINITORRE, TIPO DE PROCESADOR: INTEL XEON X3480 3.06 GHZ (NO INCLUYE ACELERADORES) 4 NUCLEOS, MOTHERBOARD: TECNOLOGIA INTEL, MEMORIA CACHE: 8 MB L3, ARQUITECTURA BUS: 133MHZ, MEMORIA RAM: 4GB TECNOLOGIA DDR3 ECC CAPACIDAD D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO ANDRES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 95812,
+    "descripcion": "COMPUTADOR HP Z 20  WORKSTATION MINITORRE, TIPO DE PROCESADOR: INTEL XEON X3480 3.06 GHZ (NO INCLUYE ACELERADORES) 4 NUCLEOS, MOTHERBOARD: TECNOLOGIA INTEL, MEMORIA CACHE: 8 MB L3, ARQUITECTURA BUS: 133MHZ, MEMORIA RAM: 4GB TECNOLOGIA DDR3 ECC CAPACIDAD D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO IMPRESORA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 95817,
+    "descripcion": "SERVIDOR HP DL 180GB RACK CON ACCESORIOS PARA MONTAJE, TIPO DE PROCESADOR: INTEL XEON E5520 CON TUBO HT, 2.26 GHZ, 4 NUCLEOS, 1 PROCESADOR ESCALABRE A 2 PROCESADORES, MOTHERBOARD: TECNOLOGIA INTEL, MEMORIA DE CACHE: MINIMO 8 MB L3, ARQUIETCTURA BUS: QPI A 5.86 GT/S",
+    "ubicacion": "DATACENTER",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 95966,
+    "descripcion": "TELEVISOR 3D EDGE LED BRAVIA DE 60\" FULL HD SERIE NX817 CON SINTONIZADOR DIGITAL EUROPEO DVB-T, PARA EL SALON 006 DEL SOTANO, ESCUELA DE INGENIERIA CIVIL.",
+    "ubicacion": "SALA SIG",
+    "observacion": "TRASLADO YULY FERNANDA LÓPEZ CONTRERAS GUATIGUARA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 99784,
+    "descripcion": "TELEFONO IP REF.9620                               08N515404699",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "AUXILIARES SISTEMAS",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 99785,
+    "descripcion": "TELEFONO IP REF.9620                               08N515404980",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO CARLOS",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 100696,
+    "descripcion": "LICENCIA ACTUALIZACIóN DE LICENCIA SOFTWARE PIX4D MAPPER POR UN AñO EN DESARROLLO DE LAS ACTIVIDADES DEL GRUPO DE INVESTIGACIóN GEOMáTICA.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PC AUXILIARES",
+    "tipo_inventario": "INTANGIBLE",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 102738,
+    "descripcion": "TABLET IPAD WI-FI 4G 32GB WHITE-SPA",
+    "ubicacion": "NO ESTÁ",
+    "observacion": "EN EL 2017 REGISTRA QUE  TIENE UNA EL PROFESOR HERNÁN. SIN EMBARGO, AL MOMENTO DE IR A LA OFICINA NO SE ENCONTRÓ LA TABLETA. FALTA POR CONFIRMAR.",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 102745,
+    "descripcion": "TABLET IPAD WI-FI 4G 32GB WHITE-SPA",
+    "ubicacion": "NO ESTÁ",
+    "observacion": "DESDE INVENTARIOS ANTERIORES REGISTRA ENTREGADA AL ING. JOSE LUIS LEAL.  LA ING. LUZ MARINA INDICA DENUNCIARLO COMO HURTADO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 102750,
+    "descripcion": "TABLET IPAD WI-FI 4G 32GB BLACK-SPA",
+    "ubicacion": "NO ESTÁ",
+    "observacion": "DESDE INVENTARIOS ANTERIORES REGISTRA ENTREGADA AL ING. JOSE LUIS LEAL.  LA ING. LUZ MARINA INDICA DENUNCIARLO COMO HURTADO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 104641,
+    "descripcion": "TELEFONO AVAYA IP 1608,",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MADELINE",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 104642,
+    "descripcion": "TELEFONO AVAYA IP 1608,",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO NERY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 104673,
+    "descripcion": "COMPUTADOR PORTATIL GETAC B300 INTEL CORE 17, 8 GB DE RAM, DISCO DURO 160 GB SSD, QUEMADOR DE DVD, CON CAPACIDAD DE TRABAJO ENTRE LOS 29 A 60 GRADOS, 5 AñOS DE GARANTIA.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 105846,
+    "descripcion": "CAMARA HIGH PRECISION CAMERA OPTION",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106761,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 10 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106762,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO CARLOS",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106763,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MARIA ISABEL",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106765,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 5 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106766,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 12 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106767,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 1 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106768,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO SANDY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106769,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "OFICINA YERLY",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106770,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 11 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106771,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MARIA TERESA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106772,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MADELYN",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106773,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 2 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106774,
+    "descripcion": "PANTALLA LED 3D DE 23 PULGADAS MARCA LG",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 7 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106898,
+    "descripcion": "SILLA GIRATORIA TROYA II CON BRAZOS GRADUABLES BASE EN NYLON",
+    "ubicacion": "GEO 01",
+    "observacion": "TRASLADO YULY FERNANDA LÓPEZ CONTRERAS GUATIGUARA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106976,
+    "descripcion": "MONITOR APPLE 27-INCH LED CINEMA DISPLAY",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 2 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 106977,
+    "descripcion": "MONITOR APPLE 27-INCH LED CINEMA DISPLAY",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO DEICY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 108059,
+    "descripcion": "COMPUTADOR PROCESADOR INTEL CORE 17 QC 3770 16GB DE RTAM TARJETA DE VIDEO 2000 QUADRO DE 1GB",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO SANDY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109287,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO 4",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109290,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO SANDY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109291,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MELISSA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109293,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "PRESTADA A NERY NOV 2025",
+    "observacion": null,
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109294,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 4",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109295,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO 4 AUXILIARES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109296,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVA SALA AUX",
+    "observacion": "PUESTO 13",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109631,
+    "descripcion": "COMPUTADOR PROCESADOR INTEL CORE I5 DE 4 NUCLEOS, 2,7 GHZ, 8GB DE RAM, DISCO DURO DE 1 TB.",
+    "ubicacion": "RECTORIA?",
+    "observacion": null,
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 109898,
+    "descripcion": "PROYECTOR V11H47 POWERLITE 1965 LUMINOSIDAD, 5000 PARA EL GRUPO DE INVESTIGACION GEOMATICA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "ARCHIVO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 112730,
+    "descripcion": "GEORADAR MULTIPROPOSITO MARCA GEOPHYSICAL SURVEY SYSTEMS",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 113544,
+    "descripcion": "TOMOGRAFO CON TODOS SUS ACCESORIOS PARA SU NORMAL FUNCIONAMIENTO SE INCLUYE TODOS LOS ELEMENTOS  DE LA COTIZACION 2013090902 ENTRE ESTOS:PARTE SUPERSTING R8/IP/SP/WIFI RESISTIVITY METER COMPLETE, SUPE RSTING R8 SWITCH BOX 56 ELECTRODE SYSTEM COMPLETE, HEAVY DU",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 116267,
+    "descripcion": "COMPUTADOR PORTATIL DELL LATITUDE E6440 INTEL CORE 17 4600M, RAM DE 16 GB, D.D. DE 1 TB, PANTALLA DE 14 PULGADAS, TIPO C",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "GUARDADO EN EL ARMARIO DETRÁS DE RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 116269,
+    "descripcion": "COMPUTADOR PORTATIL DELL LATITUDE E6440 INTEL CORE 17 4600M, RAM DE 16 GB, D.D. DE 1 TB, PANTALLA DE 14 PULGADAS, TIPO C",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "GUARDADO EN EL ARMARIO DETRÁS DE RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 130787,
+    "descripcion": "IMPRESORA HP COLOR LASERJET M855XH ENTERPRISE, TABLOIDE, VELOCIDAD HASTA 45 PPM, COLOR (NORMAL, A4)HSTA 45PPM, 600X600 DPI, PROCESADOR 800 MHZ, MEMORIA ESTANDAR/MAXIMO 1 GB, VOL MENSUAL DE PAGINAS RECOMENDADO 400 A 25000 PAG, C ICLO DE TRABAJO HASTA 175000 PAG, B",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "AL LADO RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 138421,
+    "descripcion": "COMPUTADOR PORTATIL THINKPAD T460P (DEMAS ESPECIFICACIONES TECNICAS SEGUN COTIZACION)",
+    "ubicacion": "PRESTADA A NERY NOV 2025",
+    "observacion": null,
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 140878,
+    "descripcion": "MEDIDOR PH/ORP,EC,OD Y TURBIDEZ C/GPS Y REGIS (ADICIONALES SEGUN COTIZACION N°77016)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 142966,
+    "descripcion": "CáMARA AUTONIVELANTE CON CARRETE PARA INSPECCIóN DE TUBERíA. CAPACIDAD DE ACOMETIDA DE 5 . 30 CM. LONGITUD MíNIMA DE CABLE DE 90 M. TRASMISOR DE SONDA DE 512 HZ. RESOLUCIóN MíNIMA DE VíDEO 768(H) X 494(V). ILUMINACIóN LE D. PROFUNDIDAD APRUEBA DE AGUA DE",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 142967,
+    "descripcion": "MONITOR DE GRABACIóN DIGITAL COMPATIBLE CON CARRETES PARA CAPTURA DE VIDEO E IMáGENES. PANTALLA DE MíNIMO 150 MM X 114 MM COLOR LCD, CON RESOLUCIóN MíNIMA DE 640 X 480. MICRóFONO Y ALTAVOCES INTEGRADO. INCLUYE BATERíAS Y CA RGADOR.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 143223,
+    "descripcion": "MEDIDOR DE FLUJO ULTRASONICO PORTATIL, TIPO CLAMP ON, MARCA FLEXIM, MODELO FLUXUS F601 PARA MEDICION DE LIQUIDOS, DEMAS ESPECIFICACIONES ANEXAS SEGUN COTIZACION N°CV0417 0216 FCSF REV.2",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 144369,
+    "descripcion": "IMPRESORA LASER JET M651DN HP, PARA EL GRUPO DE INVESTIGACIóN GEOMáTICA.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA ARCHIVO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 152486,
+    "descripcion": "COMPUTADOR MARCA HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON  E-2136 DE 3.2 GHZ, MEMORIA RAM DE 32 GB DDR4, DISCO DURO, 1 (UNO) DE 512 GB SSD (PRINCIPAL), 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5., MONITOR DE 23",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MARIA ISABEL.\nPANTALLA DADA DE BAJA ",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 152487,
+    "descripcion": "COMPUTADOR MARCA HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON  E-2136 DE 3.2 GHZ, MEMORIA RAM DE 32 GB DDR4, DISCO DURO, 1 (UNO) DE 512 GB SSD (PRINCIPAL), 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5., MONITOR DE 23",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO RECEPCION JUAN",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 152488,
+    "descripcion": "COMPUTADOR MARCA HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON  E-2136 DE 3.2 GHZ, MEMORIA RAM DE 32 GB DDR4, DISCO DURO, 1 (UNO) DE 512 GB SSD (PRINCIPAL), 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5., MONITOR DE 23",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MARIA BAEZ",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 152489,
+    "descripcion": "COMPUTADOR MARCA HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON  E-2136 DE 3.2 GHZ, MEMORIA RAM DE 32 GB DDR4, DISCO DURO, 1 (UNO) DE 512 GB SSD (PRINCIPAL), 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5., MONITOR DE 23",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MADELYN",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 152490,
+    "descripcion": "COMPUTADOR MARCA HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON  E-2136 DE 3.2 GHZ, MEMORIA RAM DE 32 GB DDR4, DISCO DURO, 1 (UNO) DE 512 GB SSD (PRINCIPAL), 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5., MONITOR DE 23",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO NERY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 152491,
+    "descripcion": "COMPUTADOR MARCA HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON  E-2136 DE 3.2 GHZ, MEMORIA RAM DE 32 GB DDR4, DISCO DURO, 1 (UNO) DE 512 GB SSD (PRINCIPAL), 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5., MONITOR DE 23",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO CARLOS \nPANTALLA DADA DE BAJA ",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 154479,
+    "descripcion": "CARRETILLAS RUEDA DE CAUCHO 2 1/2     ",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 156268,
+    "descripcion": "SONDA DE NIVEL, CONDUCTIVIDAD Y TEMPERATURA LONGITUD DE 100 M CON MARCACIONES CADA M, CM, MM. CINTA DE POLIETILENO PLANA, ES FLEXIBLE, DESLIZA CON FACILIDAD, Y PERMANECE RECTA EN EL POZO. CONDUCTORES EN ACERO I NO IDABLE 2.2CM DE DIáMETRO X 14CM DE LARGO. PANTAL",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 156702,
+    "descripcion": "CIRCUITO CERRADO DE TELEVISIÓN - CCTV DEL GRUPO DE INVESTIGACIÓN GEOMÁTICA, SEGÚN ESPECIFICACIONES TÉCNICAS ANEXAS EN LA PROPUESTA PRESENTADA, INCLUYENDO EL SUMINISTRO DE ACCESORIOS Y EQUIPO S NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 157045,
+    "descripcion": "CONTROLADORA PARA SAN P2000G3 . AP837B FIBRE CHANNEL A 8 GBPS Y ISCSI A 1 GBPS, PUERTOS FC: 2 X 8 GBPS FC, PUERTOS ISCSI 2 X 1GBE ISCSI, CACHE INTERNA 2GB O SUPERIOR, HASTA 512 LUNS, 64TB (MAXIMUN LUN SIZE), SOPORTE PA RA RAID 0, 1, 3, 5, 6, 10, 50, DISCOS SOPOR",
+    "ubicacion": "CENTIC",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 157046,
+    "descripcion": "MóDULO I/O DE LA CAJA DE EXPANSIóN 2 DE 12-BAY LFF - AP844A HP P2000 12-BAY DRV ENCLOSURE I/O MODULE DE LA CAJA DE EXPANSIóN 2 (ENCLOSURE 2) DE 12 DISCOS LFF UBICADA LOWER IOM SLOT PARA LA SAN P2000G3 FC/ISCSI. P/N AP84 4A. DEBE INCLUIR LA INSTALACIóN Y LA CONFIGURAC",
+    "ubicacion": "CENTIC",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 157169,
+    "descripcion": "SERVIDOR ADICIONAL N.2 AL CG 2019000081 RENOVACION DE LA PLATAFORMA DE SERVIDORES DE ALTO RENDIMIENTO, SISTEMAS DE ALMACENAMIENTO, RESPALDO E IMPRESORAS, PARA SOPORTE DE LAS APLICACIONES INFORMATICAS DE MISIÓN CRITICA DE LA UNIVERSIDAD. CONVOCATORIA PúBLICA NO.",
+    "ubicacion": "CENTIC",
+    "observacion": "CENTIC",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 206236,
+    "descripcion": "SOPLADORA PARA GEOMATICA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "GUARDADO EN EL ARMARIO DETRÁS DE RECEPCION",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 249212,
+    "descripcion": "MESA MULTIPLE GRADUABLE A 3 ALTURAS ARTECMA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO SERGIO",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 249213,
+    "descripcion": "MESA MULTIPLE GRADUABLE A 3 ALTURAS ARTECMA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MARIA TERESA",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 249214,
+    "descripcion": "MESA MULTIPLE GRADUABLE A 3 ALTURAS ARTECMA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO RECEPCION",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 249215,
+    "descripcion": "MESA MULTIPLE GRADUABLE A 3 ALTURAS ARTECMA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO SANDRA",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 249216,
+    "descripcion": "MESA MULTIPLE GRADUABLE A 3 ALTURAS ARTECMA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO RECEPCION",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 249217,
+    "descripcion": "MESA MULTIPLE GRADUABLE A 3 ALTURAS ARTECMA",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO ROBERTO",
+    "tipo_inventario": "MENOR",
+    "funcionario": "HERNAN PORRAS",
+    "imagen": "fotos_inventario/rector/"
+  },
+  {
+    "id": 91185,
+    "descripcion": "ESCALERA TIJERA Nº10 UBICADA EN EL MPIO.LA JAGUA DE IBIRICO CESAR.CONVENIO UIS-CORPOCESAR.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 97349,
+    "descripcion": "VDEO BEAM, MODELO PLC-XD2200",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 100251,
+    "descripcion": "SILLA KAPPA EJECUTIVA.(GEOMATICA)",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 101367,
+    "descripcion": "COMPUTADOR IMAC TIPO 3",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 101370,
+    "descripcion": "COMPUTADOR IMAC TIPO 4 QP0460MADNR",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 102735,
+    "descripcion": "TABLET IPAD WI-FI 4G 32GB WHITE-SPA",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 105845,
+    "descripcion": "SCANNER CHOICE BASIC CONFIGURATION POWER SOURCE AND ACCESORIES",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 106531,
+    "descripcion": "1)KIT SISTEMA GR-5 UHF GSM CON OAF GPS, + GLONASS, 10HZ RTK, (2)KIT RECEPTOR UNIDAD GR-5, (1)COLECTOR FC-236, (1)CINTA METRICA, (1)TRIPODE, (1)SOFTWARE MARCA TOPCON, (5)PROTECTOR PANTALLA FC-236, (1)BASTON 2M, (1)BR ACKET PARA GR-5 RTK, (1)BRACKET PARA GR-5 RTK",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 106978,
+    "descripcion": "MONITOR APPLE 27-INCH LED CINEMA DISPLAY",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 106979,
+    "descripcion": "MONITOR APPLE 27-INCH LED CINEMA DISPLAY",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 109289,
+    "descripcion": "MONITOR LCD LED 23\" D2342P LG CINEMA 3D, 1 PAIR 3D GLASSES INCLUDED, FULL HD 1080P, TRIDEF 3D CONVERSION SOFTWARE, HDMI INPUT, ENERGY STAR@ QUALIFLED",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 109990,
+    "descripcion": "WORKSTATION PARA EL VIDEO WALL (PROCESADOR INTEL CORE I7-3820, 32 GB RAM, DISCO DURO DE 1 TB 10000 RPM, DISCO DURO SSD DE 240 GB, BOARD ASUS RAMPAGE IV EXTREME QUE INCLUYE CUATRO PC EXPRESS 3 Y 2 AMD-FIREPO W 9000 GB.",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 110860,
+    "descripcion": "AIRE ACONDICIONADO TIPO SPLIT DE 5TR PARA LABORATORIO DE VISUALIZACION DEL GRUPO DE INVESTIGACION GEOMATICA, ESCUELA DE INGENIERIA CIVIL,",
+    "ubicacion": "DMT",
+    "observacion": "TRASLADO DEICY DELGADO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 111095,
+    "descripcion": "DRON VEHICULO AEREO NO TRIPULADO, SISTEMA UAV MARCA SENSEFLY Y DEMáS ESPECIFICACIONES DE LA PROFORMA Q20130212947DETALLES DE LA(S) AERONAVE(S):ISTEMA UAV MARCA SENSEFLY Y DEMáS ESPECIFICACIONES DE LA PROFORMA Q20130212947",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 111976,
+    "descripcion": "SILLA YACARTA BASE CROMO, ASIENTO CON ESPUMA DE ALTA DENCIDD FORRADA EN MALLA, ESPALDAR EN MALLA TRANSPARENTE, BRAZOS FIJOS CON APLICACIONES EN CROMO, BASE METALICA DE 5 ASPAS CROMADA",
+    "ubicacion": "LABVIS",
+    "observacion": "JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 111978,
+    "descripcion": "SILLA YACARTA BASE CROMO, ASIENTO CON ESPUMA DE ALTA DENCIDD FORRADA EN MALLA, ESPALDAR EN MALLA TRANSPARENTE, BRAZOS FIJOS CON APLICACIONES EN CROMO, BASE METALICA DE 5 ASPAS CROMADA",
+    "ubicacion": "LABVIS",
+    "observacion": "JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112484,
+    "descripcion": "MESA ESPECIAL EN VIDRIO PARA (CONFERENCIAS), MEDIDAS 4,30X4,40X1.20X0,70X0,75 H, SUPERFICIE DE TRABAJO EN VIDRIO LAMINADO 10+10 COLOR VERDE LIMON, SOPORTES EN TUBERIA COL ROLLE CROMADOS Y ARO ADICIONAL CROMADO PARA CUBRIR EL CABLEADO DEL PISO, ESTRUCTURA CENTR",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112530,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112531,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112532,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112533,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112534,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112535,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112536,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112537,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112538,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112539,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112540,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112541,
+    "descripcion": "MONITORES INDUSTRIALES LG-55WV70 PARA EL GRUPO DE INVESTIGACION GEOMATICA DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER - ADJUDICACION CONVOCATORIA PUBLICA NO. 057 DE 2013",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 112729,
+    "descripcion": "MARCO TACTIL MULTITOQUE, CUSTOMIZED PLUS VERSION",
+    "ubicacion": "LABVIS",
+    "observacion": "BAJA JULIO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 114610,
+    "descripcion": "SISTEMA DE DESPLIEGUE MULTIMEDIA Y SONIDO PARA CONMUTAR DIFERENTES DISPOSITIVOS MULTIMEDIA AL SISTEMA DE VISUALIZACION Y AL SISTEMA DE SONIDO DEL AL LABORATORIO DE VISUALIZACION DE LA ESCUELA DE INGENIERIA CIVIL Y GRU PO DE INVESTIGACION",
+    "ubicacion": "LABVIS",
+    "observacion": "OF 326 LP",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 122926,
+    "descripcion": "SOFTWARE RENOVACIóN DEL PAQUETE DE LICENCIAS SOFTWARE DE LA PLATAFORMA ARCGIS PARA EDUCACIóN POR TRES (3) AñOS Y LICENCIA PROFESIONAL UN USUARIO POR UN AñO PARA EL GRUPO DE INVESTIGACIóN GEOMáTICA, EN DESARROLLO DE LAS ACTIVIDADES DEL CONTRATO FNTC 646 DE 2023 ENTRE FONTUR Y LA UIS.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUBE",
+    "tipo_inventario": "INTANGIBLE",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 127117,
+    "descripcion": "LICENCIA RENOVACIóN DE LICENCIA DE SOFTWARE COMERCIAL ANUAL ARCHITECTURE ENGINEERING CONSTRUCTION COLLECTION DE AUTODESK EN DESARROLLO DE LAS ACTIVIDADES DEL CONTRATO FNTC 646 DE 2023 ENTRE FONTUR Y LA UIS.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUBE",
+    "tipo_inventario": "INTANGIBLE",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 131536,
+    "descripcion": "DRONE PHATOM 4 (QUADROTOR DJI PHANTOM 4, INCLUYE QUADROTOR PHANTOM Y GIMBAL ESTABILIZADOR DE CAMARA DE 3 EJES CARA 12 MPIXELS RES 4K VIDEO HASTA 120FPS FHD CONTROL REMOTO SISTEMA DJI LIGHTBRIDGE LINK FPV EN HD INTE GRADO",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 137215,
+    "descripcion": "DRON VEHICULO AEREO NO TRIPULADO EBEE PLUS CON CAMARA +BATERIA. (ADICION DEL NO. 174319 12/09/2022 GASTOS DE IMPORTACION)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 138420,
+    "descripcion": "COMPUTADOR PORTATIL THINKPAD T460P (DEMAS ESPECIFICACIONES TECNICAS SEGUN COTIZACION)",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 143304,
+    "descripcion": "MICROFONO TEAMCONNECT WIRELES",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO PUESTO DETRÁS RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 143971,
+    "descripcion": "TRíPODE CON ALTURA SUPERIOR DE 2,60 M, CON SISTEMA DE ELEVACIóN Y CON CAPACIDAD DE SOPORTE DE 12 KILOGRAMOS.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 151184,
+    "descripcion": "NEVERA 220 LT, NO FROST, DOBLE PUERTA, DISPENSADOR DE AGUA, BANDEJAS EN VIDRIO TEMPLADO.",
+    "ubicacion": "CAFETIN GEO",
+    "observacion": "CAFETIN GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152276,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PRESTADO NERY 2026 JUN",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152277,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152278,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152279,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152280,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152281,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152282,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152283,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152284,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152285,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152286,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152287,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152288,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152289,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152290,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152291,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152292,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152293,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152294,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152295,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 152296,
+    "descripcion": "COMPUTADOR DE ESCRITORIO MARCA HP PROODESK G4 SFF, PROCESADOR CORE I7 8700 3.2 GHZ DE OCTVAVA GENERACION, MEMORIA RAM DE 8 GB DDR4, DISCO DURO 1 (UNO) DE 256 GB SSD (PRINCIPAL) 1 (UNO)  1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO AMD RADEON R7 430 DE 2 GB GDDR5, MONITOR D",
+    "ubicacion": "ABP 107",
+    "observacion": "ABP 107",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 154736,
+    "descripcion": "TABLET SISTEMA OPERATIVO IOS 12 O POSTERIOR, CHIP A12X BIONIC CON ARQUITECTURA DE 64 BITS, ALMACENAMIENTO DE 256 GB, PANTALLA DE 11 PULGADAS MUTI-TOUCH CON IPS, RESOLUCIóN 2388 X 1668 PíXELES/PULGADA Y 600 NITS DE BRILLO, SENSORES (CáMARA DE 12MP, ACELERóMET",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 154737,
+    "descripcion": "TABLET SISTEMA OPERATIVO IOS 12 O POSTERIOR, CHIP A12 BIONIC CON ARQUITECTURA DE 64 BITS, ALMACENAMIENTO DE 64 GB, PANTALLA DE 7.9 PULGADAS MUTI-TOUCH CON LED-BACKLIT, RESOLUCIóN 2048 X 1536 PíXELES/PULGADA Y 500 NITS DE BRILLO, S ENSORES (CáMARA DE 8MP, ACELERóMET",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 155163,
+    "descripcion": "TABLET SAMSUNG GALAXY TAB A 8.0 WIFI - 16GB",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 168457,
+    "descripcion": "DRONE DJI MAVIC 3 FLY MORE COMBO.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 174919,
+    "descripcion": "COMPUTADOR PORTATIL COMPUTADOR PORTÁTIL CYBORG15A12VF-7. I7-12650H, INTEL WIFI 6AX201(2*2 AX)+BT5.2 3CELL 53,5WHR, MEMORIA DDR5 24GB, SSD 512GB NVME PCIE GEN 4X4 DRAM TARJETA RTX 4060, GDDR6 8GB, PANTALLA 15,6\" FHD (1920X1080), 144HZ 45%  NTSC IPS-LEVEL",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "USADO POR SANDY YANES",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 175266,
+    "descripcion": "UPS ADQUISICIóN, INSTALACIóN Y CONFIGURACIóN DE UNA (1) UPS SEGúN ESPECIFICACIONES TéCNICAS PARA EL GRUPO DE INVESTIGACIóN GEOMáTICA DE LA ESCUELA DE INGENIERíA CIVIL.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 175272,
+    "descripcion": "IPAD IPAD PRO 11 PULGADAS DE úLTIMA GENERACIóN, ALMACENAMIENTO: 256 GB CONEXIóN A INTERNET: WI-FI.",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "TRABAJO CAMPO EMBARCADEROS",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 177597,
+    "descripcion": "MAC MINI CON CHIP M2 PRO (2023) - RAM 16GB - 512GB - PLATA.",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178565,
+    "descripcion": "COMPUTADOR PORTATIL 1P3581I76G PRECISION 3581 INTEL CORE I7-13700H (ADICION NO. 178582 (MENOR 291553) MAR/22/2024) (24MB CACHE, 14 CORES, 20 THREADS, 2.4-5.0 GHZ TURBO, 45W) MEMORIA 16 GB 4800MHZ, DDR5, NON-ECC SODIMM (1X16GB). CRECE HASTA 64GB EN 2 SLOTS DISCO SOLIDO 1TB M.2 PCIE NVID IA RTX A1000 6GB GDDR",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO PUESTO RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178566,
+    "descripcion": "COMPUTADOR PORTATIL 1P3581I76G PRECISION 3581 INTEL CORE I7-13700H (ADICION NO. 178583 (MENOR 291554) MAR/22/2024) (24MB CACHE, 14 CORES, 20 THREADS, 2.4-5.0 GHZ TURBO, 45W) MEMORIA 16 GB 4800MHZ, DDR5, NON-ECC SODIMM (1X16GB). CRECE HASTA 64GB EN 2 SLOTS DISCO SOLIDO 1TB M.2 PCIE NVID IA RTX A1000 6GB GDDR",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "TRABAJO CAMPO EMBARCADEROS",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178567,
+    "descripcion": "DRON SISTEMA AEREO NO TRIPULADO MARCA DJI REF. MAVIC 3 MULTIESPECTRAL (M3M)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178568,
+    "descripcion": "DRON SISTEMA AEREO NO TRIPULADO MARCA DJI REF. MAVIC 3 MULTIESPECTRAL (M3M)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178571,
+    "descripcion": "SISTEMA GNSS DE NAVEGACION   MARCA SOUTH REF. GALAXY G7 BASE + ROVER + COLECTOR H6 + SURVSTAR",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178635,
+    "descripcion": "IPAD PRO 11 (4TA GENERACIóN) CON CHIP M2 - 256GB - GRIS ESPACIAL. (ADICION DEL 289738 MEN TARSLADO MAYOR 178905 MAY/15/2024)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "TRABAJO CAMPO EMBARCADEROS",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 178636,
+    "descripcion": "IPAD PRO 11 (4TA GENERACIóN) CON CHIP M2 - 256GB - GRIS ESPACIAL. (ADICION DEL 291581 MEN TARSLADO MAYOR 178906 MAY/15/2024)",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 179898,
+    "descripcion": "WORKSTATION PRECISION 3680 MT PROCESADOR: 14TH GENERACIóN INTEL CORE I9 14900 (36 MB CACHE, 24 CORES, 32THREADS, 2.0 GHZ TO 5.8 GHZ,                            65W) - MEMORIA: 32GB 4400MHZ UDIMM NON-ECC DDR5 - DISCO DURO: 1TB PCIE NVME , SSD + 1TB PCIE NVME,SSD - TARJE",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO DEICY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 179899,
+    "descripcion": "WORKSTATION PRECISION 3680 MT PROCESADOR: 14TH GENERACIóN INTEL CORE I9 14900 (36 MB CACHE, 24 CORES, 32THREADS, 2.0 GHZ TO 5.8 GHZ,                            65W) - MEMORIA: 32GB 4400MHZ UDIMM NON-ECC DDR5 - DISCO DURO: 1TB PCIE NVME , SSD + 1TB PCIE NVME,SSD - TARJE",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "NUEVO GEO PUESTO RECEPCION",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 179900,
+    "descripcion": "WORKSTATION PRECISION 3680 MT PROCESADOR: 14TH GENERACIóN INTEL CORE I9 14900 (36 MB CACHE, 24 CORES, 32THREADS, 2.0 GHZ TO 5.8 GHZ,                            65W) - MEMORIA: 32GB 4400MHZ UDIMM NON-ECC DDR5 - DISCO DURO: 1TB PCIE NVME , SSD + 1TB PCIE NVME,SSD - TARJE",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MELISSA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 200545,
+    "descripcion": "ESCALERA ALUMINIO DE TIJERA DE 4 PASOS",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "BODEGA NUEVA GEO",
+    "tipo_inventario": "MENOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 290816,
+    "descripcion": "ACCESORIO* MAGIC MOUSE CON SUPERFICIE MULTI-TOUCH - NEGRO.",
+    "ubicacion": "OFICINA JHON",
+    "observacion": "OFICINA JHON",
+    "tipo_inventario": "MENOR",
+    "funcionario": "JHON CÁCERES",
+    "imagen": "fotos_inventario/jhon/"
+  },
+  {
+    "id": 99786,
+    "descripcion": " TELEFONO IP REF.9620 08N515404796",
+    "ubicacion": "OFICINA YERLY",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 109288,
+    "descripcion": "COMPUTADOR HP WORKSTATION Z2 4G TORRE, PROCESADOR INTEL XEON E-2136 DE 3.2 GHZ, RAM DE 32GB DDR4, DISCO DURO 512 GB SSD (PRINCIPAL), 1 (UNO) 1TB A 7200 RPM (ESCLAVO), TARJETA DE VIDEO NVIDIA QUADRO P 2000 5GB GDDR5, MONITOR DE 23\" (BAJA MONITOR OCT/29/2025)",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO RECEPCIÓN",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 187645,
+    "descripcion": " IPAD TABLETA APPLE IPAD PRO 5TH GENERATION, A2836 8GB, 256GB ALMACENAMIENTO, TECNOLOGIA TRUE TONE PANTALLA 12 MEGAPIXEL CAMARA FRONTAL 10 HORAS DURACION MAXIMA PILAS",
+    "ubicacion": "OFICINA YERLY",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 187646,
+    "descripcion": "ACCESORIO IPAD MAGIC KEYBOARD 11 NEGRO LAM ESTUCHE DE TECLADO, CUBIERTA APPLE MAGIC PARA 27.9CM ALUMINO, CRISTAL BODY",
+    "ubicacion": "OFICINA YERLY",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 188879,
+    "descripcion": "COMPUTADOR PORTATIL",
+    "ubicacion": "OFICINA YERLY",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 190914,
+    "descripcion": "WORKSTATION",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 190915,
+    "descripcion": "WORKSTATION",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO CLAUDIA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 190916,
+    "descripcion": "WORKSTATION",
+    "ubicacion": "NUEVO GEO",
+    "observacion": "PUESTO MARIA TERESA",
+    "tipo_inventario": "MAYOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 120886,
+    "descripcion": "LICENCIA RENOVACIóN DE LICENCIA DE SOFTWARE COMERCIAL ANUAL ARCHITECTURE ENGINEERING CONSTRUCTION COLLECTION DE AUTODESK EN DESARROLLO DE LAS ACTIVIDADES DEL CONTRATO FNTC 646 DE 2023 ENTRE FONTUR Y LA UIS.                                                 ",
+    "ubicacion": "NUBE AUTODESK",
+    "observacion": "NUBE AUTODESK",
+    "tipo_inventario": "INTANGIBLE",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
+  },
+  {
+    "id": 295928,
+    "descripcion": "ACCESORIO LAPIZ OPTICO APPLE PENCIL BLUETOOTH IPAD 2ND GEN AME",
+    "ubicacion": "OFICINA YERLY",
+    "observacion": "OFICINA YERLY",
+    "tipo_inventario": "MENOR",
+    "funcionario": "YERLY MARTINEZ",
+    "imagen": "fotos_inventario/yerly/"
   }
 ]

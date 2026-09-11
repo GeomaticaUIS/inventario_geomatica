@@ -65,39 +65,16 @@ function renderTable() {
     return;
   }
 
-  tbody.innerHTML = filtered.map(it => {
-    const imgHtml = it.imagen
-      ? `<img class="thumb" src="${escapeHtml(it.imagen)}" alt="${escapeHtml(it.descripcion)}" loading="lazy"
-              onclick="openPhotoModal('${escapeHtml(it.imagen)}', '${escapeHtml(it.id)} - ${escapeHtml(it.descripcion)}')"
-              onerror="this.outerHTML='<div class=&quot;thumb thumb-empty&quot;></div>'">`
-      : `<div class="thumb thumb-empty"></div>`;
-
-    const salaBadge = it.sala_nombre
-      ? `<span class="badge-sala">${escapeHtml(it.sala_nombre)}</span>`
-      : '';
-
-    const btnPlano = it.sala_id && it.pos_x !== null && it.pos_y !== null
-      ? `<button type="button" class="ghost" style="padding:4px 8px;font-size:0.78rem" onclick="focusItemOnMap('${escapeHtml(it.id)}')">📍 Ver</button>`
-      : `<span style="color:var(--ink-soft);font-size:0.8rem">—</span>`;
-
-    return `
-      <tr>
-        <td>${imgHtml}</td>
-        <td class="id">${escapeHtml(it.id)}</td>
-        <td>
-          <strong>${escapeHtml(it.descripcion)}</strong>
-          ${it.observacion ? `<br><span style="color:var(--ink-soft);font-size:0.82rem">${escapeHtml(it.observacion)}</span>` : ''}
-        </td>
-        <td>
-          ${escapeHtml(it.ubicacion || '')}
-          ${salaBadge ? `<br>${salaBadge}` : ''}
-        </td>
-        <td><span class="${tipoBadgeClass(it.tipo_inventario)}">${escapeHtml(it.tipo_inventario)}</span></td>
-        <td>${escapeHtml(it.funcionario || '—')}</td>
-        <td style="text-align:center">${btnPlano}</td>
-      </tr>
-    `;
-  }).join('');
+  tbody.innerHTML = filtered.map(it => `
+    <tr>
+      <td>${thumb(it)}</td>
+      <td class="id">${it.id}</td>
+      <td>${it.descripcion}${it.observacion ? `<br><span style="color:var(--ink-soft);font-size:0.85rem">${it.observacion}</span>` : ''}</td>
+      <td>${it.ubicacion || ''}</td>
+      <td><span class="${tipoBadgeClass(it.tipo_inventario)}">${it.tipo_inventario}</span></td>
+      <td>${it.funcionario || ''}</td>
+    </tr>
+  `).join('');
 }
 
 // Inicialización de selectores de filtro

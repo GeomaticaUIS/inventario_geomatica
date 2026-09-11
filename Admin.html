@@ -76,10 +76,10 @@
 
           <div class="field">
             <label for="f-tipo">Tipo de inventario</label>
-            <select id="f-tipo">
-              <option value="Mayor">Mayor</option>
-              <option value="Menor">Menor</option>
-              <option value="Intangible">Intangible</option>
+            <select id="f-tipo" required>
+              <option value="MAYOR">Mayor</option>
+              <option value="MENOR">Menor</option>
+              <option value="INTANGIBLE">Intangible</option>
             </select>
           </div>
 
@@ -95,7 +95,9 @@
 
           <div class="field">
             <label for="f-funcionario">Responsable a cargo</label>
-            <select id="f-funcionario"></select>
+            <select id="f-funcionario">
+              <option value="">-- Sin responsable asignado --</option>
+            </select>
           </div>
 
           <div class="field full">

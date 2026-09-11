@@ -77,6 +77,8 @@ def run_tests():
     r_item = client.get('/api/items/7777')
     assert r_item.status_code == 200
     assert r_item.json()["pos_x"] == 130.0
+    assert r_item.json()["tipo_inventario"] == "MAYOR"
+    assert r_item.json()["funcionario"] == "JHON CÁCERES"
     print("[OK] Lectura y verificacion de coordenadas del item: OK")
 
     # Limpiar

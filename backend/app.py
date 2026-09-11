@@ -122,7 +122,26 @@ def get_single_item(item_id: str):
 
 @app.post("/api/items")
 def save_item(item: ItemModel):
-    res = upsert_item(item.dict())
+    data = item.dict()
+    # Normalizar tipo a MAYOR, MENOR, INTANGIBLE
+    tipo = (data.get("tipo_inventario") or "MAYOR").strip().upper()
+    if tipo not in ["MAYOR", "MENOR", "INTANGIBLE"]:
+        tipo = "MAYOR"
+    data["tipo_inventario"] = tipo
+
+    # Normalizar funcionario a formato canónico
+    func = (data.get("funcionario") or "").strip()
+    func_upper = func.upper()
+    if func_upper in ["RECTOR", "HERNAN PORRAS"] or "PORRAS" in func_upper:
+        data["funcionario"] = "HERNAN PORRAS"
+    elif func_upper in ["JHON"] or "CACERES" in func_upper or "CÁCERES" in func_upper or "CERES" in func_upper:
+        data["funcionario"] = "JHON CÁCERES"
+    elif func_upper in ["YERLY"] or "MARTINEZ" in func_upper or "MARTÍNEZ" in func_upper:
+        data["funcionario"] = "YERLY MARTINEZ"
+    elif func_upper in ["CARLOS"] or "GARCIA" in func_upper or "GARCÍA" in func_upper:
+        data["funcionario"] = "CARLOS GARCIA"
+
+    res = upsert_item(data)
     return {"ok": True, "item": res}
 
 @app.delete("/api/items/{item_id}")

@@ -134,11 +134,33 @@ function populateSelects() {
   // Select de Responsables
   const selFunc = el('f-funcionario');
   selFunc.innerHTML = '<option value="">-- Seleccionar responsable --</option>';
-  usuarios.forEach(u => {
+
+  const defaultResponsables = [
+    { value: 'HERNAN PORRAS', label: 'HERNAN PORRAS (Rector)' },
+    { value: 'JHON CÁCERES', label: 'JHON CÁCERES' },
+    { value: 'YERLY MARTINEZ', label: 'YERLY MARTINEZ' },
+    { value: 'CARLOS GARCIA', label: 'CARLOS GARCIA' }
+  ];
+
+  const addedValues = new Set();
+  defaultResponsables.forEach(r => {
+    addedValues.add(r.value.toUpperCase());
     const opt = document.createElement('option');
-    opt.value = u.usuario;
-    opt.textContent = `${u.nombre} (${u.usuario})`;
+    opt.value = r.value;
+    opt.textContent = r.label;
     selFunc.appendChild(opt);
+  });
+
+  // Agregar otros responsables existentes en los ítems si no están en la lista base
+  items.forEach(it => {
+    const f = (it.funcionario || '').trim();
+    if (f && !addedValues.has(f.toUpperCase())) {
+      addedValues.add(f.toUpperCase());
+      const opt = document.createElement('option');
+      opt.value = f;
+      opt.textContent = f;
+      selFunc.appendChild(opt);
+    }
   });
 
   // Select de Salas en formulario de ítems
@@ -328,8 +350,46 @@ function startEdit(id) {
   el('f-descripcion').value = it.descripcion;
   el('f-ubicacion').value = it.ubicacion || '';
   el('f-observacion').value = it.observacion || '';
-  el('f-tipo').value = it.tipo_inventario;
-  el('f-funcionario').value = it.funcionario || '';
+
+  // Normalizar Tipo de inventario a mayúsculas
+  const tipoNorm = (it.tipo_inventario || 'MAYOR').trim().toUpperCase();
+  el('f-tipo').value = ['MAYOR', 'MENOR', 'INTANGIBLE'].includes(tipoNorm) ? tipoNorm : 'MAYOR';
+
+  // Normalizar Responsable
+  let funcVal = (it.funcionario || '').trim();
+  const funcUpper = funcVal.toUpperCase();
+  if (funcUpper === 'RECTOR' || funcUpper.includes('PORRAS')) {
+    funcVal = 'HERNAN PORRAS';
+  } else if (funcUpper === 'JHON' || funcUpper.includes('CACERES') || funcUpper.includes('CÁCERES') || funcUpper.includes('CERES')) {
+    funcVal = 'JHON CÁCERES';
+  } else if (funcUpper === 'YERLY' || funcUpper.includes('MARTINEZ') || funcUpper.includes('MARTÍNEZ')) {
+    funcVal = 'YERLY MARTINEZ';
+  } else if (funcUpper === 'CARLOS' || funcUpper.includes('GARCIA') || funcUpper.includes('GARCÍA')) {
+    funcVal = 'CARLOS GARCIA';
+  }
+
+  // Buscar coincidencia en el select de responsable
+  let matchedIndex = -1;
+  for (let i = 0; i < el('f-funcionario').options.length; i++) {
+    const optVal = el('f-funcionario').options[i].value.toUpperCase();
+    if (optVal && (optVal === funcVal.toUpperCase() || (funcVal && optVal.includes(funcVal.toUpperCase())))) {
+      matchedIndex = i;
+      break;
+    }
+  }
+
+  if (matchedIndex >= 0) {
+    el('f-funcionario').selectedIndex = matchedIndex;
+  } else if (funcVal) {
+    const opt = document.createElement('option');
+    opt.value = funcVal;
+    opt.textContent = funcVal;
+    el('f-funcionario').appendChild(opt);
+    el('f-funcionario').value = funcVal;
+  } else {
+    el('f-funcionario').value = '';
+  }
+
   el('f-sala').value = it.sala_id || '';
   el('f-imagen').value = '';
 
@@ -364,6 +424,8 @@ function resetForm() {
   el('save-btn').textContent = 'Guardar ítem';
   el('cancel-edit').style.display = 'none';
   el('admin-map-wrapper').style.display = 'none';
+  el('f-tipo').value = 'MAYOR';
+  el('f-funcionario').value = '';
   clearAdminMarker();
 }
 
@@ -375,8 +437,8 @@ el('item-form').addEventListener('submit', async (e) => {
   const descripcion = el('f-descripcion').value.trim();
   const ubicacion = el('f-ubicacion').value.trim();
   const observacion = el('f-observacion').value.trim();
-  const tipo_inventario = el('f-tipo').value;
-  const funcionario = el('f-funcionario').value;
+  const tipo_inventario = (el('f-tipo').value || 'MAYOR').trim().toUpperCase();
+  const funcionario = (el('f-funcionario').value || '').trim();
   const sala_id = el('f-sala').value || null;
   const posXVal = el('f-pos-x').value;
   const posYVal = el('f-pos-y').value;

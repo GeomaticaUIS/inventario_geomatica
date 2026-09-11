@@ -123,7 +123,19 @@ def _migrate_initial_data(conn: sqlite3.Connection):
                     ub_upper = ub.upper()
                     obs = (it.get("observacion") or "").strip()
                     tipo = (it.get("tipo_inventario") or "MAYOR").strip().upper()
+                    if tipo not in ["MAYOR", "MENOR", "INTANGIBLE"]:
+                        tipo = "MAYOR"
+
                     func = (it.get("funcionario") or "").strip()
+                    func_upper = func.upper()
+                    if "PORRAS" in func_upper or func_upper == "RECTOR":
+                        func = "HERNAN PORRAS"
+                    elif "CERES" in func_upper or func_upper == "JHON":
+                        func = "JHON CÁCERES"
+                    elif "MARTINEZ" in func_upper or func_upper == "YERLY":
+                        func = "YERLY MARTINEZ"
+                    elif "GARCIA" in func_upper or func_upper == "CARLOS":
+                        func = "CARLOS GARCIA"
 
                     img = (it.get("imagen") or "").strip()
                     if not img or img.endswith("/") or not ("." in os.path.basename(img)):
@@ -162,6 +174,21 @@ def _migrate_initial_data(conn: sqlite3.Connection):
                     """, (item_id, desc, ub, obs, tipo, func, img, sala_id, float(pos_x), float(pos_y)))
         except Exception as e:
             print(f"Advertencia migrando items.json: {e}")
+
+    # 4. Normalizar datos existentes para consistencia total en tipo y funcionario
+    try:
+        cur.execute("UPDATE items SET tipo_inventario = 'MAYOR' WHERE tipo_inventario IS NULL OR TRIM(tipo_inventario) = ''")
+        cur.execute("UPDATE items SET tipo_inventario = UPPER(TRIM(tipo_inventario)) WHERE tipo_inventario IS NOT NULL")
+        cur.execute("UPDATE items SET funcionario = 'JHON CÁCERES' WHERE funcionario = 'jhon' OR funcionario LIKE '%CERES%'")
+        cur.execute("UPDATE items SET funcionario = 'HERNAN PORRAS' WHERE LOWER(funcionario) = 'rector'")
+        cur.execute("UPDATE items SET funcionario = 'YERLY MARTINEZ' WHERE LOWER(funcionario) = 'yerly'")
+        cur.execute("UPDATE items SET funcionario = 'CARLOS GARCIA' WHERE LOWER(funcionario) = 'carlos'")
+        cur.execute("UPDATE usuarios SET nombre = 'Hernán Porras (Rector)' WHERE usuario = 'rector'")
+        cur.execute("UPDATE usuarios SET nombre = 'Jhon Cáceres' WHERE usuario = 'jhon'")
+        cur.execute("UPDATE usuarios SET nombre = 'Yerly Martínez' WHERE usuario = 'yerly'")
+        cur.execute("UPDATE usuarios SET nombre = 'Carlos García' WHERE usuario = 'carlos'")
+    except Exception as e:
+        print(f"Advertencia normalizando datos: {e}")
 
     conn.commit()
 

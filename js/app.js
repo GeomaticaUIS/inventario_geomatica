@@ -31,6 +31,52 @@ let nextElementId = 1;
 let editingSalaId = null;
 let canvasZoom = 1.0;
 
+// Generador y validador de IDs únicos para elementos del lienzo (evita selección múltiple y colisiones)
+function getNextElementId() {
+  let maxId = 0;
+  canvasElements.forEach(item => {
+    if (item && typeof item.id === 'string') {
+      const match = item.id.match(/(\d+)/);
+      if (match) {
+        const num = parseInt(match[1], 10);
+        if (num > maxId) maxId = num;
+      }
+    }
+  });
+  nextElementId = Math.max(nextElementId, maxId + 1);
+  while (canvasElements.some(item => item && item.id === `elem_${nextElementId}`)) {
+    nextElementId++;
+  }
+  return `elem_${nextElementId++}`;
+}
+
+function ensureUniqueElementIds() {
+  const seen = new Set();
+  let maxId = 0;
+  canvasElements.forEach(item => {
+    if (item && typeof item.id === 'string') {
+      const match = item.id.match(/(\d+)/);
+      if (match) {
+        const num = parseInt(match[1], 10);
+        if (num > maxId) maxId = num;
+      }
+    }
+  });
+  nextElementId = Math.max(nextElementId, maxId + 1);
+
+  canvasElements.forEach(item => {
+    if (!item) return;
+    if (!item.id || seen.has(item.id)) {
+      while (seen.has(`elem_${nextElementId}`) || canvasElements.some(x => x && x.id === `elem_${nextElementId}`)) {
+        nextElementId++;
+      }
+      item.id = `elem_${nextElementId++}`;
+    }
+    seen.add(item.id);
+  });
+}
+
+
 const el = id => document.getElementById(id);
 
 // Utilidad para escapar texto HTML y prevenir XSS
@@ -1047,7 +1093,7 @@ el('s-nombre')?.addEventListener('input', (e) => {
 });
 
 window.addCanvasItem = function(type) {
-  const id = 'elem_' + (nextElementId++);
+  const id = getNextElementId();
   let width = 200;
   let height = 90;
   let label = 'Mesa';
@@ -1078,6 +1124,7 @@ window.addCanvasItem = function(type) {
 window.clearCanvas = function() {
   if (canvasElements.length && !confirm('¿Vaciar todos los elementos del plano?')) return;
   canvasElements = [];
+  nextElementId = 1;
   selectedElementId = null;
   renderCanvasElements();
   hideInspector();
@@ -1261,7 +1308,7 @@ window.duplicateCanvasItem = function(id, e) {
   const item = canvasElements.find(x => x.id === id);
   if (!item) return;
 
-  const newId = 'elem_' + (nextElementId++);
+  const newId = getNextElementId();
   const newItem = {
     ...item,
     id: newId,
@@ -1599,7 +1646,7 @@ if (el('s-archivo-plano')) {
         const parsed = parseSvgToCanvasElements(text, parseInt(el('s-ancho').value) || 1000, parseInt(el('s-alto').value) || 700);
         if (parsed.elements.length > 0) {
           canvasElements = parsed.elements;
-          nextElementId = canvasElements.length + 1;
+          ensureUniqueElementIds();
           if (parsed.width) el('s-ancho').value = parsed.width;
           if (parsed.height) el('s-alto').value = parsed.height;
           if (parsed.title && !el('s-nombre').value) el('s-nombre').value = parsed.title;
@@ -1634,6 +1681,7 @@ function resetSalaForm() {
 
   updateCanvasSize();
   canvasElements = [];
+  nextElementId = 1;
   selectedElementId = null;
   hideInspector();
   el('canvas-title-label').textContent = 'Plano de Sala';
@@ -1696,7 +1744,7 @@ window.startEditSala = async function(salaId) {
         updateCanvasSize();
 
         canvasElements = parsed.elements;
-        nextElementId = canvasElements.length + 1;
+        ensureUniqueElementIds();
         selectedElementId = null;
         renderCanvasElements();
         hideInspector();
@@ -1711,6 +1759,7 @@ window.startEditSala = async function(salaId) {
       canvas.style.backgroundSize = '100% 100%';
       canvas.style.backgroundRepeat = 'no-repeat';
       canvasElements = [];
+      nextElementId = 1;
       selectedElementId = null;
       renderCanvasElements();
       hideInspector();
@@ -1723,6 +1772,7 @@ window.startEditSala = async function(salaId) {
     canvas.style.backgroundSize = '100% 100%';
     canvas.style.backgroundRepeat = 'no-repeat';
     canvasElements = [];
+    nextElementId = 1;
     selectedElementId = null;
     renderCanvasElements();
     hideInspector();

@@ -76,26 +76,21 @@ def _migrate_initial_data(conn: sqlite3.Connection):
 
     # 1. Salas reales de Geomática UIS
     salas_reales = [
-        ("nuevo_geo", "Laboratorio Principal (Nuevo Geo)", "Laboratorio principal de Geomática y sensores", "uploads/planos/lab_geomatica.svg", 1200, 800),
+        ("nuevo_geo", "Laboratorio Principal (Nuevo Geo)", "Laboratorio principal de Geomática y sensores", "uploads/planos/plano_nuevo_geo.svg", 1200, 1200),
         ("labvis", "Laboratorio de Visualización (LABVIS)", "Laboratorio de visualización y modelado 3D", "uploads/planos/sala_sistemas.svg", 1200, 800),
         ("oficina_jhon", "Oficina Jhon Cáceres", "Oficina de coordinación técnica", "uploads/planos/oficina_rectoria.svg", 1000, 700),
         ("oficina_yerly", "Oficina Yerly Martínez", "Oficina administrativa y gestión", "uploads/planos/oficina_rectoria.svg", 1000, 700),
-        ("nueva_sala_aux", "Nueva Sala Auxiliar", "Sala auxiliar de cómputo y reuniones", "uploads/planos/sala_sistemas.svg", 1200, 800),
-        ("datacenter", "Datacenter / Servidores", "Área de servidores y almacenamiento", "uploads/planos/sala_sistemas.svg", 1000, 700),
+        ("nueva_sala_aux", "Nueva Sala Auxiliar", "Sala auxiliar de cómputo y reuniones", "uploads/planos/plano_nueva_sala_aux.svg", 1200, 800),
+        ("datacenter", "Datacenter / Servidores", "Área de servidores y almacenamiento", "uploads/planos/plano_datacenter.svg", 1200, 800),
+        ("recepcion", "Recepción", "Área de recepción y atención", "uploads/planos/plano_recepcion.svg", 1000, 700),
         ("oficina_rectoria", "Oficina Rectoría", "Despacho principal", "uploads/planos/oficina_rectoria.svg", 1000, 700),
         ("auditorio", "Auditorio", "Auditorio principal de eventos", "uploads/planos/auditorio.svg", 1000, 700)
     ]
 
     for s in salas_reales:
         cur.execute("""
-            INSERT INTO salas (id, nombre, descripcion, plano_imagen, ancho, alto)
+            INSERT OR IGNORE INTO salas (id, nombre, descripcion, plano_imagen, ancho, alto)
             VALUES (?, ?, ?, ?, ?, ?)
-            ON CONFLICT(id) DO UPDATE SET
-                nombre = excluded.nombre,
-                descripcion = excluded.descripcion,
-                plano_imagen = excluded.plano_imagen,
-                ancho = excluded.ancho,
-                alto = excluded.alto
         """, s)
 
     # 2. Usuarios del sistema

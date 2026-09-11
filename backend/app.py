@@ -174,14 +174,10 @@ def save_designed_sala(payload: SalaDesignModel):
     sala_id_clean = payload.id.strip().lower().replace(' ', '_')
     existing = get_sala(sala_id_clean)
 
-    # Si ya tenía una ruta de plano SVG asignada en uploads/planos, sobreescribir ese archivo directamente
-    if existing and existing.get("plano_imagen") and existing["plano_imagen"].endswith(".svg") and not existing["plano_imagen"].startswith("http"):
-        rel_path = existing["plano_imagen"].replace("\\", "/")
-        dest = os.path.join(BASE_DIR, rel_path.replace("/", os.sep))
-    else:
-        filename = f"plano_{sala_id_clean}.svg"
-        dest = os.path.join(UPLOADS_PLANOS_DIR, filename)
-        rel_path = f"uploads/planos/{filename}"
+    # Guardar en archivo SVG dedicado para esta sala (evitando sobreescribir plantillas base)
+    filename = f"plano_{sala_id_clean}.svg"
+    dest = os.path.join(UPLOADS_PLANOS_DIR, filename)
+    rel_path = f"uploads/planos/{filename}"
 
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     with open(dest, "w", encoding="utf-8") as f:

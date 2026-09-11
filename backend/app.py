@@ -222,5 +222,3 @@ app.mount("/uploads", StaticFiles(directory=os.path.join(BASE_DIR, "uploads")), 
 app.mount("/vendor", StaticFiles(directory=os.path.join(BASE_DIR, "vendor")), name="vendor")
 app.mount("/css", StaticFiles(directory=os.path.join(BASE_DIR, "css")), name="css")
 app.mount("/js", StaticFiles(directory=os.path.join(BASE_DIR, "js")), name="js")
-if os.path.exists(os.path.join(BASE_DIR, "fotos_inventario")):
-    app.mount("/fotos_inventario", StaticFiles(directory=os.path.join(BASE_DIR, "fotos_inventario")), name="fotos_inventario")

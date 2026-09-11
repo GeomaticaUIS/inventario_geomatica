@@ -41,14 +41,14 @@ def run_tests():
     r = client.get('/api/items')
     assert r.status_code == 200
     items = r.json()
-    assert len(items) == 6
+    assert len(items) >= 169, f"Se esperaban al menos 169 items, se encontraron {len(items)}"
     print(f"[OK] GET /api/items: OK ({len(items)} items cargados)")
 
     # 7. API Salas
     r = client.get('/api/salas')
     assert r.status_code == 200
     salas = r.json()
-    assert len(salas) == 4
+    assert len(salas) >= 8, f"Se esperaban al menos 8 salas, se encontraron {len(salas)}"
     print(f"[OK] GET /api/salas: OK ({len(salas)} salas configuradas)")
 
     print("\nDetalle de items con coordenadas de plano:")

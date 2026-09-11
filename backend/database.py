@@ -6,7 +6,6 @@ from typing import List, Dict, Optional, Any
 
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'inventario.db')
 ITEMS_JSON_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'items.json')
-CREDENTIALS_JSON_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'credentials.json')
 
 def hash_password(password: str) -> str:
     """Calcula el hash SHA-256 de una contraseña."""
@@ -75,75 +74,92 @@ def init_db():
 def _migrate_initial_data(conn: sqlite3.Connection):
     cur = conn.cursor()
 
-    # 1. Salas por defecto
-    salas_defecto = [
-        ("oficina_rectoria", "Oficina Rectoría", "Oficina principal y sala de reuniones", "uploads/planos/oficina_rectoria.svg", 1000, 700),
-        ("sala_sistemas", "Sala de Sistemas", "Aulas de cómputo y servidores", "uploads/planos/sala_sistemas.svg", 1200, 800),
-        ("lab_geomatica", "Laboratorio de Geomática UIS", "Área de sensores, topografía y procesamiento SIG", "uploads/planos/lab_geomatica.svg", 1200, 800),
-        ("auditorio", "Auditorio", "Auditorio principal de eventos y presentaciones", "uploads/planos/auditorio.svg", 1000, 700)
+    # 1. Salas reales de Geomática UIS
+    salas_reales = [
+        ("nuevo_geo", "Laboratorio Principal (Nuevo Geo)", "Laboratorio principal de Geomática y sensores", "uploads/planos/lab_geomatica.svg", 1200, 800),
+        ("labvis", "Laboratorio de Visualización (LABVIS)", "Laboratorio de visualización y modelado 3D", "uploads/planos/sala_sistemas.svg", 1200, 800),
+        ("oficina_jhon", "Oficina Jhon Cáceres", "Oficina de coordinación técnica", "uploads/planos/oficina_rectoria.svg", 1000, 700),
+        ("oficina_yerly", "Oficina Yerly Martínez", "Oficina administrativa y gestión", "uploads/planos/oficina_rectoria.svg", 1000, 700),
+        ("nueva_sala_aux", "Nueva Sala Auxiliar", "Sala auxiliar de cómputo y reuniones", "uploads/planos/sala_sistemas.svg", 1200, 800),
+        ("datacenter", "Datacenter / Servidores", "Área de servidores y almacenamiento", "uploads/planos/sala_sistemas.svg", 1000, 700),
+        ("oficina_rectoria", "Oficina Rectoría", "Despacho principal", "uploads/planos/oficina_rectoria.svg", 1000, 700),
+        ("auditorio", "Auditorio", "Auditorio principal de eventos", "uploads/planos/auditorio.svg", 1000, 700)
     ]
 
-    for s in salas_defecto:
+    for s in salas_reales:
         cur.execute("""
-            INSERT OR IGNORE INTO salas (id, nombre, descripcion, plano_imagen, ancho, alto)
+            INSERT INTO salas (id, nombre, descripcion, plano_imagen, ancho, alto)
             VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                nombre = excluded.nombre,
+                descripcion = excluded.descripcion,
+                plano_imagen = excluded.plano_imagen,
+                ancho = excluded.ancho,
+                alto = excluded.alto
         """, s)
 
-    # 2. Migrar credenciales
-    cur.execute("SELECT COUNT(*) FROM usuarios")
-    if cur.fetchone()[0] == 0 and os.path.exists(CREDENTIALS_JSON_PATH):
-        try:
-            with open(CREDENTIALS_JSON_PATH, 'r', encoding='utf-8') as f:
-                creds = json.load(f)
-                for c in creds:
-                    cur.execute("""
-                        INSERT OR IGNORE INTO usuarios (usuario, password_hash, nombre, rol)
-                        VALUES (?, ?, ?, ?)
-                    """, (c["usuario"].strip().lower(), c["hash"], c.get("nombre", c["usuario"]), "admin" if c["usuario"] == "rector" else "editor"))
-        except Exception as e:
-            print(f"Advertencia migrando credentials.json: {e}")
+    # 2. Usuarios del sistema
+    cur.execute("""
+        INSERT OR IGNORE INTO usuarios (usuario, password_hash, nombre, rol)
+        VALUES 
+            ('rector', '9b841968f952acd89807c2290958218c4cf808b763a3b5c0d1aaeca0a393a563', 'Hernán Porras (Rector)', 'admin'),
+            ('jhon', '9b841968f952acd89807c2290958218c4cf808b763a3b5c0d1aaeca0a393a563', 'Jhon Cáceres', 'editor'),
+            ('yerly', '9b841968f952acd89807c2290958218c4cf808b763a3b5c0d1aaeca0a393a563', 'Yerly Martínez', 'editor'),
+            ('carlos', '9b841968f952acd89807c2290958218c4cf808b763a3b5c0d1aaeca0a393a563', 'Carlos García', 'editor')
+    """)
 
-    # 3. Migrar ítems
+    # 3. Migrar ítems desde data/items.json si la tabla está vacía
     cur.execute("SELECT COUNT(*) FROM items")
     if cur.fetchone()[0] == 0 and os.path.exists(ITEMS_JSON_PATH):
         try:
             with open(ITEMS_JSON_PATH, 'r', encoding='utf-8') as f:
                 items = json.load(f)
-                for it in items:
-                    ub = (it.get("ubicacion") or "").lower()
-                    sala_id = None
-                    pos_x = None
-                    pos_y = None
+                room_counters = {}
 
-                    # Asignación espacial inteligente inicial
-                    if "rector" in ub:
+                for it in items:
+                    item_id = str(it.get("id") or "").strip()
+                    desc = (it.get("descripcion") or "").strip()
+                    ub = (it.get("ubicacion") or "").strip()
+                    ub_upper = ub.upper()
+                    obs = (it.get("observacion") or "").strip()
+                    tipo = (it.get("tipo_inventario") or "MAYOR").strip().upper()
+                    func = (it.get("funcionario") or "").strip()
+
+                    img = (it.get("imagen") or "").strip()
+                    if not img or img.endswith("/") or not ("." in os.path.basename(img)):
+                        img = ""
+
+                    # Asignar sala según ubicación
+                    if "NUEVO GEO" in ub_upper or "GEO" in ub_upper or "SALA SIG" in ub_upper:
+                        sala_id = "nuevo_geo"
+                    elif "LABVIS" in ub_upper:
+                        sala_id = "labvis"
+                    elif "JHON" in ub_upper:
+                        sala_id = "oficina_jhon"
+                    elif "YERLY" in ub_upper:
+                        sala_id = "oficina_yerly"
+                    elif "SALA AUX" in ub_upper or "ABP" in ub_upper:
+                        sala_id = "nueva_sala_aux"
+                    elif "DATACENTER" in ub_upper:
+                        sala_id = "datacenter"
+                    elif "RECTOR" in ub_upper:
                         sala_id = "oficina_rectoria"
-                        pos_x, pos_y = (260.0, 230.0) if it["id"] == "1001" else (255.0, 200.0)
-                    elif "sistema" in ub or "profesor" in ub:
-                        sala_id = "sala_sistemas"
-                        pos_x, pos_y = (260.0, 240.0) if it["id"] == "1003" else (350.0, 370.0)
-                    elif "auditorio" in ub:
+                    elif "AUDITORIO" in ub_upper:
                         sala_id = "auditorio"
-                        pos_x, pos_y = (500.0, 350.0)
                     else:
-                        sala_id = "lab_geomatica"
-                        pos_x, pos_y = (660.0, 530.0)
+                        sala_id = "nuevo_geo"
+
+                    count = room_counters.get(sala_id, 0)
+                    room_counters[sala_id] = count + 1
+                    col = count % 8
+                    row = (count // 8) % 6
+                    pos_x = 280 + (col * 90)
+                    pos_y = 220 + (row * 80)
 
                     cur.execute("""
-                        INSERT OR IGNORE INTO items (id, descripcion, ubicacion, observacion, tipo_inventario, funcionario, imagen, sala_id, pos_x, pos_y)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """, (
-                        it["id"],
-                        it.get("descripcion", ""),
-                        it.get("ubicacion", ""),
-                        it.get("observacion", ""),
-                        it.get("tipo_inventario", "Mayor"),
-                        it.get("funcionario", ""),
-                        it.get("imagen", ""),
-                        sala_id,
-                        pos_x,
-                        pos_y
-                    ))
+                        INSERT OR REPLACE INTO items (id, descripcion, ubicacion, observacion, tipo_inventario, funcionario, imagen, sala_id, pos_x, pos_y, actualizado_en)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                    """, (item_id, desc, ub, obs, tipo, func, img, sala_id, float(pos_x), float(pos_y)))
         except Exception as e:
             print(f"Advertencia migrando items.json: {e}")
 

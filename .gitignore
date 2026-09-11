@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# SQLite WAL and journal files
+*.db-wal
+*.db-shm
+*.db-journal
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

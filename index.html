@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <div>
+      <h1>Inventario de equipos</h1>
+      <p>Consulta del inventario de equipos técnicos y de cómputo del grupo.</p>
+    </div>
+    <div class="count" id="count">— ítems</div>
+  </header>
+
+  <nav class="tools">
+    <a class="button ghost" href="admin.html">Editar inventario →</a>
+  </nav>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Buscar por número, descripción o ubicación…">
+    <select id="filter-tipo">
+      <option value="">Todos los tipos</option>
+      <option value="Mayor">Mayor</option>
+      <option value="Menor">Menor</option>
+      <option value="Intangible">Intangible</option>
+    </select>
+    <select id="filter-funcionario"><option value="">Todos los funcionarios</option></select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>No. inventario</th>
+        <th>Descripción</th>
+        <th>Ubicación</th>
+        <th>Tipo</th>
+        <th>Funcionario</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <footer class="note">
+    Los datos se cargan desde <code>data/items.json</code>. Para modificarlos usa la página de edición.
+  </footer>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

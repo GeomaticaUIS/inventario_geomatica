@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1001",
+    "descripcion": "Escritorio en L con superficie de madera",
+    "ubicacion": "Oficina rectoría",
+    "observacion": "Buen estado",
+    "tipo_inventario": "Mayor",
+    "funcionario": "rector",
+    "imagen": "fotos_inventario/rector/1001.jpg"
+  },
+  {
+    "id": "1002",
+    "descripcion": "Computador portátil HP ProBook",
+    "ubicacion": "Oficina rectoría",
+    "observacion": "Con maletín incluido",
+    "tipo_inventario": "Mayor",
+    "funcionario": "rector",
+    "imagen": "fotos_inventario/rector/1002.jpg"
+  },
+  {
+    "id": "1003",
+    "descripcion": "Silla ergonómica giratoria",
+    "ubicacion": "Sala de sistemas",
+    "observacion": "",
+    "tipo_inventario": "Menor",
+    "funcionario": "jhon",
+    "imagen": "fotos_inventario/jhon/1003.jpg"
+  },
+  {
+    "id": "1004",
+    "descripcion": "Videobeam Epson PowerLite",
+    "ubicacion": "Auditorio",
+    "observacion": "Requiere cambio de lámpara pronto",
+    "tipo_inventario": "Mayor",
+    "funcionario": "jhon",
+    "imagen": ""
+  },
+  {
+    "id": "1005",
+    "descripcion": "Licencia ArcGIS Online (usuario nombrado)",
+    "ubicacion": "N/A",
+    "observacion": "Renovación anual",
+    "tipo_inventario": "Intangible",
+    "funcionario": "yerly",
+    "imagen": ""
+  },
+  {
+    "id": "1006",
+    "descripcion": "Calculadora científica Casio",
+    "ubicacion": "Sala de profesores",
+    "observacion": "",
+    "tipo_inventario": "Menor",
+    "funcionario": "yerly",
+    "imagen": "fotos_inventario/yerly/1006.jpg"
+  }
+]

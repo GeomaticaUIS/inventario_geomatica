@@ -19,7 +19,25 @@ function escapeHtml(str) {
 }
 
 function tipoBadgeClass(tipo) {
-  return 'badge ' + (tipo || '').toLowerCase();
+  const t = (tipo || '').toLowerCase();
+  return 'badge ' + t;
+}
+
+// Función para renderizar miniaturas de forma segura
+function thumb(it) {
+  const imgUrl = (it.imagen || '').trim();
+  // Validar que sea un archivo de imagen real (no carpeta)
+  if (!imgUrl || imgUrl.endsWith('/') || !imgUrl.includes('.')) {
+    return `<div class="thumb thumb-empty" title="Sin foto"></div>`;
+  }
+
+  const safeUrl = escapeHtml(imgUrl);
+  const safeDesc = escapeHtml(it.descripcion || '');
+  const safeId = escapeHtml(String(it.id || ''));
+
+  return `<img class="thumb" src="${safeUrl}" alt="${safeDesc}" loading="lazy"
+               onclick="openPhotoModal('${safeUrl}', '${safeId} - ${safeDesc}')"
+               onerror="this.outerHTML='<div class=&quot;thumb thumb-empty&quot;></div>'">`;
 }
 
 // Carga de datos desde la API local
@@ -45,14 +63,15 @@ async function loadData() {
 function renderTable() {
   const tbody = document.getElementById('rows');
   const search = document.getElementById('search').value.trim().toLowerCase();
-  const tipo = document.getElementById('filter-tipo').value;
+  const tipo = document.getElementById('filter-tipo').value.trim().toUpperCase();
   const funcionario = document.getElementById('filter-funcionario').value;
   const sala = document.getElementById('filter-sala').value;
 
   const filtered = allItems.filter(it => {
+    const itTipo = (it.tipo_inventario || '').toUpperCase();
     const matchesSearch = !search || [it.id, it.descripcion, it.ubicacion, it.observacion, it.funcionario, it.sala_nombre]
       .filter(Boolean).some(v => String(v).toLowerCase().includes(search));
-    const matchesTipo = !tipo || it.tipo_inventario === tipo;
+    const matchesTipo = !tipo || itTipo === tipo;
     const matchesFuncionario = !funcionario || it.funcionario === funcionario;
     const matchesSala = !sala || it.sala_id === sala;
     return matchesSearch && matchesTipo && matchesFuncionario && matchesSala;
@@ -65,16 +84,33 @@ function renderTable() {
     return;
   }
 
-  tbody.innerHTML = filtered.map(it => `
-    <tr>
-      <td>${thumb(it)}</td>
-      <td class="id">${it.id}</td>
-      <td>${it.descripcion}${it.observacion ? `<br><span style="color:var(--ink-soft);font-size:0.85rem">${it.observacion}</span>` : ''}</td>
-      <td>${it.ubicacion || ''}</td>
-      <td><span class="${tipoBadgeClass(it.tipo_inventario)}">${it.tipo_inventario}</span></td>
-      <td>${it.funcionario || ''}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = filtered.map(it => {
+    const salaBadge = it.sala_nombre
+      ? `<span class="badge-sala">${escapeHtml(it.sala_nombre)}</span>`
+      : '';
+
+    const btnPlano = it.sala_id && it.pos_x !== null && it.pos_y !== null
+      ? `<button type="button" class="ghost" style="padding:4px 8px;font-size:0.78rem" onclick="focusItemOnMap('${escapeHtml(String(it.id))}')">📍 Ver</button>`
+      : `<span style="color:var(--ink-soft);font-size:0.8rem">—</span>`;
+
+    return `
+      <tr>
+        <td>${thumb(it)}</td>
+        <td class="id">${escapeHtml(String(it.id))}</td>
+        <td>
+          <strong>${escapeHtml(it.descripcion)}</strong>
+          ${it.observacion ? `<br><span style="color:var(--ink-soft);font-size:0.82rem">${escapeHtml(it.observacion)}</span>` : ''}
+        </td>
+        <td>
+          ${escapeHtml(it.ubicacion || '')}
+          ${salaBadge ? `<br>${salaBadge}` : ''}
+        </td>
+        <td><span class="${tipoBadgeClass(it.tipo_inventario)}">${escapeHtml(it.tipo_inventario)}</span></td>
+        <td>${escapeHtml(it.funcionario || '—')}</td>
+        <td style="text-align:center">${btnPlano}</td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // Inicialización de selectores de filtro
@@ -160,7 +196,9 @@ function renderSalaOnMap(salaId) {
     const lng = it.pos_x;
 
     const tipoClass = (it.tipo_inventario || 'mayor').toLowerCase();
-    const pinHtml = `<div class="custom-pin ${tipoClass}" title="${escapeHtml(it.id)}">${escapeHtml(it.id.slice(-4))}</div>`;
+    const strId = String(it.id || '');
+    const pinLabel = strId.length > 4 ? strId.slice(-4) : strId;
+    const pinHtml = `<div class="custom-pin ${tipoClass}" title="${escapeHtml(strId)}">${escapeHtml(pinLabel)}</div>`;
 
     const customIcon = L.divIcon({
       html: pinHtml,
@@ -170,16 +208,17 @@ function renderSalaOnMap(salaId) {
       popupAnchor: [0, -14]
     });
 
-    const imgPopup = it.imagen
+    const hasRealImg = it.imagen && !it.imagen.endsWith('/') && it.imagen.includes('.');
+    const imgPopup = hasRealImg
       ? `<img src="${escapeHtml(it.imagen)}" alt="${escapeHtml(it.descripcion)}"
-              onclick="openPhotoModal('${escapeHtml(it.imagen)}', '${escapeHtml(it.id)} - ${escapeHtml(it.descripcion)}')"
+              onclick="openPhotoModal('${escapeHtml(it.imagen)}', '${escapeHtml(strId)} - ${escapeHtml(it.descripcion)}')"
               onerror="this.style.display='none'">`
       : '';
 
     const popupContent = `
       <div class="popup-card">
         ${imgPopup}
-        <h4>No. ${escapeHtml(it.id)}</h4>
+        <h4>No. ${escapeHtml(strId)}</h4>
         <p><strong>${escapeHtml(it.descripcion)}</strong></p>
         ${it.ubicacion ? `<p>📍 ${escapeHtml(it.ubicacion)}</p>` : ''}
         ${it.observacion ? `<p style="font-style:italic;color:var(--ink-soft)">${escapeHtml(it.observacion)}</p>` : ''}
@@ -192,25 +231,25 @@ function renderSalaOnMap(salaId) {
 
     const marker = L.marker([lat, lng], { icon: customIcon }).addTo(indoorMap);
     marker.bindPopup(popupContent);
-    marker.itemId = it.id;
+    marker.itemId = strId;
     mapMarkers.push(marker);
   });
 }
 
 function focusItemOnMap(itemId) {
-  const it = allItems.find(x => x.id === itemId);
+  const strId = String(itemId);
+  const it = allItems.find(x => String(x.id) === strId);
   if (!it || !it.sala_id) return;
 
   switchView('mapa');
 
-  // Si la sala seleccionada es distinta, cambiar
   if (currentSalaId !== it.sala_id) {
     document.getElementById('map-sala-select').value = it.sala_id;
     renderSalaOnMap(it.sala_id);
   }
 
   setTimeout(() => {
-    const marker = mapMarkers.find(m => m.itemId === itemId);
+    const marker = mapMarkers.find(m => m.itemId === strId);
     if (marker) {
       const sala = allSalas.find(s => s.id === it.sala_id);
       const h = sala ? sala.alto : 700;

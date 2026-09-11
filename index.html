@@ -55,19 +55,48 @@
     </select>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th>No. inventario</th>
-        <th>Descripción</th>
-        <th>Ubicación</th>
-        <th>Tipo</th>
-        <th>Funcionario</th>
-      </tr>
-    </thead>
-    <tbody id="rows"></tbody>
-  </table>
+  <!-- Vista 1: Tabla de Equipos -->
+  <div id="table-view-section">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:58px">Foto</th>
+            <th>No. Inventario</th>
+            <th>Descripción</th>
+            <th>Ubicación / Sala</th>
+            <th>Tipo</th>
+            <th>Responsable</th>
+            <th style="width:90px">Plano</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td class="empty" colspan="7">Cargando inventario…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Vista 2: Esquema Interactivo de Sala (Plano Indoor Leaflet) -->
+  <div id="map-view-section" class="map-view-wrapper" style="display:none">
+    <div class="map-toolbar">
+      <div class="map-toolbar-left">
+        <label for="map-sala-select">Sala / Espacio:</label>
+        <select id="map-sala-select"></select>
+      </div>
+      <div class="map-legend">
+        <span class="legend-item"><span class="legend-dot mayor"></span> Mayor</span>
+        <span class="legend-item"><span class="legend-dot menor"></span> Menor</span>
+        <span class="legend-item"><span class="legend-dot intangible"></span> Intangible</span>
+      </div>
+    </div>
+    <div class="map-container">
+      <div id="indoor-map"></div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--ink-soft);margin-top:8px;margin-bottom:0">
+      💡 <strong>Consejo:</strong> Haz clic en cualquier marcador para ver la ficha técnica y foto del elemento. Usa la rueda del ratón para hacer zoom sobre el plano.
+    </p>
+  </div>
 
   <footer class="note">
     Inventario interno · Servidor local seguro (SQLite). Los cambios se almacenan en <code>data/inventario.db</code>.

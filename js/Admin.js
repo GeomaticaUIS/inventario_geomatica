@@ -516,6 +516,7 @@ async function deleteItem(id) {
     showStatus(statusBox, err.message, 'error');
   }
 }
+window.deleteItem = deleteItem;
 
 // =========================================================================
 // === DISEÑADOR VISUAL DE PLANOS 2D DE SALAS ===
@@ -719,7 +720,28 @@ window.resizeCanvasItem = function(id, e) {
   }
 };
 
-// Parser inteligente de planos SVG existentes para convertirlos en elementos interactivos
+window.deleteCanvasItem = function(id, e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  canvasElements = canvasElements.filter(x => x.id !== id);
+  if (selectedElementId === id) {
+    selectedElementId = null;
+  }
+  renderCanvasElements();
+};
+
+// Atajo de teclado: Teclas Supr / Delete / Backspace para eliminar el elemento seleccionado en el plano
+document.addEventListener('keydown', (e) => {
+  if ((e.key === 'Delete' || e.key === 'Backspace') && selectedElementId) {
+    const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    if (tag !== 'input' && tag !== 'textarea' && tag !== 'select') {
+      e.preventDefault();
+      window.deleteCanvasItem(selectedElementId);
+    }
+  }
+});
 function parseSvgToCanvasElements(svgText, defaultW = 1000, defaultH = 700) {
   try {
     const parser = new DOMParser();

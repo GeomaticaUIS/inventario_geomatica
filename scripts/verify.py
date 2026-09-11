@@ -83,7 +83,7 @@ def run_tests():
         "tipo_inventario": "Mayor",
         "funcionario": "jhon",
         "imagen": "",
-        "sala_id": "lab_geomatica",
+        "sala_id": "nuevo_geo",
         "pos_x": 130.0,
         "pos_y": 200.0
     })

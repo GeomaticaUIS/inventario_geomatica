@@ -3,44 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inventario de Equipos - Geomática UIS</title>
+<title>Inventario de Equipos · Grupo de Geomática UIS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrap">
 
+  <!-- Cabecera Institucional Grupo de Geomática UIS -->
   <header class="site">
-    <div>
-      <h1>Inventario de Equipos</h1>
-      <p>Grupo de Geomática UIS · Consulta de equipos técnicos, cómputo y sensores de laboratorio.</p>
+    <div class="geo-brand-container">
+      <div class="geo-logo-emblem" title="Grupo de Investigación en Geomática - UIS">
+        <svg viewBox="0 0 48 48" width="36" height="36" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="21" stroke-width="1.8" opacity="0.4"/>
+          <ellipse cx="24" cy="24" rx="11" ry="21" stroke-width="1.8" opacity="0.7"/>
+          <line x1="3" y1="24" x2="45" y2="24" stroke-width="1.8" opacity="0.7"/>
+          <circle cx="24" cy="24" r="5" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
+          <path d="M24 3V11M24 37V45M3 24H11M37 24H45" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="geo-brand-text">
+        <h1>
+          Inventario de Equipos
+          <span class="geo-badge-tag">GEOMÁTICA UIS</span>
+        </h1>
+        <p>Grupo de Investigación en Geomática · Consulta y localización espacial de equipos de laboratorio, sensores, topografía y cómputo.</p>
+      </div>
     </div>
-    <div class="count" id="count">— ítems</div>
+    <div class="header-status-box">
+      <div class="status-pill">
+        <span class="status-indicator-dot"></span>
+        <span>SQLite WAL · En línea</span>
+      </div>
+    </div>
   </header>
 
+  <!-- Mini-Dashboard de Estadísticas Rápidas (KPIs / Filtros rápidos) -->
+  <div class="kpi-grid" id="kpi-dashboard">
+    <div class="kpi-card active" id="kpi-card-all" onclick="quickFilterType('')" title="Clic para ver todos los ítems">
+      <div class="kpi-icon-wrap kpi-icon-total">📦</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-total">—</span>
+        <span class="kpi-label">Total Equipos</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-mayor" onclick="quickFilterType('MAYOR')" title="Clic para filtrar solo bienes de Tipo Mayor">
+      <div class="kpi-icon-wrap kpi-icon-mayor">🏛️</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-mayor">—</span>
+        <span class="kpi-label">Tipo Mayor</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-menor" onclick="quickFilterType('MENOR')" title="Clic para filtrar solo bienes de Tipo Menor">
+      <div class="kpi-icon-wrap kpi-icon-menor">🔧</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-menor">—</span>
+        <span class="kpi-label">Tipo Menor</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-intangible" onclick="quickFilterType('INTANGIBLE')" title="Clic para filtrar solo bienes Intangibles">
+      <div class="kpi-icon-wrap kpi-icon-intangible">💾</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-intangible">—</span>
+        <span class="kpi-label">Intangibles</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-plano" onclick="quickFilterPlano()" title="Clic para filtrar equipos ubicados en planos 2D">
+      <div class="kpi-icon-wrap kpi-icon-plano">📍</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-plano">—</span>
+        <span class="kpi-label">En Plano 2D</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Herramientas y Navegación entre Vistas -->
   <nav class="tools">
     <div class="nav-left">
       <div class="view-switch">
         <button type="button" id="btn-view-tabla" class="view-btn active">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
           Vista Tabla
         </button>
         <button type="button" id="btn-view-mapa" class="view-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
           Esquema de Sala (Plano 2D)
         </button>
       </div>
     </div>
     <div class="nav-right">
-      <a class="button ghost" href="admin.html">Administrar inventario →</a>
+      <div style="font-family:var(--mono);font-size:0.85rem;color:var(--text-soft)" id="count">Cargando…</div>
+      <a class="button ghost" href="admin.html">
+        <span>Administración</span>
+        <span>→</span>
+      </a>
     </div>
   </nav>
 
-  <!-- Filtros Generales -->
-  <div class="controls">
-    <input type="text" id="search" placeholder="Buscar por número, descripción, ubicación o responsable…">
+  <!-- Barra de Búsqueda y Filtros -->
+  <div class="controls-bar">
+    <div class="search-input-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search" placeholder="Buscar por No. inventario, descripción, sala, funcionario…">
+    </div>
     <select id="filter-tipo">
       <option value="">Todos los tipos</option>
       <option value="MAYOR">Mayor</option>
@@ -53,6 +120,9 @@
     <select id="filter-sala">
       <option value="">Todas las salas</option>
     </select>
+    <button type="button" id="btn-clear-filters" class="btn-clear-filters" title="Restablecer todos los filtros y búsqueda">
+      ✕ Limpiar
+    </button>
   </div>
 
   <!-- Vista 1: Tabla de Equipos -->
@@ -61,17 +131,17 @@
       <table>
         <thead>
           <tr>
-            <th style="width:58px">Foto</th>
-            <th>No. Inventario</th>
-            <th>Descripción</th>
+            <th style="width:60px">Foto</th>
+            <th style="width:130px">No. Inventario</th>
+            <th>Descripción del Elemento</th>
             <th>Ubicación / Sala</th>
             <th>Tipo</th>
             <th>Responsable</th>
-            <th style="width:90px">Plano</th>
+            <th style="width:95px;text-align:center">Plano</th>
           </tr>
         </thead>
         <tbody id="rows">
-          <tr><td class="empty" colspan="7">Cargando inventario…</td></tr>
+          <tr><td class="empty" colspan="7">Cargando inventario del servidor…</td></tr>
         </tbody>
       </table>
     </div>
@@ -79,32 +149,58 @@
 
   <!-- Vista 2: Esquema Interactivo de Sala (Plano Indoor Leaflet) -->
   <div id="map-view-section" class="map-view-wrapper" style="display:none">
-    <div class="map-toolbar">
-      <div class="map-toolbar-left">
-        <label for="map-sala-select">Sala / Espacio:</label>
-        <select id="map-sala-select"></select>
+    
+    <!-- Ficha informativa de la sala activa -->
+    <div class="map-header-card">
+      <div class="map-sala-info">
+        <h3 id="map-sala-title">Laboratorio de Geomática UIS</h3>
+        <p id="map-sala-desc">Plano interactivo 2D del espacio con localización de equipos y mobiliario técnico.</p>
       </div>
-      <div class="map-legend">
-        <span class="legend-item"><span class="legend-dot mayor"></span> Mayor</span>
-        <span class="legend-item"><span class="legend-dot menor"></span> Menor</span>
-        <span class="legend-item"><span class="legend-dot intangible"></span> Intangible</span>
+      <div class="map-sala-controls">
+        <label for="map-sala-select" style="font-size:0.85rem;font-weight:600;color:var(--text-muted)">Sala:</label>
+        <select id="map-sala-select"></select>
+        <select id="map-item-select" style="max-width:240px">
+          <option value="">🎯 Enfocar equipo en el plano…</option>
+        </select>
+        <button type="button" id="btn-center-map" class="ghost" style="padding:7px 12px;font-size:0.82rem" title="Centrar plano y restablecer zoom">
+          🎯 Centrar
+        </button>
       </div>
     </div>
+
+    <!-- Contenedor del Mapa Leaflet -->
     <div class="map-container">
       <div id="indoor-map"></div>
     </div>
-    <p style="font-size:0.82rem;color:var(--ink-soft);margin-top:8px;margin-bottom:0">
-      💡 <strong>Consejo:</strong> Haz clic en cualquier marcador para ver la ficha técnica y foto del elemento. Usa la rueda del ratón para hacer zoom sobre el plano.
-    </p>
+
+    <!-- Leyenda y Ayuda -->
+    <div class="map-legend-bar">
+      <div style="display:flex;gap:14px;align-items:center">
+        <span class="legend-item"><span class="legend-dot mayor"></span> Mayor (<span id="leg-count-mayor">0</span>)</span>
+        <span class="legend-item"><span class="legend-dot menor"></span> Menor (<span id="leg-count-menor">0</span>)</span>
+        <span class="legend-item"><span class="legend-dot intangible"></span> Intangible (<span id="leg-count-intangible">0</span>)</span>
+      </div>
+      <div style="color:var(--text-soft);font-size:0.8rem">
+        💡 Haz clic en cualquier pin para ver su ficha y foto. Usa la rueda del ratón para hacer zoom.
+      </div>
+    </div>
   </div>
 
   <footer class="note">
-    Inventario interno · Servidor local seguro (SQLite). Los cambios se almacenan en <code>data/inventario.db</code>.
+    <div>
+      <strong>Grupo de Investigación en Geomática UIS</strong> · Sistema local de gestión y planos 2D.
+    </div>
+    <div>
+      Base de datos SQLite: <code>data/inventario.db</code> (Modo WAL)
+    </div>
   </footer>
 
 </div>
 
-<!-- Modal para ver foto completa -->
+<!-- Contenedor de Toasts Flotantes -->
+<div id="toast-container"></div>
+
+<!-- Modal para ver foto completa / Lightbox -->
 <div id="photo-modal" class="modal-overlay">
   <div class="modal-card">
     <div class="modal-header">

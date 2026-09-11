@@ -10,56 +10,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-<!-- Pantalla de Login -->
-<div class="wrap login-wrap" id="login-screen">
-  <div class="login-card">
-    <div class="login-header-logo">
-      <div class="geo-logo-emblem" style="margin:0 auto 12px;background:var(--geo-primary);color:#fff">
-        <svg viewBox="0 0 48 48" width="34" height="34" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="21" stroke-width="1.8" opacity="0.4"/>
-          <ellipse cx="24" cy="24" rx="11" ry="21" stroke-width="1.8" opacity="0.7"/>
-          <line x1="3" y1="24" x2="45" y2="24" stroke-width="1.8" opacity="0.7"/>
-          <circle cx="24" cy="24" r="5" fill="#10b981" stroke="#ffffff" stroke-width="2"/>
-          <path d="M24 3V11M24 37V45M3 24H11M37 24H45" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <h1 style="font-size:1.35rem;margin:0 0 4px;color:var(--geo-primary-dark)">Iniciar Sesión</h1>
-      <span class="geo-badge-tag">GEOMÁTICA UIS · ADMIN</span>
-    </div>
-    <p style="color:var(--text-soft);font-size:0.86rem;margin-bottom:18px;text-align:center">
-      Accede con tus credenciales para gestionar el inventario técnico y diseñar planos 2D de salas.
-    </p>
-
-    <div id="login-status" class="status-msg"></div>
-
-    <form id="login-form">
-      <div class="field" style="margin-bottom:14px">
-        <label for="login-user">Usuario del Sistema</label>
-        <input type="text" id="login-user" required autocomplete="username" placeholder="ej. rector, jhon, yerly, carlos">
-      </div>
-      <div class="field" style="margin-bottom:20px">
-        <label for="login-pass">Contraseña</label>
-        <input type="password" id="login-pass" required autocomplete="current-password" placeholder="Contraseña">
-      </div>
-      <button type="submit" style="width:100%">Entrar al Sistema →</button>
-    </form>
-
-    <!-- Usuarios de acceso rápido para pruebas y demo -->
-    <div class="login-quick-users">
-      <label>Acceso Rápido (Haz clic para rellenar):</label>
-      <div class="user-chips-row">
-        <span class="user-chip" onclick="fillLoginUser('rector')">👨‍💼 Rector</span>
-        <span class="user-chip" onclick="fillLoginUser('jhon')">👨‍💻 Jhon C.</span>
-        <span class="user-chip" onclick="fillLoginUser('yerly')">👩‍🔬 Yerly M.</span>
-        <span class="user-chip" onclick="fillLoginUser('carlos')">👨‍🔧 Carlos G.</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Pantalla Principal de Administración (Oculta hasta autenticarse) -->
-<div class="wrap" id="admin-screen" style="display:none">
+<div class="wrap">
 
   <!-- Cabecera Institucional Grupo de Geomática UIS -->
   <header class="site">
@@ -75,161 +26,212 @@
       </div>
       <div class="geo-brand-text">
         <h1>
-          Panel de Administración
+          Inventario de Equipos
           <span class="geo-badge-tag">GEOMÁTICA UIS</span>
         </h1>
-        <p>Sesión activa: <strong id="logged-user-label" style="color:#a7f3d0">—</strong> · Servidor local seguro (SQLite WAL).</p>
+        <p>Grupo de Investigación en Geomática · Consulta y localización espacial de equipos de laboratorio, sensores, topografía y cómputo.</p>
       </div>
     </div>
+
+    <!-- Zona de Usuario y Autenticación en la Cabecera -->
     <div class="header-status-box">
-      <div class="status-pill">
-        <span class="status-indicator-dot"></span>
-        <span id="count">— ítems</span>
+      <!-- Estado: No autenticado (Invitado) -->
+      <div id="guest-header-controls" class="header-auth-group">
+        <div class="status-pill" style="margin-right:8px">
+          <span class="status-indicator-dot"></span>
+          <span>En línea</span>
+        </div>
+        <button type="button" class="button auth-login-btn" id="btn-open-login">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Iniciar Sesión
+        </button>
+      </div>
+
+      <!-- Estado: Autenticado con permisos -->
+      <div id="auth-header-controls" class="header-auth-group" style="display:none">
+        <div class="user-profile-badge">
+          <span class="user-avatar-icon">👤</span>
+          <div class="user-profile-text">
+            <strong id="user-display-name">Usuario</strong>
+            <span class="user-role-tag" id="user-display-role">Editor</span>
+          </div>
+        </div>
+        <button type="button" class="button ghost auth-logout-btn" id="btn-logout" title="Cerrar sesión activa">
+          Salir
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Navegación y Pestañas -->
-  <nav class="tools">
-    <div class="nav-left">
-      <a class="button ghost" href="index.html">← Ver inventario y planos</a>
-      <div class="view-switch">
-        <button type="button" id="tab-btn-items" class="view-btn active">📦 Gestionar Ítems</button>
-        <button type="button" id="tab-btn-salas" class="view-btn">📐 Diseñador de Salas y Planos</button>
+  <!-- Mini-Dashboard de Estadísticas Rápidas (KPIs / Filtros rápidos) -->
+  <div class="kpi-grid" id="kpi-dashboard">
+    <div class="kpi-card active" id="kpi-card-all" onclick="quickFilterType('')" title="Clic para ver todos los ítems">
+      <div class="kpi-icon-wrap kpi-icon-total">📦</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-total">—</span>
+        <span class="kpi-label">Total Equipos</span>
       </div>
     </div>
+    <div class="kpi-card" id="kpi-card-mayor" onclick="quickFilterType('MAYOR')" title="Clic para filtrar solo bienes de Tipo Mayor">
+      <div class="kpi-icon-wrap kpi-icon-mayor">🏛️</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-mayor">—</span>
+        <span class="kpi-label">Tipo Mayor</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-menor" onclick="quickFilterType('MENOR')" title="Clic para filtrar solo bienes de Tipo Menor">
+      <div class="kpi-icon-wrap kpi-icon-menor">🔧</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-menor">—</span>
+        <span class="kpi-label">Tipo Menor</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-intangible" onclick="quickFilterType('INTANGIBLE')" title="Clic para filtrar solo bienes Intangibles">
+      <div class="kpi-icon-wrap kpi-icon-intangible">💾</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-intangible">—</span>
+        <span class="kpi-label">Intangibles</span>
+      </div>
+    </div>
+    <div class="kpi-card" id="kpi-card-plano" onclick="quickFilterPlano()" title="Clic para filtrar equipos ubicados en planos 2D">
+      <div class="kpi-icon-wrap kpi-icon-plano">📍</div>
+      <div class="kpi-info">
+        <span class="kpi-val" id="kpi-plano">—</span>
+        <span class="kpi-label">En Plano 2D</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Herramientas y Navegación entre Vistas -->
+  <nav class="tools">
+    <div class="nav-left">
+      <div class="view-switch">
+        <button type="button" id="btn-view-tabla" class="view-btn active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
+          Vista Tabla
+        </button>
+        <button type="button" id="btn-view-mapa" class="view-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          Esquema de Sala (Plano 2D)
+        </button>
+        <!-- Pestaña de Diseñador de Planos: Solo visible si el usuario tiene sesión activa -->
+        <button type="button" id="btn-view-designer" class="view-btn auth-only-control" style="display:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12h20M12 2v20M20 20l-4-4M4 4l4 4"/></svg>
+          📐 Diseñador de Planos
+        </button>
+      </div>
+    </div>
+
     <div class="nav-right">
-      <button type="button" class="button ghost" id="logout-btn" style="color:#dc2626">Cerrar sesión</button>
+      <div style="font-family:var(--mono);font-size:0.85rem;color:var(--text-soft)" id="count">Cargando…</div>
+      <!-- Botón para crear nuevo ítem: Solo visible si el usuario tiene sesión activa -->
+      <button type="button" class="button auth-only-control" id="btn-open-create-item" style="display:none">
+        <span>➕ Añadir Ítem</span>
+      </button>
     </div>
   </nav>
 
-  <!-- SECCIÓN 1: GESTIÓN DE ÍTEMS DE INVENTARIO -->
-  <div id="sec-admin-items">
-    <div class="panel">
-      
-      <!-- Banner de modo edición -->
-      <div id="edit-item-banner" class="edit-mode-banner">
-        <span>✏️ Modo Edición activo para el ítem <strong id="edit-item-banner-id"></strong></span>
-        <button type="button" class="button ghost" id="banner-cancel-edit" style="padding:4px 10px;font-size:0.78rem">✕ Cancelar</button>
-      </div>
-
-      <h2 id="form-title">Añadir ítem al inventario</h2>
-      
-      <form id="item-form">
-        <input type="hidden" id="item-original-id">
-        <input type="hidden" id="f-pos-x">
-        <input type="hidden" id="f-pos-y">
-
-        <div class="field-grid">
-          <div class="field">
-            <label for="f-id">No. de inventario *</label>
-            <input type="text" id="f-id" required placeholder="ej. 1007 o 178566">
-          </div>
-
-          <div class="field">
-            <label for="f-tipo">Tipo de inventario *</label>
-            <select id="f-tipo" required>
-              <option value="MAYOR">Mayor</option>
-              <option value="MENOR">Menor</option>
-              <option value="INTANGIBLE">Intangible</option>
-            </select>
-          </div>
-
-          <div class="field full">
-            <label for="f-descripcion">Descripción del elemento *</label>
-            <input type="text" id="f-descripcion" required placeholder="ej. Nivel óptico Topcon con trípode de aluminio">
-          </div>
-
-          <div class="field">
-            <label for="f-ubicacion">Ubicación textual descriptiva</label>
-            <input type="text" id="f-ubicacion" placeholder="ej. Gabinete 2, Estante superior">
-          </div>
-
-          <div class="field">
-            <label for="f-funcionario">Responsable a cargo</label>
-            <select id="f-funcionario">
-              <option value="">-- Sin responsable asignado --</option>
-            </select>
-          </div>
-
-          <div class="field full">
-            <label for="f-sala">Sala / Espacio (para ubicar en el plano 2D)</label>
-            <select id="f-sala">
-              <option value="">-- Sin sala asignada --</option>
-            </select>
-          </div>
-
-          <!-- Selector visual de ubicación sobre el esquema de la sala -->
-          <div class="field full" id="admin-map-wrapper" style="display:none">
-            <label>Ubicación Espacial en el Plano de la Sala</label>
-            <div class="coord-hint">
-              <span>📍 <strong>Instrucción:</strong> Haz clic sobre la mesa o estante donde está el elemento para fijar el pin. Puedes arrastrarlo libremente.</span>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span id="coord-display" style="font-weight:600;font-family:var(--mono);color:var(--geo-primary)"></span>
-                <button type="button" class="button ghost" id="btn-clear-coords" style="padding:2px 8px;font-size:0.75rem">Quitar pin</button>
-              </div>
-            </div>
-            <div class="admin-map-container" style="height:400px;position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-top:8px">
-              <div id="admin-indoor-map" style="width:100%;height:100%"></div>
-            </div>
-          </div>
-
-          <div class="field full">
-            <label for="f-observacion">Observación / comentario técnico</label>
-            <input type="text" id="f-observacion" placeholder="Opcional: número de serie, estado operativo, calibraciones pendientes...">
-          </div>
-
-          <div class="field full">
-            <label for="f-imagen">Fotografía del elemento</label>
-            <div class="photo-upload-zone" id="photo-drop-zone" onclick="document.getElementById('f-imagen').click()">
-              <input type="file" id="f-imagen" accept="image/*" style="display:none">
-              <div style="font-size:1.6rem;margin-bottom:4px">📷</div>
-              <div style="font-weight:600;color:var(--geo-primary);font-size:0.9rem">Haz clic para seleccionar o arrastra una foto aquí</div>
-              <div style="font-size:0.8rem;color:var(--text-soft)">Formatos JPG, PNG o WebP (almacenamiento local seguro)</div>
-            </div>
-            <div id="imagen-actual-preview"></div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" id="save-btn">💾 Guardar ítem</button>
-          <button type="button" class="button ghost" id="cancel-edit" style="display:none">Cancelar edición</button>
-        </div>
-      </form>
+  <!-- Barra de Búsqueda y Filtros -->
+  <div class="controls-bar" id="search-filter-controls">
+    <div class="search-input-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search" placeholder="Buscar por No. inventario, descripción, sala, funcionario…">
     </div>
+    <select id="filter-tipo">
+      <option value="">Todos los tipos</option>
+      <option value="MAYOR">Mayor</option>
+      <option value="MENOR">Menor</option>
+      <option value="INTANGIBLE">Intangible</option>
+    </select>
+    <select id="filter-funcionario">
+      <option value="">Todos los responsables</option>
+    </select>
+    <select id="filter-sala">
+      <option value="">Todas las salas</option>
+    </select>
+    <button type="button" id="btn-clear-filters" class="btn-clear-filters" title="Restablecer todos los filtros y búsqueda">
+      ✕ Limpiar
+    </button>
+  </div>
 
-    <!-- Tabla de Gestión de Ítems -->
+  <!-- VISTA 1: TABLA DE EQUIPOS -->
+  <div id="table-view-section">
     <div class="table-responsive">
       <table>
         <thead>
-          <tr>
+          <tr id="table-header-row">
             <th style="width:60px">Foto</th>
             <th style="width:130px">No. Inventario</th>
-            <th>Descripción</th>
-            <th>Sala / Ubicación</th>
+            <th>Descripción del Elemento</th>
+            <th>Ubicación / Sala</th>
             <th>Tipo</th>
             <th>Responsable</th>
-            <th style="width:150px;text-align:center">Acciones</th>
+            <th style="width:95px;text-align:center">Plano</th>
+            <!-- Columna de Acciones: se añade dinámicamente si está autenticado -->
+            <th class="auth-table-col" style="width:140px;text-align:center;display:none">Acciones</th>
           </tr>
         </thead>
-        <tbody id="admin-rows"></tbody>
+        <tbody id="rows">
+          <tr><td class="empty" colspan="8">Cargando inventario del servidor…</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
 
-  <!-- SECCIÓN 2: DISEÑADOR Y GESTOR DE SALAS / PLANOS -->
-  <div id="sec-admin-salas" style="display:none">
+  <!-- VISTA 2: ESQUEMA INTERACTIVO DE SALA (PLANO INDOOR LEAFLET) -->
+  <div id="map-view-section" class="map-view-wrapper" style="display:none">
     
+    <div class="map-header-card">
+      <div class="map-sala-info">
+        <h3 id="map-sala-title">Laboratorio de Geomática UIS</h3>
+        <p id="map-sala-desc">Plano interactivo 2D del espacio con localización de equipos y mobiliario técnico.</p>
+      </div>
+      <div class="map-sala-controls">
+        <label for="map-sala-select" style="font-size:0.85rem;font-weight:600;color:var(--text-muted)">Sala:</label>
+        <select id="map-sala-select"></select>
+        <select id="map-item-select" style="max-width:240px">
+          <option value="">🎯 Enfocar equipo en el plano…</option>
+        </select>
+        <button type="button" id="btn-center-map" class="button ghost" style="padding:7px 12px;font-size:0.82rem" title="Centrar plano y restablecer zoom">
+          🎯 Centrar
+        </button>
+        <!-- Botón para modificar este plano directamente en el diseñador (Solo autenticado) -->
+        <button type="button" id="btn-edit-room-plan" class="button ghost auth-only-control" style="padding:7px 12px;font-size:0.82rem;display:none" title="Editar mobiliario y esquema de esta sala">
+          ✏️ Editar este plano
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenedor del Mapa Leaflet -->
+    <div class="map-container">
+      <div id="indoor-map"></div>
+    </div>
+
+    <!-- Leyenda y Ayuda -->
+    <div class="map-legend-bar">
+      <div style="display:flex;gap:14px;align-items:center">
+        <span class="legend-item"><span class="legend-dot mayor"></span> Mayor (<span id="leg-count-mayor">0</span>)</span>
+        <span class="legend-item"><span class="legend-dot menor"></span> Menor (<span id="leg-count-menor">0</span>)</span>
+        <span class="legend-item"><span class="legend-dot intangible"></span> Intangible (<span id="leg-count-intangible">0</span>)</span>
+      </div>
+      <div style="color:var(--text-soft);font-size:0.8rem">
+        💡 Haz clic en cualquier pin para ver su ficha y foto. Usa la rueda del ratón para hacer zoom.
+      </div>
+    </div>
+  </div>
+
+  <!-- VISTA 3: DISEÑADOR VISUAL DE PLANOS 2D (ADMIN / SESIÓN ACTIVA) -->
+  <div id="designer-view-section" style="display:none">
     <div class="panel">
       <h2 id="sala-form-title">📐 Diseñador Visual de Planos de Sala 2D</h2>
       <p style="font-size:0.86rem;color:var(--text-soft);margin-top:-6px">
-        Diseña el plano arrastrando mesas, escritorios, puertas y muebles, o edita directamente los planos vectoriales existentes.
+        Diseña el plano de tu espacio arrastrando mesas, puestos de cómputo, puertas y muebles, o edita directamente los planos SVG existentes.
       </p>
 
       <form id="sala-form">
         <div class="field-grid">
           <div class="field">
-            <label for="s-id">ID de la sala (código único sin espacios) *</label>
+            <label for="s-id">ID de la sala (código sin espacios) *</label>
             <input type="text" id="s-id" required placeholder="ej. nuevo_geo o lab_sensores">
           </div>
           <div class="field">
@@ -241,11 +243,11 @@
             <input type="text" id="s-desc" placeholder="ej. Edificio de Ingeniería Civil, Aula 102">
           </div>
           <div class="field">
-            <label for="s-ancho">Ancho del plano (píxeles)</label>
+            <label for="s-ancho">Ancho del plano (px)</label>
             <input type="number" id="s-ancho" value="1000" min="600" max="2400" step="50">
           </div>
           <div class="field">
-            <label for="s-alto">Alto del plano (píxeles)</label>
+            <label for="s-alto">Alto del plano (px)</label>
             <input type="number" id="s-alto" value="700" min="400" max="1800" step="50">
           </div>
         </div>
@@ -254,22 +256,22 @@
         <div class="designer-toolbar-container" style="margin-top:16px">
           <div>
             <label style="font-size:0.8rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px">
-              Añadir Elementos al Lienzo:
+              Añadir Mobiliario al Lienzo:
             </label>
             <div class="designer-tools-row">
-              <button type="button" class="designer-tool-btn" onclick="addCanvasItem('mesa')">🪑 + Mesa de Trabajo</button>
-              <button type="button" class="designer-tool-btn" onclick="addCanvasItem('computo')">🖥️ + Puesto Cómputo</button>
+              <button type="button" class="designer-tool-btn" onclick="addCanvasItem('mesa')">🪑 + Mesa</button>
+              <button type="button" class="designer-tool-btn" onclick="addCanvasItem('computo')">🖥️ + Puesto PC</button>
               <button type="button" class="designer-tool-btn" onclick="addCanvasItem('gabinete')">🗄️ + Gabinete</button>
               <button type="button" class="designer-tool-btn" onclick="addCanvasItem('rack')">🔌 + Rack Red</button>
               <button type="button" class="designer-tool-btn" onclick="addCanvasItem('puerta')">🚪 + Puerta</button>
               <button type="button" class="designer-tool-btn" onclick="addCanvasItem('ventana')">🪟 + Ventanal</button>
               <button type="button" class="designer-tool-btn" onclick="addCanvasItem('telon')">📽️ + Telón</button>
               <button type="button" class="designer-tool-btn" onclick="addCanvasItem('texto')">🏷️ + Rótulo</button>
-              <button type="button" class="designer-tool-btn" style="color:#dc2626" onclick="clearCanvas()">🧹 Vaciar Todo</button>
+              <button type="button" class="designer-tool-btn" style="color:#dc2626" onclick="clearCanvas()">🧹 Vaciar</button>
             </div>
           </div>
 
-          <!-- Barra de Inspector de Propiedades (En vivo, sin prompts) -->
+          <!-- Barra de Inspector de Propiedades -->
           <div id="designer-inspector" class="designer-inspector-bar">
             <span class="inspector-title" id="insp-elem-title">Propiedades</span>
             <div class="inspector-group">
@@ -298,7 +300,6 @@
             </div>
           </div>
 
-          <!-- Controles flotantes de Zoom del Lienzo -->
           <div class="canvas-zoom-controls">
             <button type="button" class="zoom-btn" onclick="zoomCanvas(0.1)" title="Acercar">+</button>
             <button type="button" class="zoom-btn" onclick="resetCanvasZoom()" title="Restablecer zoom al 100%" id="zoom-level-label">100%</button>
@@ -308,12 +309,11 @@
         </div>
 
         <p style="font-size:0.8rem;color:var(--text-soft);margin-top:8px">
-          💡 <strong>Consejos de diseño:</strong> Arrastra para mover elementos. Selecciónalo para ajustar sus dimensiones exactas o renombrarlo en la barra superior. Usa <code>Supr</code> para borrar, <code>Ctrl+D</code> para duplicar y las flechas del teclado para mover de a 1px (o 10px con Shift).
+          💡 <strong>Atajos:</strong> Arrastra para mover elementos. Usa <code>Supr</code> para borrar, <code>Ctrl+D</code> para duplicar y las flechas para mover con precisión de 1px (o 10px con Shift).
         </p>
 
-        <!-- Subida opcional de archivo plano -->
         <div style="margin-top:16px;padding-top:14px;border-top:1px dashed var(--border)">
-          <label style="font-size:0.84rem;color:var(--text-main);font-weight:600">Opcional: ¿Deseas importar un archivo de plano existente (PNG, JPG o SVG)?</label>
+          <label style="font-size:0.84rem;color:var(--text-main);font-weight:600">Opcional: Importar plano en archivo (SVG, PNG, JPG)</label>
           <div style="margin-top:6px">
             <input type="file" id="s-archivo-plano" accept="image/*,.svg">
           </div>
@@ -332,24 +332,178 @@
       <h2>Salas Registradas</h2>
       <div id="salas-list" class="salas-grid"></div>
     </div>
-
   </div>
 
   <footer class="note">
     <div>
-      <strong>Grupo de Investigación en Geomática UIS</strong> · Administración del Inventario.
+      <strong>Grupo de Investigación en Geomática UIS</strong> · Sistema local de gestión de inventario y planos 2D.
     </div>
     <div>
-      Base de datos: <code>data/inventario.db</code>
+      Base de datos SQLite: <code>data/inventario.db</code> (Modo WAL)
     </div>
   </footer>
 
 </div>
 
-<!-- Contenedor de Toasts Flotantes -->
+<!-- =========================================================================
+     MODAL DE INICIO DE SESIÓN
+     ========================================================================= -->
+<div id="login-modal" class="modal-overlay">
+  <div class="modal-card" style="max-width:440px;width:100%">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:1.2rem">🔐</span>
+        <h3 style="margin:0">Iniciar Sesión en el Sistema</h3>
+      </div>
+      <button type="button" class="modal-close" onclick="closeLoginModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align:left;padding:24px">
+      <p style="color:var(--text-soft);font-size:0.86rem;margin-top:0;margin-bottom:16px">
+        Ingresa con tus credenciales institucionales para habilitar la edición de equipos y planos.
+      </p>
+
+      <div id="login-status" class="status-msg"></div>
+
+      <form id="login-form">
+        <div class="field" style="margin-bottom:12px">
+          <label for="login-user">Usuario</label>
+          <input type="text" id="login-user" required autocomplete="username" placeholder="ej. rector, jhon, yerly, carlos">
+        </div>
+        <div class="field" style="margin-bottom:18px">
+          <label for="login-pass">Contraseña</label>
+          <input type="password" id="login-pass" required autocomplete="current-password" placeholder="Contraseña">
+        </div>
+        <button type="submit" style="width:100%">Entrar al Sistema →</button>
+      </form>
+
+      <div class="login-quick-users">
+        <label>Acceso Rápido (Haz clic para rellenar):</label>
+        <div class="user-chips-row">
+          <span class="user-chip" onclick="fillLoginUser('rector')">👨‍💼 Rector</span>
+          <span class="user-chip" onclick="fillLoginUser('jhon')">👨‍💻 Jhon C.</span>
+          <span class="user-chip" onclick="fillLoginUser('yerly')">👩‍🔬 Yerly M.</span>
+          <span class="user-chip" onclick="fillLoginUser('carlos')">👨‍🔧 Carlos G.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     MODAL DE CREACIÓN / EDICIÓN DE ÍTEM
+     ========================================================================= -->
+<div id="item-modal" class="modal-overlay">
+  <div class="modal-card" style="max-width:820px;width:100%;max-height:92vh">
+    <div class="modal-header">
+      <h3 id="item-modal-title">Añadir Ítem al Inventario</h3>
+      <button type="button" class="modal-close" onclick="closeItemModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align:left;padding:24px;overflow-y:auto">
+      
+      <form id="item-form">
+        <input type="hidden" id="item-original-id">
+        <input type="hidden" id="f-pos-x">
+        <input type="hidden" id="f-pos-y">
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="f-id">No. de Inventario *</label>
+            <input type="text" id="f-id" required placeholder="ej. 1007 o 178566">
+          </div>
+
+          <div class="field">
+            <label for="f-tipo">Tipo de Inventario *</label>
+            <select id="f-tipo" required>
+              <option value="MAYOR">Mayor</option>
+              <option value="MENOR">Menor</option>
+              <option value="INTANGIBLE">Intangible</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="f-descripcion">Descripción del Elemento *</label>
+            <input type="text" id="f-descripcion" required placeholder="ej. Estación Total Leica TS06 con trípode y prisma">
+          </div>
+
+          <div class="field">
+            <label for="f-ubicacion">Ubicación Textual</label>
+            <input type="text" id="f-ubicacion" placeholder="ej. Gabinete 2, Estante 3">
+          </div>
+
+          <div class="field">
+            <label for="f-funcionario">Responsable a Cargo</label>
+            <select id="f-funcionario">
+              <option value="">-- Sin responsable asignado --</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="f-sala">Sala / Espacio (para ubicar en plano 2D)</label>
+            <select id="f-sala">
+              <option value="">-- Sin sala asignada --</option>
+            </select>
+          </div>
+
+          <!-- Selector visual de ubicación sobre el plano Leaflet -->
+          <div class="field full" id="admin-map-wrapper" style="display:none">
+            <label>Localización en el Plano de la Sala</label>
+            <div class="coord-hint">
+              <span>📍 <strong>Haz clic</strong> sobre la mesa o estante donde está el equipo para fijar el pin. Puedes arrastrarlo libremente.</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span id="coord-display" style="font-weight:600;font-family:var(--mono);color:var(--geo-primary)"></span>
+                <button type="button" class="button ghost" id="btn-clear-coords" style="padding:2px 8px;font-size:0.75rem">Quitar pin</button>
+              </div>
+            </div>
+            <div class="admin-map-container" style="height:320px;position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-top:8px">
+              <div id="admin-indoor-map" style="width:100%;height:100%"></div>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="f-observacion">Observación Técnica / Estado</label>
+            <input type="text" id="f-observacion" placeholder="Opcional: número de serie, mantenimientos pendientes...">
+          </div>
+
+          <div class="field full">
+            <label for="f-imagen">Foto del Equipo</label>
+            <div class="photo-upload-zone" id="photo-drop-zone" onclick="document.getElementById('f-imagen').click()">
+              <input type="file" id="f-imagen" accept="image/*" style="display:none">
+              <div style="font-size:1.5rem;margin-bottom:2px">📷</div>
+              <div style="font-weight:600;color:var(--geo-primary);font-size:0.88rem">Haz clic para seleccionar foto o arrástrala aquí</div>
+              <div style="font-size:0.78rem;color:var(--text-soft)">Formatos JPG, PNG o WebP</div>
+            </div>
+            <div id="imagen-actual-preview"></div>
+          </div>
+        </div>
+
+        <div class="form-actions" style="justify-content:flex-end;margin-top:20px">
+          <button type="button" class="button ghost" onclick="closeItemModal()">Cancelar</button>
+          <button type="submit" id="save-item-btn">💾 Guardar Ítem</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     MODAL DE FOTO EN ALTA RESOLUCIÓN (LIGHTBOX)
+     ========================================================================= -->
+<div id="photo-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modal-title">Foto del Equipo</h3>
+      <button type="button" class="modal-close" onclick="closePhotoModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <img id="modal-img" src="" alt="Foto en tamaño completo">
+    </div>
+  </div>
+</div>
+
+<!-- Contenedor de Notificaciones Toast Flotantes -->
 <div id="toast-container"></div>
 
 <script src="vendor/leaflet/leaflet.js"></script>
-<script src="js/admin.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

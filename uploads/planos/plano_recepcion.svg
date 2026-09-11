@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <pattern id="grid_1789153350111" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="700" fill="#f8fafc"/>
+  <rect width="1000" height="700" fill="url(#grid_1789153350111)"/>
+  <rect x="20" y="20" width="960" height="660" fill="none" stroke="#334155" stroke-width="12" rx="6"/>
+  <text x="500" y="65" font-family="sans-serif" font-size="22" font-weight="bold" fill="#065f46" text-anchor="middle">Recepción</text>
+  <script type="application/json" id="canvas-elements-data">[{"id":"elem_9","type":"computo","x":400,"y":90,"width":200,"height":80,"rotation":0,"label":"Puesto Cómputo 2"},{"id":"elem_10","type":"computo","x":610,"y":90,"width":200,"height":80,"rotation":0,"label":"Puesto Cómputo 1"},{"id":"elem_11","type":"puerta","x":870,"y":640,"width":90,"height":40,"rotation":0,"label":"Puerta"},{"id":"elem_12","type":"puerta","x":900,"y":20,"width":90,"height":40,"rotation":0,"label":"Puerta"},{"id":"elem_13","type":"gabinete","x":700,"y":570,"width":140,"height":110,"rotation":0,"label":"Gabinete 1"},{"id":"elem_14","type":"gabinete","x":550,"y":570,"width":140,"height":110,"rotation":0,"label":"Gabinete 2"},{"id":"elem_15","type":"gabinete","x":400,"y":570,"width":140,"height":110,"rotation":0,"label":"Gabinete 3"},{"id":"elem_16","type":"gabinete","x":250,"y":570,"width":140,"height":110,"rotation":0,"label":"Gabinete 4"}]</script>
+  <g id="elem_9">
+<rect x="400" y="90" width="200" height="80" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+<rect x="475" y="102" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+<text x="500" y="155" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo 2</text>
+</g>
+  <g id="elem_10">
+<rect x="610" y="90" width="200" height="80" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+<rect x="685" y="102" width="50" height="28" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+<text x="710" y="155" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Puesto Cómputo 1</text>
+</g>
+  <g id="elem_11">
+<line x1="870" y1="680" x2="960" y2="680" stroke="#f8fafc" stroke-width="14"/>
+<line x1="870" y1="680" x2="870" y2="640" stroke="#475569" stroke-width="3"/>
+<path d="M 870 680 A 90 40 0 0 1 960 640" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+<text x="915" y="672" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">Puerta</text>
+</g>
+  <g id="elem_12">
+<line x1="900" y1="60" x2="990" y2="60" stroke="#f8fafc" stroke-width="14"/>
+<line x1="900" y1="60" x2="900" y2="20" stroke="#475569" stroke-width="3"/>
+<path d="M 900 60 A 90 40 0 0 1 990 20" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+<text x="945" y="52" font-family="sans-serif" font-size="11" fill="#475569" text-anchor="middle">Puerta</text>
+</g>
+  <g id="elem_13">
+<rect x="700" y="570" width="140" height="110" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+<text x="770" y="630" font-family="sans-serif" font-size="12" font-weight="bold" fill="#064e3b" text-anchor="middle">Gabinete 1</text>
+</g>
+  <g id="elem_14">
+<rect x="550" y="570" width="140" height="110" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+<text x="620" y="630" font-family="sans-serif" font-size="12" font-weight="bold" fill="#064e3b" text-anchor="middle">Gabinete 2</text>
+</g>
+  <g id="elem_15">
+<rect x="400" y="570" width="140" height="110" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+<text x="470" y="630" font-family="sans-serif" font-size="12" font-weight="bold" fill="#064e3b" text-anchor="middle">Gabinete 3</text>
+</g>
+  <g id="elem_16">
+<rect x="250" y="570" width="140" height="110" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="3"/>
+<text x="320" y="630" font-family="sans-serif" font-size="12" font-weight="bold" fill="#064e3b" text-anchor="middle">Gabinete 4</text>
+</g>
+</svg>

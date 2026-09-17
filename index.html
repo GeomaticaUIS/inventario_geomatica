@@ -143,6 +143,25 @@
       <option value="MENOR">Menor</option>
       <option value="INTANGIBLE">Intangible</option>
     </select>
+    <select id="filter-categoria">
+      <option value="">Todas las categorías</option>
+      <option value="pc_pantalla">🖥️ PC Torre con Pantalla</option>
+      <option value="torre">🔲 Torre sin Pantalla</option>
+      <option value="monitor">🖥️ Pantalla Sola</option>
+      <option value="portatil">💻 Portátil / Laptop</option>
+      <option value="tablet">📱 Tablet / iPad</option>
+      <option value="dron">🛸 Dron / UAV</option>
+      <option value="gnss">📡 Receptor GNSS / GPS</option>
+      <option value="servidor">🗄️ Servidor / Rack</option>
+      <option value="red">🔌 Red / Telefonía</option>
+      <option value="proyector">📽️ Proyector / TV</option>
+      <option value="impresora">🖨️ Impresora / Plotter</option>
+      <option value="camara">📷 Cámara / Sensor</option>
+      <option value="energia">⚡ UPS / Energía</option>
+      <option value="mueble">🪑 Mobiliario / Mesa</option>
+      <option value="herramienta">🔧 Herramienta</option>
+      <option value="otro">📦 Otro / General</option>
+    </select>
     <select id="filter-funcionario">
       <option value="">Todos los responsables</option>
     </select>
@@ -197,13 +216,53 @@
         </button>
         <!-- Botón para modificar este plano directamente en el diseñador (Solo autenticado) -->
         <button type="button" id="btn-edit-room-plan" class="button ghost auth-only-control" style="padding:7px 12px;font-size:0.82rem;display:none" title="Editar mobiliario y esquema de esta sala">
-          ✏️ Editar este plano
+          ✏️ Esquema SVG
         </button>
+        <!-- Botón para activar el modo interactivo de edición masiva de posiciones -->
+        <button type="button" id="btn-toggle-position-edit" class="button auth-only-control" style="padding:7px 12px;font-size:0.82rem;display:none;background:var(--geo-primary)" title="Editar y mover la posición de todos los objetos en el plano">
+          📍 Mover Objetos
+        </button>
+        <label style="font-size:0.8rem;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--text-muted);user-select:none" title="Mostrar u ocultar etiquetas flotantes">
+          <input type="checkbox" id="chk-toggle-pin-labels"> Etiquetas
+        </label>
       </div>
     </div>
 
     <!-- Contenedor del Mapa Leaflet -->
     <div class="map-container">
+      <!-- Barra Flotante de Edición Masiva de Posiciones -->
+      <div id="map-batch-toolbar" class="map-batch-toolbar" style="display:none">
+        <div class="batch-status-text">
+          <span>📍 <strong>Modo Edición:</strong> Arrastra los pines para reubicarlos</span>
+          <span id="batch-changes-counter" class="batch-counter-badge zero">0 cambios</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button type="button" id="btn-save-batch-positions" class="button" style="background:#10b981;color:#fff;padding:5px 12px;font-size:0.8rem;border:none;border-radius:4px" disabled>
+            💾 Guardar Posiciones
+          </button>
+          <button type="button" id="btn-toggle-unplaced-drawer" class="button ghost" style="padding:5px 10px;font-size:0.8rem;color:#f8fafc;border-color:rgba(255,255,255,0.3)">
+            📦 Sin ubicar (<span id="unplaced-count">0</span>)
+          </button>
+          <button type="button" id="btn-cancel-batch-positions" class="button ghost" style="padding:5px 10px;font-size:0.8rem;color:#fca5a5;border-color:rgba(252,165,165,0.4)">
+            ✕ Salir
+          </button>
+        </div>
+      </div>
+
+      <!-- Cajón Desplegable de Ítems sin Ubicación en esta Sala -->
+      <div id="unplaced-drawer" class="unplaced-drawer" style="display:none">
+        <div class="unplaced-drawer-header">
+          <div class="unplaced-drawer-title">
+            <span>📦 Equipos de esta sala pendientes por ubicar en el plano</span>
+            <span id="unplaced-badge" class="badge menor" style="font-size:0.75rem">0</span>
+          </div>
+          <button type="button" class="button ghost" style="padding:2px 8px;font-size:0.75rem" onclick="toggleUnplacedDrawer(false)">✕ Cerrar</button>
+        </div>
+        <div id="unplaced-items-list" class="unplaced-items-scroll">
+          <!-- Elementos sin ubicar inyectados dinámicamente -->
+        </div>
+      </div>
+
       <div id="indoor-map"></div>
     </div>
 
@@ -417,6 +476,28 @@
               <option value="MAYOR">Mayor</option>
               <option value="MENOR">Menor</option>
               <option value="INTANGIBLE">Intangible</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="f-categoria">Tipo de Objeto / Icono *</label>
+            <select id="f-categoria" required>
+              <option value="pc_pantalla">🖥️ PC Torre con Pantalla</option>
+              <option value="torre">🔲 Torre sin Pantalla</option>
+              <option value="monitor">🖥️ Pantalla Sola</option>
+              <option value="portatil">💻 Portátil / Laptop</option>
+              <option value="tablet">📱 Tablet / iPad</option>
+              <option value="dron">🛸 Dron / UAV</option>
+              <option value="gnss">📡 Receptor GNSS / GPS</option>
+              <option value="servidor">🗄️ Servidor / Rack</option>
+              <option value="red">🔌 Red / Telefonía</option>
+              <option value="proyector">📽️ Proyector / TV</option>
+              <option value="impresora">🖨️ Impresora / Plotter</option>
+              <option value="camara">📷 Cámara / Sensor</option>
+              <option value="energia">⚡ UPS / Energía</option>
+              <option value="mueble">🪑 Mobiliario / Mesa</option>
+              <option value="herramienta">🔧 Herramienta</option>
+              <option value="otro">📦 Otro / General</option>
             </select>
           </div>
 

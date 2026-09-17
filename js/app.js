@@ -11,6 +11,94 @@ let currentSalaId = null;
 let currentView = 'tabla'; // 'tabla' | 'mapa' | 'designer'
 let activeKpiFilter = ''; // '' | 'MAYOR' | 'MENOR' | 'INTANGIBLE' | 'PLANO'
 
+// Catálogo de Categorías / Tipos de Objeto con Iconos Representativos
+const ITEM_CATEGORIES = {
+  pc_pantalla: { label: 'PC Torre con Pantalla', icon: '🖥️', short: 'PC + Pantalla' },
+  torre: { label: 'Torre sin Pantalla', icon: '🔲', short: 'Torre PC' },
+  monitor: { label: 'Pantalla Sola', icon: '🖥️', short: 'Pantalla' },
+  portatil: { label: 'Portátil / Laptop', icon: '💻', short: 'Laptop' },
+  tablet: { label: 'Tablet / iPad', icon: '📱', short: 'Tablet' },
+  dron: { label: 'Dron / UAV', icon: '🛸', short: 'Dron' },
+  gnss: { label: 'Receptor GNSS / GPS', icon: '📡', short: 'GNSS' },
+  servidor: { label: 'Servidor / Rack', icon: '🗄️', short: 'Servidor' },
+  red: { label: 'Red / Telefonía', icon: '🔌', short: 'Red' },
+  proyector: { label: 'Proyector / TV', icon: '📽️', short: 'Video' },
+  impresora: { label: 'Impresora / Plotter', icon: '🖨️', short: 'Impresora' },
+  camara: { label: 'Cámara / Sensor', icon: '📷', short: 'Cámara' },
+  energia: { label: 'UPS / Energía', icon: '⚡', short: 'UPS' },
+  mueble: { label: 'Mobiliario / Mesa', icon: '🪑', short: 'Mueble' },
+  herramienta: { label: 'Herramienta', icon: '🔧', short: 'Herr.' },
+  otro: { label: 'Otro / General', icon: '📦', short: 'Otro' }
+};
+
+function getCategoryInfo(catKey) {
+  let k = (catKey || 'otro').toLowerCase().trim();
+  if (k === 'computador') k = 'pc_pantalla';
+  return ITEM_CATEGORIES[k] || ITEM_CATEGORIES.otro;
+}
+
+function getCategorySvg(catKey, size = 18) {
+  let k = (catKey || 'otro').toLowerCase().trim();
+  if (k === 'computador') k = 'pc_pantalla';
+  switch (k) {
+    case 'pc_pantalla':
+      // PC Torre con Pantalla (Monitor con soporte a la izquierda + Torre vertical a la derecha)
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="1.5" y="4" width="13" height="10" rx="1.5"/><line x1="8" y1="14" x2="8" y2="18"/><line x1="4.5" y1="18" x2="11.5" y2="18"/><rect x="16.5" y="3" width="6" height="17" rx="1"/><circle cx="19.5" cy="6" r="0.8" fill="currentColor"/><line x1="18" y1="9" x2="21" y2="9"/><line x1="18" y1="16" x2="21" y2="16"/></svg>`;
+
+    case 'torre':
+      // Torre sin Pantalla (Solo chasis vertical de la CPU con bahías, botón y ventilación)
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="6" r="1.5" fill="currentColor"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="9" y1="19" x2="15" y2="19"/></svg>`;
+
+    case 'monitor':
+      // Pantalla Sola (Solo monitor plano con soporte y base, sin torre)
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>`;
+
+    case 'portatil':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>`;
+
+    case 'tablet':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`;
+
+    case 'dron':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><circle cx="12" cy="12" r="2.5"/><line x1="10" y1="10" x2="5" y2="5"/><line x1="14" y1="10" x2="19" y2="5"/><line x1="10" y1="14" x2="5" y2="19"/><line x1="14" y1="14" x2="19" y2="19"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>`;
+
+    case 'gnss':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M7.8 7.8c-2.3 2.3-2.3 6.1 0 8.5"/><path d="M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2"/><path d="M4.9 4.9c-3.9 3.9-3.9 10.3 0 14.2"/></svg>`;
+
+    case 'servidor':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>`;
+
+    case 'red':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="6" cy="12" r="1.5" fill="currentColor"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="14" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/></svg>`;
+
+    case 'proyector':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><path d="M3 6h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="11" r="3"/><line x1="7" y1="18" x2="5" y2="21"/><line x1="17" y1="18" x2="19" y2="21"/></svg>`;
+
+    case 'impresora':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>`;
+
+    case 'camara':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+
+    case 'energia':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+
+    case 'mueble':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><rect x="3" y="6" width="18" height="4" rx="1"/><line x1="5" y1="10" x2="5" y2="20"/><line x1="19" y1="10" x2="19" y2="20"/></svg>`;
+
+    case 'herramienta':
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
+
+    default:
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cat-svg"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`;
+  }
+}
+
+// Variables del Modo Edición de Posiciones en Lote
+let isPositionEditMode = false;
+let pendingPositionChanges = new Map(); // itemId -> { id, pos_x, pos_y, sala_id, categoria }
+let isLabelsVisible = false;
+
 // Estado del Visor de Planos 2D (Leaflet Indoor)
 let indoorMap = null;
 let mapImageOverlay = null;
@@ -160,6 +248,8 @@ function updateAuthUI() {
     if (btnDesigner) btnDesigner.style.display = 'inline-flex';
     if (btnAddItem) btnAddItem.style.display = 'inline-flex';
     if (btnEditRoomPlan) btnEditRoomPlan.style.display = 'inline-block';
+    const btnTogglePos = el('btn-toggle-position-edit');
+    if (btnTogglePos) btnTogglePos.style.display = 'inline-block';
     authTableCols.forEach(c => c.style.display = 'table-cell');
   } else {
     if (guestControls) guestControls.style.display = 'inline-flex';
@@ -168,7 +258,14 @@ function updateAuthUI() {
     if (btnDesigner) btnDesigner.style.display = 'none';
     if (btnAddItem) btnAddItem.style.display = 'none';
     if (btnEditRoomPlan) btnEditRoomPlan.style.display = 'none';
+    const btnTogglePos = el('btn-toggle-position-edit');
+    if (btnTogglePos) btnTogglePos.style.display = 'none';
     authTableCols.forEach(c => c.style.display = 'none');
+
+    // Cancelar modo edición de posiciones si estaba activo
+    if (isPositionEditMode) {
+      cancelBatchPositions();
+    }
 
     // Si el usuario estaba en la pestaña del diseñador y cerró sesión, volver a tabla
     if (currentView === 'designer') {
@@ -324,6 +421,7 @@ function renderTable() {
 
   const search = el('search')?.value.trim().toLowerCase() || '';
   const tipo = el('filter-tipo')?.value.trim().toUpperCase() || '';
+  const categoria = el('filter-categoria')?.value || '';
   const funcionario = el('filter-funcionario')?.value || '';
   const sala = el('filter-sala')?.value || '';
 
@@ -331,15 +429,17 @@ function renderTable() {
 
   const filtered = allItems.filter(it => {
     const itTipo = (it.tipo_inventario || '').toUpperCase();
-    const matchesSearch = !search || [it.id, it.descripcion, it.ubicacion, it.observacion, it.funcionario, it.sala_nombre]
+    const itCat = (it.categoria || 'otro').toLowerCase();
+    const matchesSearch = !search || [it.id, it.descripcion, it.ubicacion, it.observacion, it.funcionario, it.sala_nombre, it.categoria]
       .filter(Boolean).some(v => String(v).toLowerCase().includes(search));
     
     const matchesTipo = !tipo || itTipo === tipo;
+    const matchesCategoria = !categoria || itCat === categoria;
     const matchesFuncionario = !funcionario || it.funcionario === funcionario;
     const matchesSala = !sala || it.sala_id === sala;
     const matchesPlano = (activeKpiFilter !== 'PLANO') || (it.sala_id && it.pos_x !== null && it.pos_y !== null);
 
-    return matchesSearch && matchesTipo && matchesFuncionario && matchesSala && matchesPlano;
+    return matchesSearch && matchesTipo && matchesCategoria && matchesFuncionario && matchesSala && matchesPlano;
   });
 
   const countEl = el('count');
@@ -360,6 +460,9 @@ function renderTable() {
   }
 
   tbody.innerHTML = filtered.map(it => {
+    const catInfo = getCategoryInfo(it.categoria);
+    const catBadge = `<span class="cat-badge" title="Categoría: ${escapeHtml(catInfo.label)}">${getCategorySvg(it.categoria, 14)} <span>${escapeHtml(catInfo.short)}</span></span>`;
+
     const salaBadge = it.sala_nombre
       ? `<span class="badge-sala">📍 ${escapeHtml(it.sala_nombre)}</span>`
       : '';
@@ -388,8 +491,11 @@ function renderTable() {
           <button type="button" class="copy-id-btn" title="Copiar código" onclick="copyInventoryId('${escapeHtml(String(it.id))}', event)">📋</button>
         </td>
         <td>
-          <strong style="color:var(--text-main)">${escapeHtml(it.descripcion)}</strong>
-          ${it.observacion ? `<br><span style="color:var(--text-soft);font-size:0.82rem">${escapeHtml(it.observacion)}</span>` : ''}
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap">
+            ${catBadge}
+            <strong style="color:var(--text-main)">${escapeHtml(it.descripcion)}</strong>
+          </div>
+          ${it.observacion ? `<span style="color:var(--text-soft);font-size:0.82rem">${escapeHtml(it.observacion)}</span>` : ''}
         </td>
         <td>
           ${escapeHtml(it.ubicacion || '—')}
@@ -462,6 +568,7 @@ function populateFilters() {
 window.clearFilters = function() {
   el('search').value = '';
   el('filter-tipo').value = '';
+  if (el('filter-categoria')) el('filter-categoria').value = '';
   el('filter-funcionario').value = '';
   el('filter-sala').value = '';
   activeKpiFilter = '';
@@ -519,6 +626,7 @@ window.openCreateItemModal = function() {
   el('f-id').readOnly = false;
   el('f-id').style.backgroundColor = '#fff';
   el('f-tipo').value = 'MAYOR';
+  if (el('f-categoria')) el('f-categoria').value = 'pc_pantalla';
   el('f-funcionario').value = '';
   el('f-sala').value = '';
   el('imagen-actual-preview').innerHTML = '';
@@ -550,6 +658,11 @@ window.startEditItem = function(id) {
 
   const tipoNorm = (it.tipo_inventario || 'MAYOR').trim().toUpperCase();
   el('f-tipo').value = ['MAYOR', 'MENOR', 'INTANGIBLE'].includes(tipoNorm) ? tipoNorm : 'MAYOR';
+  if (el('f-categoria')) {
+    let catVal = (it.categoria || 'otro').toLowerCase();
+    if (catVal === 'computador') catVal = 'pc_pantalla';
+    el('f-categoria').value = catVal;
+  }
 
   let funcVal = (it.funcionario || '').trim();
   const funcUpper = funcVal.toUpperCase();
@@ -821,6 +934,7 @@ el('item-form')?.addEventListener('submit', async (e) => {
       ubicacion,
       observacion,
       tipo_inventario,
+      categoria: el('f-categoria')?.value || 'otro',
       funcionario,
       imagen: finalPhotoUrl,
       sala_id,
@@ -929,15 +1043,25 @@ function renderSalaOnMap(salaId) {
   mapImageOverlay = L.imageOverlay(sala.plano_imagen, bounds).addTo(indoorMap);
   indoorMap.fitBounds(bounds);
 
-  const itemsEnSala = allItems.filter(it => it.sala_id === sala.id && it.pos_x !== null && it.pos_y !== null);
+  // Determinar los ítems que deben mostrarse en esta sala
+  const itemsEnSala = allItems.filter(it => {
+    const strId = String(it.id);
+    if (pendingPositionChanges.has(strId)) {
+      const pending = pendingPositionChanges.get(strId);
+      return pending.sala_id === sala.id && pending.pos_x !== null && pending.pos_y !== null;
+    }
+    return it.sala_id === sala.id && it.pos_x !== null && it.pos_y !== null;
+  });
 
   const selItemMap = el('map-item-select');
   if (selItemMap) {
     selItemMap.innerHTML = '<option value="">🎯 Enfocar equipo en el plano…</option>';
     itemsEnSala.forEach(it => {
+      const cat = getCategoryInfo(it.categoria);
       const opt = document.createElement('option');
       opt.value = it.id;
-      opt.textContent = `[${it.id}] ${it.descripcion}`;
+      const prefix = cat.icon ? `${cat.icon} ` : '';
+      opt.textContent = `${prefix}[${it.id}] ${it.descripcion}`;
       selItemMap.appendChild(opt);
     });
   }
@@ -945,24 +1069,43 @@ function renderSalaOnMap(salaId) {
   let countMayor = 0, countMenor = 0, countIntangible = 0;
 
   itemsEnSala.forEach(it => {
+    const strId = String(it.id || '');
+    const isModified = pendingPositionChanges.has(strId);
+    const pending = pendingPositionChanges.get(strId);
+
+    const currentPosX = pending ? pending.pos_x : it.pos_x;
+    const currentPosY = pending ? pending.pos_y : it.pos_y;
+    if (currentPosX === null || currentPosY === null) return;
+
+    const currentCat = (pending && pending.categoria) ? pending.categoria : (it.categoria || 'otro');
+    const catInfo = getCategoryInfo(currentCat);
+
     const tipoNorm = (it.tipo_inventario || 'mayor').toLowerCase();
     if (tipoNorm === 'mayor') countMayor++;
     else if (tipoNorm === 'menor') countMenor++;
     else countIntangible++;
 
-    const lat = h - it.pos_y;
-    const lng = it.pos_x;
+    const lat = h - currentPosY;
+    const lng = currentPosX;
 
-    const strId = String(it.id || '');
     const pinLabel = strId.length > 4 ? strId.slice(-4) : strId;
-    const pinHtml = `<div class="custom-pin ${tipoNorm}" id="pin-${strId}" title="No. ${escapeHtml(strId)}">${escapeHtml(pinLabel)}</div>`;
+    const editClass = isPositionEditMode ? 'edit-mode' : '';
+    const modClass = isModified ? 'is-modified' : '';
+
+    const pinHtml = `
+      <div class="custom-pin ${tipoNorm} ${editClass} ${modClass}" id="pin-${strId}" title="[${escapeHtml(strId)}] ${escapeHtml(it.descripcion)}">
+        <span class="pin-icon">${getCategorySvg(currentCat, 18)}</span>
+        <span class="pin-badge">${escapeHtml(pinLabel)}</span>
+        <span class="pin-label-hover">${getCategorySvg(currentCat, 13)} [${escapeHtml(strId)}] ${escapeHtml(it.descripcion.slice(0, 30))}</span>
+      </div>
+    `;
 
     const customIcon = L.divIcon({
       html: pinHtml,
       className: 'custom-pin-container',
-      iconSize: [30, 30],
-      iconAnchor: [15, 15],
-      popupAnchor: [0, -15]
+      iconSize: [34, 34],
+      iconAnchor: [17, 17],
+      popupAnchor: [0, -17]
     });
 
     const hasRealImg = it.imagen && !it.imagen.endsWith('/') && it.imagen.includes('.');
@@ -980,8 +1123,9 @@ function renderSalaOnMap(salaId) {
       <div class="popup-card">
         ${imgPopup}
         <div class="popup-content">
-          <h4>No. ${escapeHtml(strId)}</h4>
+          <h4 style="display:flex;align-items:center;gap:6px">${getCategorySvg(currentCat, 18)} No. ${escapeHtml(strId)}</h4>
           <p><strong>${escapeHtml(it.descripcion)}</strong></p>
+          <p style="font-size:0.78rem;color:var(--text-soft)">Tipo de objeto: <strong>${escapeHtml(catInfo.label)}</strong></p>
           ${it.ubicacion ? `<p>📍 ${escapeHtml(it.ubicacion)}</p>` : ''}
           ${it.observacion ? `<p style="font-style:italic;color:var(--text-soft)">${escapeHtml(it.observacion)}</p>` : ''}
           <div class="popup-footer">
@@ -993,9 +1137,66 @@ function renderSalaOnMap(salaId) {
       </div>
     `;
 
-    const marker = L.marker([lat, lng], { icon: customIcon }).addTo(indoorMap);
-    marker.bindPopup(popupContent);
+    const marker = L.marker([lat, lng], {
+      icon: customIcon,
+      draggable: isPositionEditMode
+    }).addTo(indoorMap);
     marker.itemId = strId;
+
+    if (isPositionEditMode) {
+      marker.on('dragend', function() {
+        const p = marker.getLatLng();
+        const newLng = Math.round(p.lng);
+        const newLat = Math.round(p.lat);
+        const newX = newLng;
+        const newY = h - newLat;
+
+        pendingPositionChanges.set(strId, {
+          id: strId,
+          pos_x: newX,
+          pos_y: newY,
+          sala_id: currentSalaId,
+          categoria: currentCat
+        });
+
+        const pinNode = el(`pin-${strId}`);
+        if (pinNode) pinNode.classList.add('is-modified');
+        updateBatchToolbarCounter();
+      });
+
+      const catOptionsHtml = Object.entries(ITEM_CATEGORIES).map(([k, v]) =>
+        `<option value="${k}" ${k === currentCat ? 'selected' : ''}>${v.icon} ${v.label}</option>`
+      ).join('');
+
+      const editPopupContent = `
+        <div class="popup-card" style="padding:10px 12px;min-width:220px">
+          <div style="font-size:0.86rem;font-weight:700;color:var(--geo-primary-dark);margin-bottom:4px;display:flex;align-items:center;gap:6px">
+            ${getCategorySvg(currentCat, 18)} [${escapeHtml(strId)}]
+          </div>
+          <p style="font-size:0.8rem;margin:0 0 8px;color:var(--text-main);line-height:1.3">
+            ${escapeHtml(it.descripcion)}
+          </p>
+          <div style="margin-bottom:8px">
+            <label style="font-size:0.75rem;font-weight:600;display:block;margin-bottom:3px;color:var(--text-muted)">Tipo de Objeto / Icono:</label>
+            <select onchange="quickChangeItemCategory('${escapeHtml(strId)}', this.value)" style="width:100%;font-size:0.8rem;padding:4px 6px">
+              ${catOptionsHtml}
+            </select>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button type="button" class="button danger" style="padding:4px 8px;font-size:0.75rem;flex:1" onclick="unplaceItemFromMap('${escapeHtml(strId)}')">
+              🚫 Desubicar
+            </button>
+            <button type="button" class="button ghost" style="padding:4px 8px;font-size:0.75rem" onclick="startEditItem('${escapeHtml(strId)}')">
+              ✏️ Ficha
+            </button>
+          </div>
+        </div>
+      `;
+      marker.bindPopup(editPopupContent);
+    } else {
+      marker.bindPopup(popupContent);
+    }
+
     mapMarkers.push(marker);
   });
 
@@ -1005,7 +1206,226 @@ function renderSalaOnMap(salaId) {
   if (legMayor) legMayor.textContent = countMayor;
   if (legMenor) legMenor.textContent = countMenor;
   if (legInt) legInt.textContent = countIntangible;
+
+  updateUnplacedItemsList();
 }
+
+// =========================================================================
+// MÉTODOS DEL MODO EDICIÓN MASIVA DE POSICIONES EN PLANO
+// =========================================================================
+
+window.togglePositionEditMode = function(forceState) {
+  if (!hasEditPermission()) return;
+  isPositionEditMode = (forceState !== undefined) ? forceState : !isPositionEditMode;
+
+  const toolbar = el('map-batch-toolbar');
+  const btn = el('btn-toggle-position-edit');
+
+  if (isPositionEditMode) {
+    if (toolbar) toolbar.style.display = 'flex';
+    if (btn) {
+      btn.textContent = '✕ Salir Edición';
+      btn.style.background = '#e11d48';
+    }
+    updateBatchToolbarCounter();
+    showToast('Modo edición activado: ahora puedes arrastrar libremente los objetos sobre el plano', 'info');
+  } else {
+    if (toolbar) toolbar.style.display = 'none';
+    if (btn) {
+      btn.textContent = '📍 Mover Objetos';
+      btn.style.background = 'var(--geo-primary)';
+    }
+    toggleUnplacedDrawer(false);
+  }
+
+  renderSalaOnMap(currentSalaId);
+};
+
+window.updateBatchToolbarCounter = function() {
+  const count = pendingPositionChanges.size;
+  const badge = el('batch-changes-counter');
+  const saveBtn = el('btn-save-batch-positions');
+  if (badge) {
+    badge.textContent = `${count} ${count === 1 ? 'cambio' : 'cambios'}`;
+    if (count > 0) badge.classList.remove('zero');
+    else badge.classList.add('zero');
+  }
+  if (saveBtn) {
+    saveBtn.disabled = count === 0;
+    saveBtn.style.opacity = count === 0 ? '0.6' : '1';
+    saveBtn.style.cursor = count === 0 ? 'not-allowed' : 'pointer';
+  }
+};
+
+window.saveBatchPositions = async function() {
+  if (!pendingPositionChanges.size) {
+    showToast('No hay cambios pendientes de guardar', 'info');
+    return;
+  }
+
+  const payload = {
+    items: Array.from(pendingPositionChanges.values())
+  };
+
+  try {
+    showToast('Guardando cambios de posiciones en el servidor…', 'info');
+    const res = await fetch('/api/items/batch-positions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error('Error al guardar las posiciones en lote');
+    const data = await res.json();
+
+    const count = data.updated_count || payload.items.length;
+    showToast(`¡Se actualizaron ${count} posiciones de equipos exitosamente!`, 'ok');
+
+    pendingPositionChanges.clear();
+    togglePositionEditMode(false);
+    await loadData();
+    renderSalaOnMap(currentSalaId);
+    renderTable();
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
+};
+
+window.cancelBatchPositions = function() {
+  if (pendingPositionChanges.size > 0) {
+    if (!confirm('¿Deseas descartar los cambios de posiciones no guardados?')) return;
+  }
+  pendingPositionChanges.clear();
+  togglePositionEditMode(false);
+  loadData().then(() => {
+    renderSalaOnMap(currentSalaId);
+  });
+  showToast('Edición de posiciones cancelada', 'info');
+};
+
+window.toggleUnplacedDrawer = function(show) {
+  const drawer = el('unplaced-drawer');
+  if (!drawer) return;
+  const shouldShow = (show !== undefined) ? show : drawer.style.display === 'none';
+  drawer.style.display = shouldShow ? 'block' : 'none';
+  if (shouldShow) {
+    updateUnplacedItemsList();
+  }
+};
+
+function updateUnplacedItemsList() {
+  const listEl = el('unplaced-items-list');
+  const badgeEl = el('unplaced-badge');
+  const countEl = el('unplaced-count');
+  if (!listEl) return;
+
+  const unplaced = allItems.filter(it => {
+    const strId = String(it.id);
+    if (pendingPositionChanges.has(strId)) {
+      const p = pendingPositionChanges.get(strId);
+      return p.pos_x === null || p.pos_y === null;
+    }
+    const isUnset = (it.pos_x === null || it.pos_y === null);
+    const matchesSala = (!it.sala_id || it.sala_id === currentSalaId);
+    return isUnset && matchesSala;
+  });
+
+  if (badgeEl) badgeEl.textContent = unplaced.length;
+  if (countEl) countEl.textContent = unplaced.length;
+
+  if (!unplaced.length) {
+    listEl.innerHTML = `
+      <div style="color:var(--text-soft);font-size:0.82rem;padding:8px">
+        ✅ Todos los equipos de esta sala ya tienen posición fijada en el plano.
+      </div>
+    `;
+    return;
+  }
+
+  listEl.innerHTML = unplaced.map(it => {
+    const cat = getCategoryInfo(it.categoria);
+    const strId = String(it.id);
+    return `
+      <div class="unplaced-item-card">
+        <div class="unplaced-item-header">
+          <span style="display:inline-flex;align-items:center;color:var(--geo-primary)">${getCategorySvg(it.categoria, 16)}</span>
+          <span style="font-family:var(--mono);font-size:0.8rem;color:var(--geo-primary-dark)">${escapeHtml(strId)}</span>
+        </div>
+        <div class="unplaced-item-desc" title="${escapeHtml(it.descripcion)}">
+          ${escapeHtml(it.descripcion)}
+        </div>
+        <button type="button" class="btn-place-item" onclick="placeItemOnMapCenter('${escapeHtml(strId)}')">
+          📍 Ubicar en plano
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+window.placeItemOnMapCenter = function(itemId) {
+  const strId = String(itemId);
+  const it = allItems.find(x => String(x.id) === strId);
+  if (!it) return;
+
+  const sala = allSalas.find(s => s.id === currentSalaId);
+  if (!sala) return;
+
+  const center = indoorMap.getCenter();
+  const posX = Math.round(center.lng);
+  const posY = Math.round(sala.alto - center.lat);
+
+  pendingPositionChanges.set(strId, {
+    id: strId,
+    pos_x: posX,
+    pos_y: posY,
+    sala_id: currentSalaId,
+    categoria: it.categoria || 'otro'
+  });
+
+  renderSalaOnMap(currentSalaId);
+  updateBatchToolbarCounter();
+  updateUnplacedItemsList();
+  showToast(`Ítem ${strId} colocado en el plano. Arrástralo a su ubicación exacta.`, 'ok');
+};
+
+window.quickChangeItemCategory = async function(itemId, newCat) {
+  try {
+    const res = await fetch(`/api/items/${itemId}/categoria`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoria: newCat })
+    });
+    if (!res.ok) throw new Error('Error al actualizar la categoría');
+
+    const it = allItems.find(x => String(x.id) === String(itemId));
+    if (it) it.categoria = newCat;
+
+    if (pendingPositionChanges.has(String(itemId))) {
+      pendingPositionChanges.get(String(itemId)).categoria = newCat;
+    }
+
+    showToast(`Categoría actualizada a ${ITEM_CATEGORIES[newCat]?.label || newCat}`, 'ok');
+    renderSalaOnMap(currentSalaId);
+    renderTable();
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
+};
+
+window.unplaceItemFromMap = function(itemId) {
+  const strId = String(itemId);
+  pendingPositionChanges.set(strId, {
+    id: strId,
+    pos_x: null,
+    pos_y: null,
+    sala_id: null
+  });
+
+  renderSalaOnMap(currentSalaId);
+  updateBatchToolbarCounter();
+  updateUnplacedItemsList();
+  showToast(`Ítem ${strId} desubicado del plano (presiona Guardar para confirmar)`, 'info');
+};
 
 window.focusItemOnMap = function(itemId) {
   const strId = String(itemId);
@@ -1899,7 +2319,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderTable();
 
     // Filtros de búsqueda
-    ['search', 'filter-tipo', 'filter-funcionario', 'filter-sala'].forEach(id => {
+    ['search', 'filter-tipo', 'filter-categoria', 'filter-funcionario', 'filter-sala'].forEach(id => {
       const node = el(id);
       if (node) {
         node.addEventListener('input', () => renderTable());
@@ -1920,6 +2340,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     el('btn-center-map')?.addEventListener('click', centerMapOnBounds);
+
+    // Controles del Modo Edición Masiva de Posiciones en Plano
+    el('btn-toggle-position-edit')?.addEventListener('click', () => togglePositionEditMode());
+    el('btn-save-batch-positions')?.addEventListener('click', saveBatchPositions);
+    el('btn-cancel-batch-positions')?.addEventListener('click', cancelBatchPositions);
+    el('btn-toggle-unplaced-drawer')?.addEventListener('click', () => toggleUnplacedDrawer());
+
+    // Toggle de etiquetas sobre pines
+    el('chk-toggle-pin-labels')?.addEventListener('change', (e) => {
+      isLabelsVisible = e.target.checked;
+      const container = el('indoor-map');
+      if (container) {
+        if (isLabelsVisible) container.classList.add('show-labels');
+        else container.classList.remove('show-labels');
+      }
+    });
 
     // Cambio de vista
     el('btn-view-tabla')?.addEventListener('click', () => switchView('tabla'));

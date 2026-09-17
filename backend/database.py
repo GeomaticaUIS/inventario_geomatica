@@ -58,6 +58,7 @@ def init_db():
         tipo_inventario TEXT NOT NULL,
         funcionario TEXT,
         imagen TEXT,
+        categoria TEXT DEFAULT 'otro',
         sala_id TEXT REFERENCES salas(id) ON DELETE SET NULL,
         pos_x REAL,
         pos_y REAL,
@@ -65,9 +66,15 @@ def init_db():
     );
     """)
 
+    # Migración de columna categoria si la tabla items ya existía previamente
+    cur.execute("PRAGMA table_info(items)")
+    cols = [row["name"] for row in cur.fetchall()]
+    if "categoria" not in cols:
+        cur.execute("ALTER TABLE items ADD COLUMN categoria TEXT DEFAULT 'otro'")
+
     conn.commit()
 
-    # Migrar datos si la base de datos está vacía
+    # Migrar datos si es necesario
     _migrate_initial_data(conn)
     conn.close()
 
@@ -185,7 +192,57 @@ def _migrate_initial_data(conn: sqlite3.Connection):
     except Exception as e:
         print(f"Advertencia normalizando datos: {e}")
 
+    # 5. Auto-clasificar categorías de ítems para visualización gráfica con iconos
+    try:
+        cur.execute("SELECT id, descripcion, categoria FROM items")
+        for r in cur.fetchall():
+            curr_cat = r["categoria"]
+            if not curr_cat or curr_cat in ("otro", "computador"):
+                auto_cat = classify_item_category(r["descripcion"])
+                if auto_cat != "otro" or not curr_cat:
+                    cur.execute("UPDATE items SET categoria = ? WHERE id = ?", (auto_cat, r["id"]))
+    except Exception as e:
+        print(f"Advertencia clasificando ítems: {e}")
+
     conn.commit()
+
+def classify_item_category(descripcion: str) -> str:
+    """Clasifica automáticamente el ítem en una categoría reconocible según palabras clave."""
+    d = (descripcion or '').upper()
+    if 'PORTATIL' in d or 'LAPTOP' in d or 'PRECISION 3581' in d:
+        return 'portatil'
+    if any(k in d for k in ['IPAD', 'TABLET', 'TABLETA', 'APPLE PENCIL', 'MAGIC KEYBOARD', 'MAGIC MOUSE']):
+        return 'tablet'
+    if any(k in d for k in ['DRON', 'MAVIC', 'UAV']):
+        return 'dron'
+    if any(k in d for k in ['GNSS', 'GPS', 'GARMIN', 'TRIMBLE', 'SOUTH', 'GALAXY G7', 'ESTACION', 'ANTENA', 'SURVSTAR']):
+        return 'gnss'
+    if any(k in d for k in ['SERVIDOR', 'RACK', 'SAN', 'STORAGE', 'DISCO P2000', 'KVM']):
+        return 'servidor'
+    if any(k in d for k in ['TELEFONO', 'SWITCH', 'ROUTER', 'PATCH']):
+        return 'red'
+    if any(k in d for k in ['VIDEO BEAM', 'TELEVISOR', 'TV', 'BRAVIA', 'PROYECTOR', 'PLC-XD2200']):
+        return 'proyector'
+    if any(k in d for k in ['IMPRESORA', 'PLOTTER', 'ESCANER', 'SCANNER']):
+        return 'impresora'
+    if any(k in d for k in ['CAMARA', 'SENSOR', 'LIDAR', 'FOTOMETRO', 'ESPECTRO']):
+        return 'camara'
+    if any(k in d for k in ['UPS', 'ESTABILIZADOR', 'BATERIA', 'POWERCOM', 'ENERGEX']):
+        return 'energia'
+    if any(k in d for k in ['MESA', 'SILLA', 'ESCALERA', 'ARTECMA', 'ARCHIVADOR', 'GABINETE']):
+        return 'mueble'
+    # Distinción precisa: PC Torre con Pantalla, Torre sin Pantalla, Pantalla Sola
+    if 'MINITORRE' in d or 'TORRE' in d or 'PRECISION 3680' in d or 'HP Z' in d or 'SFF' in d:
+        if 'MONITOR' in d or 'PANTALLA' in d:
+            return 'pc_pantalla'
+        return 'torre'
+    if 'ALL IN ONE' in d or 'TODO EN UNO' in d or 'IMAC' in d or ('COMPUTADOR' in d and ('MONITOR' in d or 'PANTALLA' in d)):
+        return 'pc_pantalla'
+    if 'MONITOR' in d or 'PANTALLA' in d:
+        return 'monitor'
+    if 'WORKSTATION' in d or 'COMPUTADOR' in d or 'PC' in d:
+        return 'torre'
+    return 'otro'
 
 # --- Funciones de Acceso a Datos (CRUD) ---
 
@@ -250,13 +307,19 @@ def delete_sala(sala_id: str) -> bool:
     conn.close()
     return affected
 
-def list_items(search: Optional[str] = None, tipo: Optional[str] = None, funcionario: Optional[str] = None, sala_id: Optional[str] = None) -> List[Dict[str, Any]]:
+def list_items(
+    search: Optional[str] = None,
+    tipo: Optional[str] = None,
+    funcionario: Optional[str] = None,
+    sala_id: Optional[str] = None,
+    categoria: Optional[str] = None
+) -> List[Dict[str, Any]]:
     conn = get_connection()
     cur = conn.cursor()
 
     sql = """
         SELECT i.id, i.descripcion, i.ubicacion, i.observacion, i.tipo_inventario, i.funcionario,
-               i.imagen, i.sala_id, i.pos_x, i.pos_y, i.actualizado_en,
+               i.imagen, i.categoria, i.sala_id, i.pos_x, i.pos_y, i.actualizado_en,
                s.nombre as sala_nombre, s.plano_imagen as sala_plano, s.ancho as sala_ancho, s.alto as sala_alto
         FROM items i
         LEFT JOIN salas s ON i.sala_id = s.id
@@ -276,10 +339,18 @@ def list_items(search: Optional[str] = None, tipo: Optional[str] = None, funcion
         sql += " AND i.sala_id = ?"
         params.append(sala_id)
 
+    if categoria:
+        cat_norm = categoria.strip().lower()
+        if cat_norm in ('pc_pantalla', 'computador'):
+            sql += " AND i.categoria IN ('pc_pantalla', 'computador')"
+        else:
+            sql += " AND i.categoria = ?"
+            params.append(cat_norm)
+
     if search:
         term = f"%{search.strip().lower()}%"
-        sql += " AND (LOWER(i.id) LIKE ? OR LOWER(i.descripcion) LIKE ? OR LOWER(i.ubicacion) LIKE ? OR LOWER(i.observacion) LIKE ? OR LOWER(i.funcionario) LIKE ?)"
-        params.extend([term, term, term, term, term])
+        sql += " AND (LOWER(i.id) LIKE ? OR LOWER(i.descripcion) LIKE ? OR LOWER(i.ubicacion) LIKE ? OR LOWER(i.observacion) LIKE ? OR LOWER(i.funcionario) LIKE ? OR LOWER(i.categoria) LIKE ?)"
+        params.extend([term, term, term, term, term, term])
 
     sql += " ORDER BY i.id ASC"
 
@@ -293,7 +364,7 @@ def get_item(item_id: str) -> Optional[Dict[str, Any]]:
     cur = conn.cursor()
     cur.execute("""
         SELECT i.id, i.descripcion, i.ubicacion, i.observacion, i.tipo_inventario, i.funcionario,
-               i.imagen, i.sala_id, i.pos_x, i.pos_y, i.actualizado_en,
+               i.imagen, i.categoria, i.sala_id, i.pos_x, i.pos_y, i.actualizado_en,
                s.nombre as sala_nombre, s.plano_imagen as sala_plano
         FROM items i
         LEFT JOIN salas s ON i.sala_id = s.id
@@ -306,9 +377,15 @@ def get_item(item_id: str) -> Optional[Dict[str, Any]]:
 def upsert_item(it: Dict[str, Any]) -> Dict[str, Any]:
     conn = get_connection()
     cur = conn.cursor()
+
+    cat = (it.get("categoria") or "").strip().lower()
+    if not cat:
+        cat = classify_item_category(it.get("descripcion", ""))
+    it["categoria"] = cat
+
     cur.execute("""
-        INSERT INTO items (id, descripcion, ubicacion, observacion, tipo_inventario, funcionario, imagen, sala_id, pos_x, pos_y, actualizado_en)
-        VALUES (:id, :descripcion, :ubicacion, :observacion, :tipo_inventario, :funcionario, :imagen, :sala_id, :pos_x, :pos_y, CURRENT_TIMESTAMP)
+        INSERT INTO items (id, descripcion, ubicacion, observacion, tipo_inventario, funcionario, imagen, categoria, sala_id, pos_x, pos_y, actualizado_en)
+        VALUES (:id, :descripcion, :ubicacion, :observacion, :tipo_inventario, :funcionario, :imagen, :categoria, :sala_id, :pos_x, :pos_y, CURRENT_TIMESTAMP)
         ON CONFLICT(id) DO UPDATE SET
             descripcion = excluded.descripcion,
             ubicacion = excluded.ubicacion,
@@ -316,6 +393,7 @@ def upsert_item(it: Dict[str, Any]) -> Dict[str, Any]:
             tipo_inventario = excluded.tipo_inventario,
             funcionario = excluded.funcionario,
             imagen = CASE WHEN excluded.imagen IS NOT NULL AND excluded.imagen != '' THEN excluded.imagen ELSE items.imagen END,
+            categoria = excluded.categoria,
             sala_id = excluded.sala_id,
             pos_x = excluded.pos_x,
             pos_y = excluded.pos_y,
@@ -324,6 +402,57 @@ def upsert_item(it: Dict[str, Any]) -> Dict[str, Any]:
     conn.commit()
     conn.close()
     return get_item(it["id"])
+
+def batch_update_positions(updates: List[Dict[str, Any]]) -> int:
+    """Actualiza en una sola transacción las posiciones espaciales y/o categorías de múltiples ítems."""
+    conn = get_connection()
+    cur = conn.cursor()
+    updated_count = 0
+    for item in updates:
+        item_id = str(item.get("id") or "").strip()
+        if not item_id:
+            continue
+
+        set_clauses = ["actualizado_en = CURRENT_TIMESTAMP"]
+        params = []
+
+        if "pos_x" in item:
+            val = item.get("pos_x")
+            set_clauses.append("pos_x = ?")
+            params.append(float(val) if val is not None else None)
+
+        if "pos_y" in item:
+            val = item.get("pos_y")
+            set_clauses.append("pos_y = ?")
+            params.append(float(val) if val is not None else None)
+
+        if "sala_id" in item:
+            val = item.get("sala_id")
+            set_clauses.append("sala_id = ?")
+            params.append(val if val else None)
+
+        if "categoria" in item and item.get("categoria"):
+            set_clauses.append("categoria = ?")
+            params.append(item.get("categoria").strip().lower())
+
+        params.append(item_id)
+        cur.execute(f"UPDATE items SET {', '.join(set_clauses)} WHERE id = ?", params)
+        if cur.rowcount > 0:
+            updated_count += 1
+
+    conn.commit()
+    conn.close()
+    return updated_count
+
+def update_item_categoria(item_id: str, categoria: str) -> bool:
+    """Actualiza rápidamente la categoría de un ítem."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("UPDATE items SET categoria = ?, actualizado_en = CURRENT_TIMESTAMP WHERE id = ?", (categoria.strip().lower(), item_id))
+    affected = cur.rowcount > 0
+    conn.commit()
+    conn.close()
+    return affected
 
 def delete_item(item_id: str) -> bool:
     conn = get_connection()

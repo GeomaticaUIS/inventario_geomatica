@@ -15,6 +15,8 @@ from backend.database import (
     list_items,
     get_item,
     upsert_item,
+    batch_update_positions,
+    update_item_categoria,
     delete_item,
     list_salas,
     get_sala,
@@ -34,7 +36,7 @@ os.makedirs(UPLOADS_PLANOS_DIR, exist_ok=True)
 app = FastAPI(
     title="Inventario Geomática UIS",
     description="Sistema de Inventario con Gestión de Equipos y Diseñador de Esquemas de Sala 2D",
-    version="2.1.0"
+    version="2.2.0"
 )
 
 app.add_middleware(
@@ -59,9 +61,23 @@ class ItemModel(BaseModel):
     tipo_inventario: str
     funcionario: Optional[str] = ""
     imagen: Optional[str] = ""
+    categoria: Optional[str] = "otro"
     sala_id: Optional[str] = None
     pos_x: Optional[float] = None
     pos_y: Optional[float] = None
+
+class ItemPositionUpdate(BaseModel):
+    id: str
+    pos_x: Optional[float] = None
+    pos_y: Optional[float] = None
+    sala_id: Optional[str] = None
+    categoria: Optional[str] = None
+
+class BatchPositionsRequest(BaseModel):
+    items: List[ItemPositionUpdate]
+
+class UpdateCategoriaRequest(BaseModel):
+    categoria: str
 
 class SalaModel(BaseModel):
     id: str
@@ -109,9 +125,10 @@ def get_items(
     q: Optional[str] = None,
     tipo: Optional[str] = None,
     funcionario: Optional[str] = None,
-    sala_id: Optional[str] = None
+    sala_id: Optional[str] = None,
+    categoria: Optional[str] = None
 ):
-    return list_items(search=q, tipo=tipo, funcionario=funcionario, sala_id=sala_id)
+    return list_items(search=q, tipo=tipo, funcionario=funcionario, sala_id=sala_id, categoria=categoria)
 
 @app.get("/api/items/{item_id}")
 def get_single_item(item_id: str):
@@ -143,6 +160,19 @@ def save_item(item: ItemModel):
 
     res = upsert_item(data)
     return {"ok": True, "item": res}
+
+@app.post("/api/items/batch-positions")
+def save_batch_positions(payload: BatchPositionsRequest):
+    updates = [item.dict(exclude_unset=True) for item in payload.items]
+    updated_count = batch_update_positions(updates)
+    return {"ok": True, "updated_count": updated_count}
+
+@app.patch("/api/items/{item_id}/categoria")
+def set_item_categoria(item_id: str, payload: UpdateCategoriaRequest):
+    success = update_item_categoria(item_id, payload.categoria)
+    if not success:
+        raise HTTPException(status_code=404, detail="Ítem no encontrado")
+    return {"ok": True, "id": item_id, "categoria": payload.categoria}
 
 @app.delete("/api/items/{item_id}")
 def remove_item(item_id: str):

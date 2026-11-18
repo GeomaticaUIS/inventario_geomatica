@@ -72,6 +72,16 @@ def init_db():
     if "categoria" not in cols:
         cur.execute("ALTER TABLE items ADD COLUMN categoria TEXT DEFAULT 'otro'")
 
+    # 4. Tabla de fotos adicionales por ítem
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS item_fotos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        item_id TEXT REFERENCES items(id) ON DELETE CASCADE,
+        foto_data TEXT NOT NULL,
+        creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    """)
+
     conn.commit()
 
     # Migrar datos si es necesario
@@ -81,18 +91,8 @@ def init_db():
 def _migrate_initial_data(conn: sqlite3.Connection):
     cur = conn.cursor()
 
-    # 1. Salas reales de Geomática UIS
-    salas_reales = [
-        ("nuevo_geo", "Laboratorio Principal (Nuevo Geo)", "Laboratorio principal de Geomática y sensores", "uploads/planos/plano_nuevo_geo.svg", 1200, 1200),
-        ("labvis", "Laboratorio de Visualización (LABVIS)", "Laboratorio de visualización y modelado 3D", "uploads/planos/sala_sistemas.svg", 1200, 800),
-        ("oficina_jhon", "Oficina Jhon Cáceres", "Oficina de coordinación técnica", "uploads/planos/oficina_rectoria.svg", 1000, 700),
-        ("oficina_yerly", "Oficina Yerly Martínez", "Oficina administrativa y gestión", "uploads/planos/oficina_rectoria.svg", 1000, 700),
-        ("nueva_sala_aux", "Nueva Sala Auxiliar", "Sala auxiliar de cómputo y reuniones", "uploads/planos/plano_nueva_sala_aux.svg", 1200, 800),
-        ("datacenter", "Datacenter / Servidores", "Área de servidores y almacenamiento", "uploads/planos/plano_datacenter.svg", 1200, 800),
-        ("recepcion", "Recepción", "Área de recepción y atención", "uploads/planos/plano_recepcion.svg", 1000, 700),
-        ("oficina_rectoria", "Oficina Rectoría", "Despacho principal", "uploads/planos/oficina_rectoria.svg", 1000, 700),
-        ("auditorio", "Auditorio", "Auditorio principal de eventos", "uploads/planos/auditorio.svg", 1000, 700)
-    ]
+    # 1. Salas reales de Geomática UIS (Desactivadas porque los SVGs ya están listos y se administran manualmente)
+    salas_reales = []
 
     for s in salas_reales:
         cur.execute("""
@@ -462,3 +462,32 @@ def delete_item(item_id: str) -> bool:
     conn.commit()
     conn.close()
     return affected
+
+def get_item_fotos(item_id: str) -> List[Dict[str, Any]]:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, item_id, foto_data, creado_en FROM item_fotos WHERE item_id = ? ORDER BY creado_en DESC", (item_id,))
+    rows = [dict(r) for r in cur.fetchall()]
+    conn.close()
+    return rows
+
+def add_item_foto(item_id: str, foto_data: str) -> Dict[str, Any]:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO item_fotos (item_id, foto_data) VALUES (?, ?)", (item_id, foto_data))
+    foto_id = cur.lastrowid
+    conn.commit()
+    cur.execute("SELECT id, item_id, foto_data, creado_en FROM item_fotos WHERE id = ?", (foto_id,))
+    row = cur.fetchone()
+    conn.close()
+    return dict(row) if row else {}
+
+def delete_item_foto(foto_id: int) -> bool:
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM item_fotos WHERE id = ?", (foto_id,))
+    affected = cur.rowcount > 0
+    conn.commit()
+    conn.close()
+    return affected
+

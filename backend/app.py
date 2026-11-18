@@ -181,6 +181,27 @@ def remove_item(item_id: str):
         raise HTTPException(status_code=404, detail="Ítem no encontrado")
     return {"ok": True, "deleted_id": item_id}
 
+class ItemFotoModel(BaseModel):
+    foto_data: str
+
+from backend.database import get_item_fotos, add_item_foto, delete_item_foto
+
+@app.get("/api/items/{item_id}/fotos")
+def get_fotos(item_id: str):
+    return get_item_fotos(item_id)
+
+@app.post("/api/items/{item_id}/fotos")
+def add_foto(item_id: str, foto: ItemFotoModel):
+    res = add_item_foto(item_id, foto.foto_data)
+    return {"ok": True, "foto": res}
+
+@app.delete("/api/items/fotos/{foto_id}")
+def remove_foto(foto_id: int):
+    success = delete_item_foto(foto_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Foto no encontrada")
+    return {"ok": True, "deleted_id": foto_id}
+
 # --- Rutas de Salas y Esquemas ---
 
 @app.get("/api/salas")
